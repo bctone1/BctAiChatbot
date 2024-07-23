@@ -1,0 +1,1271 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.2\n"
+
+msgid "Thanks"
+msgstr "BCT AI Chatbot"
+
+msgid "For Choosing BCT AI Chatbot"
+msgstr "을 선택해주셔서 감사합니다"
+
+msgid "You can collect a lot of data from the website, learn (fine-tune) it,"
+msgstr ""
+"웹사이트에서 대량 데이터를 수집하여 학습(파인-튜닝) 시키고, 학습 완료된 AI 모"
+"델을 AI챗봇에 탑재하여"
+
+msgid ""
+"and run the learning model to an AI chatbot to provide the beloved chatbot "
+"service on your WordPress homepage."
+msgstr "워드프레스 홈페이지에 간편하게 챗봇 서비스를 제공할 수 있습니다."
+
+msgid ""
+"Want to consult with an expert? Take advantage of 1:1 email consultation "
+"with BCT AI Chatbot’s experts."
+msgstr ""
+"전문가와 상담하고 싶으신가요? BCT AI Chatbot의 전문 인력과 1:1 이메일 상담을 "
+"이용해 보세요."
+
+msgid "Prepared for BCT AI Chatbot users."
+msgstr "BCT AI Chatbot 사용자를 위해 준비했습니다."
+
+msgid ""
+"We'll help you understand how the plugin works and guide you on how to use "
+"it."
+msgstr "플러그인이 어떻게 작동하는지 이해를 돕고, 사용하는 방법을 안내합니다."
+
+msgid ""
+"<p style=\"width: 70%;line-height: 21px;color: #bdbcc3;font-weight:300; font-"
+"size: 14px;\">Supports upgraded features such as more sophisticated AI "
+"training, audio support functions, improved chatbots, and advanced "
+"recommendation settings. Introduce BCT AI Chatbot with expanded features at "
+"a reasonable price!</p>"
+msgstr ""
+"<p style=\"width: 75%;line-height: 42px;color: #bdbcc3;font-weight: 800;\">더"
+"욱 정교한 AI 트레이닝, 오디오 지원 기능, 향상된 쳇봇, 심화된 추천 설정 등 업"
+"그레이드 된 기능을 지원합니다. 합리적인 가격으로 확장된 기능의 BCT AI Chatbot"
+"을 도입하세요!</p>"
+
+msgid "Settings"
+msgstr "세팅"
+
+msgid "Setting"
+msgstr "세팅"
+
+msgid "Embeddings"
+msgstr "임베딩"
+
+msgid "AI Training"
+msgstr "AI 트레이닝"
+
+msgid "Audio"
+msgstr "오디오"
+
+msgid "AI ChatBot"
+msgstr "AI 챗봇"
+
+msgid "Chart"
+msgstr "차트"
+
+msgid "Home"
+msgstr "홈"
+
+msgid "OpenAI_Setting"
+msgstr "Openai 세팅"
+
+msgid "Pinecone_Setting"
+msgstr "Pinecone 세팅"
+
+msgid "Google_Setting"
+msgstr "Google 세팅"
+
+msgid "Document"
+msgstr "참고문서"
+
+msgid "FAQ"
+msgstr "자주하는질문"
+
+msgid "Support"
+msgstr "지원"
+
+msgid "Go Docs"
+msgstr "개발문서"
+
+msgid "Get Support"
+msgstr "메일상담"
+
+msgid "Provider"
+msgstr "공급기업"
+
+msgid "Model"
+msgstr "모델"
+
+msgid "Rate Limit Buffer (in Seconds):"
+msgstr "속도 제한 버퍼(초):"
+
+msgid "Temperature"
+msgstr "온도"
+
+msgid "Max Tokens"
+msgstr "최대 토큰"
+
+msgid "Top P"
+msgstr "Top P"
+
+msgid "Best Of"
+msgstr "Best Of"
+
+msgid "Frequency Penalty"
+msgstr "빈도 페널티"
+
+msgid "Presence Penalty"
+msgstr "출석 페널티"
+
+msgid "Api Key"
+msgstr "Api 키"
+
+msgid "Get Your Api Key"
+msgstr "API 키 가져오기"
+
+msgid "Pinecone"
+msgstr "파인콘"
+
+msgid "Steps"
+msgstr "순서"
+
+msgid "1. Obtain your API key from."
+msgstr "1. Pinecone에서 API 키를 받으세요."
+
+msgid "2. Create an Index on Pinecone."
+msgstr "2. Pinecone에 인덱스를 생성합니다."
+
+msgid "3. Ensure your dimension is set to"
+msgstr "3. 측정기준이 다음으로 설정되어 있는지 확인하세요"
+
+msgid "4. Set your metric to <b>cosine</b>."
+msgstr "4. 측정항목을 <b>코사인</b>으로 설정합니다."
+
+msgid "5. Input your data."
+msgstr "5. 데이터를 입력하세요."
+
+msgid "6. Navigate to Settings - ChatGPT tab and choose the Embeddings method."
+msgstr "6. 설정 - ChatGPT 탭으로 이동하여 임베딩 방법을 선택합니다."
+
+msgid "Pinecone API"
+msgstr "파인콘 API"
+
+msgid "Pinecone Environment"
+msgstr "파인콘 환경"
+
+msgid "Pinecone Index"
+msgstr "파인콘 Index"
+
+msgid "Instant Embedding"
+msgstr "인스턴트 임베딩"
+
+msgid "Enable this option to quickly embed content."
+msgstr "콘텐츠를 빠르게 임베딩 하려면 이 옵션을 활성화하세요."
+
+msgid "select all your contents and click on Instant Embedding button."
+msgstr ""
+"글, 페이지 또는 제품 페이지로 이동하여 모든 콘텐츠를 선택하고 인스턴트 임베"
+"딩 버튼을 클릭하세요."
+
+msgid "Enable"
+msgstr "활성화"
+
+msgid "Index Builder"
+msgstr "인덱스 빌더"
+
+msgid "You can create indexes using the index builder."
+msgstr "인덱스 빌더를 사용하여 인덱스를 작성할 수 있습니다."
+
+msgid "Index Builder lets you monitor and automatically update your content."
+msgstr ""
+"인덱스 빌더에서는 콘텐츠를 모니터링하고 자동으로 업데이트할 수 있습니다."
+
+msgid "Build Index for"
+msgstr "빌더 사용목적"
+
+msgid "Please add Pinecone API key and Pinecone Environment before start sync"
+msgstr "동기화를 시작하기 전에 Pinecone API 키와 Pinecone 환경을 추가하세요."
+
+msgid "Text to Speech"
+msgstr "Text to Speech"
+
+msgid "ElevenLabs API Key"
+msgstr "ElevenLabs API 키"
+
+msgid "ElevenLabs Voices"
+msgstr "ElevenLabs 보이스 연결"
+
+msgid "Get API Key"
+msgstr "API 키 가져오기"
+
+msgid "ElevenLabs Models"
+msgstr "ElevenLabs 모델"
+
+msgid "Google API Key"
+msgstr "구글 API 키"
+
+msgid "Sync Google Voices"
+msgstr "구글 보이스 연결"
+
+msgid "Sync"
+msgstr "연결"
+
+msgid "Hide errors in chat"
+msgstr "채팅창 오류 숨기기"
+
+msgid "Token Handling"
+msgstr "토큰 처리"
+
+msgid "Enable Token Sale?"
+msgstr "토큰 판매를 활성화하시겠습니까?"
+
+msgid "Syncing voices...Please wait..."
+msgstr "음성을 동기화중입니다..."
+
+msgid "Voices synced successfully!"
+msgstr "음성이 성공적으로 동기화되었습니다!"
+
+msgid "Syncing models...Please wait..."
+msgstr "모델을 동기화중입니다."
+
+msgid "Models synced successfully!"
+msgstr "모델이 성공적으로 동기화되었습니다!"
+
+# Embeddings 메뉴 시작-------------------------------------------------------
+msgid "Contents Builder"
+msgstr "콘텐츠 빌더"
+
+msgid "Content Type"
+msgstr "콘텐츠 타입"
+
+msgid "Content"
+msgstr "콘텐츠"
+
+msgid "Free Text"
+msgstr "자유로운방식"
+
+msgid "Question"
+msgstr "질문"
+
+msgid "Answer"
+msgstr "답변"
+
+msgid "Add More"
+msgstr "추가하기"
+
+msgid "Topic"
+msgstr "토픽"
+
+msgid "Desciption"
+msgstr "설명"
+
+msgid "Nomu"
+msgstr "노무"
+
+msgid "KnowledgeBase"
+msgstr "기술 자료"
+
+msgid "Category1"
+msgstr "카테고리1"
+
+msgid "Category2"
+msgstr "카테고리2"
+
+msgid "Response"
+msgstr "응답"
+
+msgid "Example"
+msgstr "예시"
+
+msgid "Judicial Precedent"
+msgstr "판례"
+
+msgid "Record saved successfully"
+msgstr "기록이 성공적으로 저장되었습니다"
+
+msgid "Entries"
+msgstr "항목"
+
+msgid "Delete All"
+msgstr "모두 삭제"
+
+msgid "Delete Selected"
+msgstr "선택항목 삭제"
+
+msgid "Delete"
+msgstr "삭제"
+
+msgid "Products"
+msgstr "상품"
+
+msgid "Success"
+msgstr "성공"
+
+msgid "Error"
+msgstr "에러"
+
+msgid "Pending"
+msgstr "보류"
+
+msgid "Token"
+msgstr "토큰"
+
+msgid "Estimated"
+msgstr "비용"
+
+msgid "Type"
+msgstr "타입"
+
+msgid "Date"
+msgstr "날짜"
+
+msgid "Status"
+msgstr "상태"
+
+msgid "Action"
+msgstr "동작"
+
+msgid "Indexed Pages"
+msgstr "임베딩된 페이지"
+
+msgid "Posts"
+msgstr "글"
+
+msgid "Pages"
+msgstr "페이지"
+
+msgid "Re-Index All"
+msgstr "전부 다시 임베딩"
+
+msgid "Re-Index Selected"
+msgstr "선택항목 임베딩"
+
+msgid "Delete Everything"
+msgstr "전부 지우기"
+
+msgid "Title"
+msgstr "타이틀"
+
+msgid "Indexed"
+msgstr "전체"
+
+msgid "Failed"
+msgstr "실패"
+
+msgid "Skipped"
+msgstr "스킵"
+
+msgid "Source"
+msgstr "소스"
+
+msgid "Start"
+msgstr "시작일"
+
+msgid "Completed"
+msgstr "완료일"
+
+msgid "Select PDF File"
+msgstr "PDF파일을 선택해주세요"
+
+msgid "Filename"
+msgstr "파일이름"
+
+msgid ""
+"Warning! All indexes will be deleted from Pinecone and elsewhere. Are you "
+"sure?"
+msgstr "경고! 모든 인덱스는 Pinecone 및 다른 곳에서 삭제됩니다. 확실합니까?"
+
+msgid "Embedding page: "
+msgstr "임베딩 페이지: "
+
+msgid "Reading PDF file"
+msgstr "PDF 파일 읽기"
+
+msgid "Your PDF embedded successfully."
+msgstr "PDF가 성공적으로 임베딩되었습니다."
+
+msgid "Your PDF file empty"
+msgstr "PDF 파일이 비어 있습니다."
+
+msgid "Please select PDF file"
+msgstr "PDF 파일을 선택해주세요."
+
+msgid "Please select PDF file before start"
+msgstr "시작하기 전에 PDF 파일을 선택하세요."
+
+msgid "Embedding Content"
+msgstr "임베딩 콘텐츠"
+
+msgid ""
+"Warning! Entries will be deleted from Pinecone and elsewhere. Are you sure?"
+msgstr "경고! 항목은 Pinecone 및 다른 곳에서 삭제됩니다. 확실합니까?"
+
+msgid "Nothing to do"
+msgstr "항목이 없습니다."
+
+msgid "Are you sure?"
+msgstr "진행 하시겠습니까?"
+
+msgid "Something went wrong"
+msgstr "문제가 발생했습니다."
+
+# AI Training 시작-------------------------------------------------
+msgid "Data Entry"
+msgstr "데이터 기입"
+
+msgid "Custom Name (Optional)"
+msgstr "커스텀 이름 (선택사항)"
+
+msgid "Model Base"
+msgstr "기반 모델"
+
+msgid ""
+"Your name is BCT, and you are an AI that provides accurate answers to "
+"questions."
+msgstr "당신의 이름은 BCT 이며, 질문에 대한 정확한 답변을 제공하는 AI 입니다."
+
+msgid "What is the capital of South Korea?"
+msgstr "대한민국의 수도는 무엇입니까?"
+
+msgid "The capital of South Korea is Seoul!"
+msgstr "대한민국의 수도는 서울입니다!"
+
+msgid "Prompt"
+msgstr "프롬프트"
+
+msgid "Completion"
+msgstr "컴플리션"
+
+msgid "System"
+msgstr "시스템 메세지"
+
+msgid "User"
+msgstr "사용자 메세지"
+
+msgid "Assistant"
+msgstr "어시스턴트 메세지"
+
+msgid "Upload"
+msgstr "업로드"
+
+msgid "Dataset (*.jsonl)"
+msgstr "데이터셋 (*.jsonl)"
+
+msgid "Custom Model Name"
+msgstr "커스텀 모델 이름"
+
+msgid "File uploaded successfully you can view it in Datasets tab."
+msgstr "파일이 성공적으로 업로드되면 데이터 세트 탭에서 볼 수 있습니다."
+
+msgid ""
+"It is supposed to be at least 100mb if you want to upload larger datasets."
+msgstr "더 큰 데이터 세트를 업로드하려면 최소 100MB가 되어야 합니다."
+
+msgid "Please select file"
+msgstr "파일을 선택해주세요"
+
+msgid "Only accept JSONL file type"
+msgstr "JSONL 파일 형식만 사용가능합니다."
+
+msgid "Dataset allow maximum"
+msgstr "데이터 세트는 최대 허용"
+
+msgid "Purpose"
+msgstr "목적"
+
+msgid "Please select least one data to convert"
+msgstr "변환할 데이터를 하나 이상 선택하십시오."
+
+msgid "Nothing to convert"
+msgstr "변환할 데이터를 하나 이상 선택하십시오."
+
+msgid "Upload successfully"
+msgstr "업로드가 성공적으로 완료되었습니다."
+
+msgid "Maximum upload file size"
+msgstr "최대 업로드 용량"
+
+msgid "Data Converter"
+msgstr "데이터 변환기"
+
+msgid "Select Data"
+msgstr "선택 데이터"
+
+msgid "Legalprotech"
+msgstr "리걸프로텍트"
+
+msgid "Convert"
+msgstr "변환"
+
+msgid "Download"
+msgstr "다운로드"
+
+msgid "Completed Conversions"
+msgstr "완료된 작업"
+
+msgid "Create Fine-Tune"
+msgstr "파인튜닝 생성"
+
+msgid "Retrieve Content"
+msgstr "콘텐츠 검색"
+
+msgid "Choose Model"
+msgstr "모델 선택"
+
+msgid "New Model"
+msgstr "새로운 모델"
+
+msgid "Create"
+msgstr "생성"
+
+msgid "File Content"
+msgstr "파일 내용"
+
+msgid "Size"
+msgstr "사이즈"
+
+msgid "Datasets"
+msgstr "데이터셋"
+
+msgid "Files"
+msgstr "파일"
+
+msgid "Sync Files"
+msgstr "파일 연결"
+
+msgid "Created At"
+msgstr "시작일"
+
+msgid "Trainings"
+msgstr "트레이닝"
+
+msgid "Fine-tunes"
+msgstr "파인튜닝"
+
+msgid "Sync Fine-tunes"
+msgstr "파인튜닝모델 연결"
+
+msgid "failed"
+msgstr "실패"
+
+msgid "Org ID"
+msgstr "모델 아이디"
+
+msgid "ID"
+msgstr "아이디"
+
+msgid "FT Model"
+msgstr "파인튜닝 모델"
+
+msgid "Updated"
+msgstr "완료일"
+
+msgid "Events"
+msgstr "이벤트"
+
+msgid "Object"
+msgstr "오브젝트"
+
+msgid "Level"
+msgstr "단계"
+
+msgid "Message"
+msgstr "메세지"
+
+msgid "Hyper-params"
+msgstr "하이퍼 매개변수"
+
+msgid "Result files"
+msgstr "결과 파일"
+
+msgid "Training-files"
+msgstr "트레이닝 파일"
+
+msgid "succeeded"
+msgstr "성공"
+
+msgid "Cancel"
+msgstr "취소"
+
+# Audio 시작-------------------------------------------------------------------
+msgid "Speech to Text"
+msgstr "Speech to Text"
+
+msgid ""
+"Simply press the record button and speak your prompt, just like you would in "
+"a conversation."
+msgstr "녹음 버튼을 누르고 대화하듯이 프롬프트를 말하면 됩니다."
+
+msgid ""
+"WordPress is an open-source, installable blog or content management system "
+"(CMS)."
+msgstr ""
+"워드프레스는 오픈소스를 기반으로 한 설치형 블로그 또는 콘텐츠 관리 시스템"
+"(CMS)이다."
+
+msgid "Speak"
+msgstr "말하기"
+
+msgid "Pause"
+msgstr "멈춤"
+
+msgid "Stop"
+msgstr "종료"
+
+msgid "Click to cancel"
+msgstr "눌러서 취소"
+
+msgid "Enter a Post Title"
+msgstr "글 제목을 입력하세요."
+
+msgid "Post Content"
+msgstr "글 내용"
+
+msgid "Save Draft"
+msgstr "임시저장"
+
+msgid "Continue"
+msgstr "계속"
+
+msgid "Web speech API"
+msgstr "웹 스피치 API"
+
+msgid "Press button and Test"
+msgstr "버튼을 누르고 테스트해주세요"
+
+msgid "TEST"
+msgstr "테스트"
+
+msgid "Audio Converter"
+msgstr "오디오 변환기"
+
+msgid "File"
+msgstr "파일"
+
+msgid "Translation"
+msgstr "번역"
+
+msgid "Transcription"
+msgstr "전사???"
+
+msgid "Computer"
+msgstr "컴퓨터"
+
+msgid "Recording"
+msgstr "녹음"
+
+msgid "whisper-1"
+msgstr "휘스퍼-1"
+
+msgid "Prompt (Optional)"
+msgstr "프롬프트 (선택사항)"
+
+msgid ""
+"Prompts can be very helpful for correcting specific words or acronyms that "
+"the model often misrecognizes in the audio. For example, the following "
+"prompt improves the transcription of the words DALL·E and GPT-3, which were "
+"previously written as \"GDP 3\" and \"DALI\"."
+msgstr ""
+"프롬프트는 모델이 오디오에서 종종 잘못 인식하는 특정 단어나 약어를 수정하는 "
+"데 매우 유용할 수 있습니다. 예를 들어, 다음 프롬프트는 이전에 \"GDP 3\" 및 "
+"\"DALI\"로 작성된 단어 DALL·E 및 GPT-3의 전사를 개선합니다."
+
+msgid ""
+"'The transcript is about OpenAI which makes technology like DALL·E, GPT-3, "
+"and ChatGPT with the hope of one day building an AGI system that benefits "
+"all of humanity.'"
+msgstr ""
+"'녹취록은 언젠가 모든 인류에게 혜택을 주는 AGI 시스템을 구축하겠다는 희망으"
+"로 DALL·E, GPT-3, ChatGPT와 같은 기술을 만드는 OpenAI에 관한 것입니다.'"
+
+msgid "Output Format"
+msgstr "출력 형식"
+
+msgid "post"
+msgstr "글"
+
+msgid "text"
+msgstr "문자"
+
+msgid "Category"
+msgstr "카테고리"
+
+msgid "ai service"
+msgstr "인공지능 서비스"
+
+msgid "fruits"
+msgstr "과일"
+
+msgid ""
+"Conversion has completed successfully. You can view the results in the Logs "
+"tab."
+msgstr ""
+"변환이 성공적으로 완료되었습니다. 로그 탭에서 결과를 확인할 수 있습니다."
+
+msgid "Converting.. This will take some time.. Please wait"
+msgstr "변환중입니다..잠시만 기다려 주세요.."
+
+msgid "Q&A"
+msgstr "질문및 답변"
+
+msgid "seoul"
+msgstr "서울"
+
+msgid "test"
+msgstr "테스트"
+
+msgid "Author"
+msgstr "저자"
+
+msgid "Draft"
+msgstr "임시저장"
+
+msgid "Publish"
+msgstr "공개"
+
+msgid "Temperature (Optional)"
+msgstr "온도(선택 사항)"
+
+msgid "Set as Default"
+msgstr "기본값으로 설정"
+
+msgid "Logs"
+msgstr "기록"
+
+msgid "Search Audio"
+msgstr "오디오 검색"
+
+msgid "Search"
+msgstr "검색"
+
+msgid "Duration"
+msgstr "지속??"
+
+# AI Chatbot 시작--------------------------------------------------------
+msgid "Shortcode"
+msgstr "숏코드"
+
+msgid "Design Template"
+msgstr "디자인 템플릿"
+
+msgid "Widget"
+msgstr "위젯"
+
+msgid "No"
+msgstr "비활성화"
+
+msgid "Yes"
+msgstr "활성화"
+
+msgid "Set the widget icon displayed on the homepage"
+msgstr "홈페이지에 보여지는 위젯 아이콘을 설정합니다"
+
+msgid "Set the chatbot icon displayed in the chat window"
+msgstr "챗팅창에서 보여지는 챗봇 아이콘을 설정합니다"
+
+msgid "Language and System Settings"
+msgstr "언어 및 시스템 설정"
+
+msgid "BCT Ai Chatbot-Basic"
+msgstr "BCT Ai Chabot-Basic"
+
+msgid "Mono"
+msgstr "모노"
+
+msgid "Dark"
+msgstr "다크"
+
+msgid "Light Grey"
+msgstr "라이트 그레이"
+
+msgid "Electric Orange"
+msgstr "일렉트릭 오렌지"
+
+msgid "Azure"
+msgstr "하늘빛"
+
+msgid "Irish Green"
+msgstr "아이리시 그린"
+
+msgid "Custom (*for Pro)"
+msgstr "사용자 정의 (*Pro용)"
+
+msgid "Custom template (*for Pro)"
+msgstr "사용자 정의 템플릿 (*Pro용)"
+
+msgid "Widget Icon"
+msgstr "위젯 아이콘"
+
+msgid "Upload Icon (100x100 px, png)"
+msgstr "업로드 아이콘 (100x100px, png)"
+
+msgid "Chatbot Icon"
+msgstr "챗봇 아이콘"
+
+msgid "Upload Icon (30x30 px, png)"
+msgstr "업로드 아이콘 (30x30px, png)"
+
+msgid "To add the chat box to your Wordpress, please include the shortcode"
+msgstr "워드프레스에 챗봇을 추가하려면 사이트의 원하는 위치에 단축 코드"
+
+msgid "in the desired"
+msgstr "를 포함하세요."
+
+msgid "location on your site."
+msgstr "           "
+
+msgid "Postition"
+msgstr "위치"
+
+msgid "Left"
+msgstr "왼쪽"
+
+msgid "Right"
+msgstr "오른쪽"
+
+msgid "GPT Model Settings"
+msgstr "GPT 모델 설정"
+
+msgid "Enter Azure Deployment Name"
+msgstr "Azure 배포 이름을 입력하세요."
+
+msgid "Output message settings"
+msgstr "출력 메시지 설정"
+
+msgid "Context Settings"
+msgstr "컨텍스트 설정"
+
+msgid "Voice Settings"
+msgstr "음성 설정"
+
+msgid "speach to text"
+msgstr "스피치를 문자로"
+
+msgid "ElevenLabs"
+msgstr "ElevenLabs"
+
+msgid "Google"
+msgstr "Google"
+
+msgid "Voice Language"
+msgstr "음성언어"
+
+msgid "Voice Name"
+msgstr "음성 이름"
+
+msgid "Audio Device Profile"
+msgstr "오디오 장치 프로필??"
+
+msgid "Voice Speed"
+msgstr "음성 속도"
+
+msgid "Voice Pitch"
+msgstr "음성 피치?"
+
+msgid ""
+"Multilingual v1 Limitations: Some numbers and symbols may currently be "
+"pronounced incorrectly. The generated speech can be unstable if the text "
+"exceeds 1000 characters"
+msgstr ""
+"다국어 v1 제한 사항: 일부 숫자와 기호는 현재 잘못 발음될 수 있습니다. 텍스트"
+"가 1000자를 초과하면 생성된 음성이 불안정할 수 있습니다."
+
+msgid "Logs Setting"
+msgstr "기록 설정"
+
+msgid "Save"
+msgstr "저장"
+
+msgid "Please enter valid voice speed value between %s and %s"
+msgstr "%s에서 %s 사이의 유효한 음성 속도 값을 입력하십시오"
+
+msgid "Please enter valid voice pitch value between %s and %s"
+msgstr "%s에서 %s 사이의 유효한 음성 피치 값을 입력하십시오"
+
+msgid "Please select voice name"
+msgstr "음성 이름을 선택해주세요."
+
+msgid "To add the chat box to your website, please include the shortcode"
+msgstr "워드프레스에 챗봇을 추가하려면 사이트의 원하는 위치에 단축 코드"
+
+msgid ""
+"If you prefer to use widget instead of shortcode, go to Widget tab and "
+"configure it."
+msgstr "단축 코드 대신 위젯을 사용하려면 위젯 탭으로 이동하여 구성하세요."
+
+msgid "Language, Tone and Profession"
+msgstr "언어, 어조 및 직업"
+
+msgid "Language"
+msgstr "언어"
+
+msgid "Tone"
+msgstr "어조"
+
+msgid "Korean"
+msgstr "한국어"
+
+msgid "English"
+msgstr "영어"
+
+msgid "Friendly"
+msgstr "친절하게"
+
+msgid "Style"
+msgstr "스타일"
+
+msgid "Width"
+msgstr "넓이"
+
+msgid "Height"
+msgstr "높이"
+
+msgid "Font Size"
+msgstr "글자 크기"
+
+msgid "User Font Color"
+msgstr "사용자 글자 크기"
+
+msgid "AI Font Color"
+msgstr "AI 글자 색상"
+
+msgid "Background Color"
+msgstr "배경 색상"
+
+msgid "Text Field Background"
+msgstr "입력창 배경 색상"
+
+msgid "Text Field font Color"
+msgstr "입력창 글자 색상"
+
+msgid "Header Icon Color"
+msgstr "해더 아이콘 색상"
+
+msgid "Button Background Color"
+msgstr "버튼 배경 색상"
+
+msgid "Button Color"
+msgstr "버튼 색상"
+
+msgid "ChatBot Main Color"
+msgstr "챗봇 메인 색상"
+
+msgid "AI Background Color"
+msgstr "AI 배경 색상"
+
+msgid "Use Avatars"
+msgstr "아바타 사용"
+
+msgid "AI Avatar (40x40)"
+msgstr "AI 아바타(40x40)"
+
+msgid "Custom"
+msgstr "사용자 정의"
+
+msgid "Parameters"
+msgstr "매개변수"
+
+msgid "Custom Text"
+msgstr "사용자 정의 글자"
+
+msgid "AI Name"
+msgstr "AI 이름"
+
+msgid "You"
+msgstr "당신"
+
+msgid "AI Thinking"
+msgstr "AI 딜레이 메세지"
+
+msgid "Placeholder"
+msgstr "안내문자"
+
+msgid "Welcome Message"
+msgstr "첫 메세지"
+
+msgid "No Answer Message"
+msgstr "응답 없음 메세지"
+
+msgid "Footer Note"
+msgstr "바닥글"
+
+msgid "Powered by"
+msgstr "제공"
+
+msgid "Context"
+msgstr "컨텍스트"
+
+msgid "Remember Conversation"
+msgstr "기록 기억하기"
+
+msgid "Remember Conv. Up To"
+msgstr "사용기록 범위"
+
+msgid "User Aware"
+msgstr "사용자 인식"
+
+msgid "Content Aware"
+msgstr "콘텐츠 인식"
+
+msgid "Use Basic"
+msgstr "기본 사용"
+
+msgid "Use Embeddings"
+msgstr "임베딩 사용"
+
+msgid "Method"
+msgstr "방식"
+
+msgid "Nearest Answers Up To"
+msgstr "가장 가까운 답변 최대"
+
+msgid "Embeddings only"
+msgstr "임베딩만 사용"
+
+msgid "Embeddings + Chat"
+msgstr "임베딩 + 언어모델 사용"
+
+msgid "VoiceChat"
+msgstr "음성채팅"
+
+msgid "Enable Speech to Text"
+msgstr "STT 활성화"
+
+msgid "Mic Color"
+msgstr "마이크 색상"
+
+msgid "Stop Color"
+msgstr "정지 색상"
+
+msgid "Select Method"
+msgstr "방식 선택"
+
+msgid "Enable Text to Speech"
+msgstr "TTS 활성화"
+
+msgid "Select a Voice"
+msgstr "음성 선택"
+
+msgid "Select a Model"
+msgstr "모델 선택"
+
+msgid "Limit Registered User"
+msgstr "Limit Registered User"
+
+msgid "Token Limit"
+msgstr "토큰 제한"
+
+msgid "Role based limit"
+msgstr "Role based limit"
+
+msgid "Limit Non-Registered User"
+msgstr "역할 기반 제한"
+
+msgid "Notice"
+msgstr "고지"
+
+msgid "Reset Limit"
+msgstr "Reset Limit"
+
+msgid "Never"
+msgstr "Never"
+
+msgid "Day"
+msgstr "Day"
+
+msgid "Months"
+msgstr "Months"
+
+msgid "Save Chat Logs"
+msgstr "채팅기록 저장"
+
+msgid "Save Prompt"
+msgstr "프롬프트 저장"
+
+msgid "Display Notice"
+msgstr "공지사항 표시"
+
+msgid "Dashboard"
+msgstr "대시보드"
+
+msgid "Days"
+msgstr "일"
+
+msgid "Chatbot Usage"
+msgstr "챗봇 사용량"
+
+msgid "Embedding Usage"
+msgstr "임베딩 사용량"
+
+msgid "TTS Usage"
+msgstr "TTS 사용량"
+
+msgid "Prompt Usage"
+msgstr "프롬프트 사용량"
+
+msgid "Notice Text"
+msgstr "공지사항 메세지"
+
+msgid "Description"
+msgstr "설명"
+
+msgid "Content Builder"
+msgstr "콘텐츠 제작"
+
+msgid "Re-Index"
+msgstr "제인덱싱"
+
+msgid "No training file"
+msgstr "파일 없음"
+
+msgid "Language (Optional)"
+msgstr "언어(선택사항)"
+
+msgid "Format"
+msgstr "포멧(Format)"
+
+msgid "Charge"
+msgstr "요금"
+
+msgid "Size (KB)"
+msgstr "사이즈 (KB)"
+
+msgid "Requests"
+msgstr "요청횟수"
+
+msgid "Contact us"
+msgstr "문의하기"
+
+msgid "Email"
+msgstr "이메일"
+
+msgid "Tel"
+msgstr "전화번호"
+
+msgid "Contact"
+msgstr "문의내용"
+
+msgid "Send"
+msgstr "완료"
+
+msgid "Please enter all fields"
+msgstr "빈칸을 모두 채워주세요"
+
+msgid "Your application has been successfully completed!"
+msgstr "문의가 성공적으로 접수되었습니다!"
+
+msgid "A problem has occurred. Please check your email address"
+msgstr "문제가 발생했습니다. 이메일 주소를 확인해주세요"
+
+msgid "Provided models can be linked to OpenAI states."
+msgstr "제공되는 모델은 OpenAI 상태에 연결될 수 있습니다."
+
+msgid "Please proceed with OpenAI registration at this link."
+msgstr "OpenAI 등록은 링크에서 진행해 주시기 바랍니다."
+
+msgid "Link"
+msgstr "링크"
+
+msgid "Openai Settings"
+msgstr "Openai 세팅"
+
+msgid "Pinecone Setting"
+msgstr "파인콘 세팅"
+
+msgid "Google Setting"
+msgstr "구글 세팅"
+
+msgid "Available in the PRO"
+msgstr "PRO에서 사용 가능"
+
+msgid "This feature is provided in the PRO."
+msgstr "이 기능은 Pro 버전에서 제공됩니다."
+
+msgid "Purchase the PRO version and"
+msgstr "PRO 버전을 구매하고"
+
+msgid "experience all the expanded exciting features."
+msgstr "확장된 흥미로운 기능을 모두 경험해 보세요."
+
+msgid "User view"
+msgstr "방문자 통계"
+
+msgid "Page view"
+msgstr "페이지 뷰"
+
+msgid "New member"
+msgstr "새로운 회원"
+
+msgid "Page rank"
+msgstr "페이지 통계"
+
+msgid "Statistics"
+msgstr "통계"
+
+msgid "Fine-tuning"
+msgstr "파인튜닝"
+
+msgid "Account"
+msgstr "어카운트"
+
+msgid "general Setting"
+msgstr "일반 설정"
+
+msgid "General Setting"
+msgstr "일반 설정"
+
+msgid "Design"
+msgstr "디자인"
+
+msgid "Widget Activate"
+msgstr "위젯 활성화"
+
+msgid ""
+"*The system is a command sent to Chatbot.  For example, “Summarize content "
+"you are provided with for a second-grade student.”"
+msgstr ""
+"*시스템은 챗봇으로 전송되는 명령입니다. 예를 들어, “2학년 학생을 위해 제공되"
+"는 콘텐츠를 요약합니다.”"
+
+msgid "Today"
+msgstr "오늘"
+
+msgid "Total"
+msgstr "전체"
+
+msgid "Chatbot Style"
+msgstr "챗봇 스타일"
+
+msgid "System Message"
+msgstr "시스템 메세지"
+
+msgid "Google does not return audio"
+msgstr "요청이 잘못되었습니다."
+
+msgid "Select the style of the chat window."
+msgstr "챗팅창의 스타일을 선택합니다."
+
+msgid "Guide"
+msgstr "가이드"
+
+msgid "Custom Style"
+msgstr "커스텀 스타일"
+
+msgid "Chatbot Name"
+msgstr "챗봇 이름"
+
+msgid "Please enter the chatbot name."
+msgstr "챗봇 이름을 입력해주세요."
