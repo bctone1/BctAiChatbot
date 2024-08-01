@@ -1,0 +1,527 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+
+.bctai_lds-ellipsis {
+    position: absolute;
+    top: 62%;
+    left: 50%;
+    width: 200px;
+    height: unset;
+    background-color: rgb(16, 75, 16);
+    padding: 70px 14px;
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+}
+
+.bctai_lds-ellipsis div {
+    display: none;
+}
+
+.bctai_lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: bctai_lds-ellipsis1 0.6s infinite;
+}
+
+.bctai_lds-ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: bctai_lds-ellipsis2 0.6s infinite;
+}
+
+.bctai_lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: bctai_lds-ellipsis2 0.6s infinite;
+}
+
+.bctai_lds-ellipsis div:nth-child(4) {
+    left: 56px;
+    animation: bctai_lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes bctai_lds-ellipsis1 {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes bctai_lds-ellipsis3 {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(0);
+    }
+}
+
+@keyframes bctai_lds-ellipsis2 {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(24px, 0);
+    }
+}
+
+.bctai_menu_editor,
+.bctgai_menu_editor ul ul,
+ol ul,
+ul ol,
+ol ol {
+    list-style-type: none;
+}
+
+#bctai_remove_heading {
+    font-size: 19px;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #FF3131;
+    text-decoration: none;
+}
+
+#bctai_remove_heading:hover {
+    color: #2271b1;
+    text-decoration: underline;
+}
+
+#bctai_add_new_heading {
+    color: green;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    margin: 28px !important;
+}
+
+#bctai_add_new_heading:hover {
+    color: #2271b1;
+    text-decoration: underline;
+}
+
+.bctai_sort_heading {
+    color: #000;
+    font-size: 24px;
+    vertical-align: middle;
+    cursor: all-scroll;
+    margin: 0 5px;
+}
+
+.bctai_sort_heading:hover {
+    color: #2271b1;
+}
+
+.modal-bctai {
+    display: none;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+    background-color: #00000063;
+    padding-top: 100px;
+    overflow: scroll !important;
+}
+
+.modal-bctai-dialog {
+    position: relative;
+    width: auto;
+    margin: 10px;
+}
+
+.bctai_modal-content {
+    position: relative;
+    background-color: #ffffff;
+    border: 1px solid #999999;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    outline: 0;
+}
+
+.modal-bctai-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    background-color: #000000;
+}
+
+.bctai_modal-header {
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+    min-height: 16.42857143px;
+}
+
+.bctai_modal-header .close {
+    margin-top: -2px;
+}
+
+.bctai_modal-title {
+    margin: 0;
+    line-height: 1.42857143;
+}
+
+.bctai_modal-body {
+    position: relative;
+    padding: 15px;
+}
+
+.bctai_modal-footer {
+    padding: 15px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+
+.close {
+    float: right;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2;
+}
+
+button.close {
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    filter: alpha(opacity=50);
+    opacity: .5;
+}
+
+@media (min-width: 768px) {
+    .modal-bctai-dialog {
+        width: 600px;
+        margin: 30px auto;
+    }
+
+    .bctai_modal-content {
+        -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-sm {
+        width: 300px;
+    }
+}
+
+@media (min-width: 992px) {
+    .modal-lg {
+        width: 900px;
+    }
+}
+
+[role="button"] {
+    cursor: pointer;
+}
+
+.bctai_hide {
+    display: none !important;
+}
+
+.bctai_show {
+    display: block !important;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.modal-backdrop {
+    z-index: -999;
+}
+
+body.modal-open {
+    overflow: hidden !important;
+    position: fixed !important;
+}
+
+.bctai_input {
+    box-sizing: border-box;
+    width: 250px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: vertical;
+}
+
+/* On smaller screens, make the input element smaller */
+@media (max-width: 600px) {
+    .bctai_input {
+        width: 80%;
+    }
+}
+
+/* On even smaller screens, make the input element even smaller */
+@media (max-width: 400px) {
+    .bctai_input {
+        width: 60%;
+    }
+}
+
+textarea {
+    width: 100%;
+}
+
+
+/* GPT3 Settings form-gpt3 Styling */
+.bctai_container_help_table {
+    line-height: 1.5;
+}
+
+.bctai_container_help_table tr,
+.bctai_container_help_table th,
+.bctai_container_help_table td {
+    border: 1px solid #ccc;
+}
+
+.bctai_container_help_img {
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    max-width: 80%;
+}
+
+.bctai_container_help_mark {
+    background-color: rgb(246, 246, 166);
+    padding: 0.2em 0.4em;
+    border-radius: 0.2em;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.bctai_container_help_h3 {
+    background-color: rgb(253, 148, 0);
+    padding: 0.2em 0.4em;
+    border-radius: 0.2em;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+
+.bctai_container .menu_wrap a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.bctai_form_row {
+    align-items: center;
+    justify-content: flex-start;
+    /* margin-bottom: 0.5em; */
+    margin: 35px 0px;
+}
+
+.bctai_label,
+.bctai_help_link {
+    flex: 1;
+}
+
+.bctai_label {
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-right: 0.5em;
+    width: 30%;
+    display: inline-block;
+}
+
+
+.bctai_button {
+    align-self: flex-end;
+    font-family: "Opens Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #FFF;
+    background-color: #3399FF;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.bctai_button:hover {
+    background-color: #2277CC;
+}
+
+.bctai_button:active {
+    transform: translateY(2px);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.bctai_help_link {
+    display: inline-block;
+    margin-left: 0.5em;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    /* color: #3399FF; */
+    text-decoration: none;
+    transition: color 0.2s ease-out;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+.bctai_help_link:hover {
+    color: #44AAFF;
+    cursor: pointer;
+}
+
+.bctai_help_link:active {
+    color: #2277CC;
+}
+
+.bctai_help_link:focus {
+    outline: none;
+}
+
+
+
+
+/* 10.25 영빈 */
+
+.menu_wrap{
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+}
+
+.bctai_container {
+    width: 1690px;
+    border-radius: 35px;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+}
+
+.BCT_nav {
+    display: flex;
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #8040ad;
+    height: 69px;
+}
+
+.sub_menu {
+    width: 172px;
+    float: left;
+    margin: 0px;
+    text-align: center;
+    line-height: 74px;
+    border-bottom: 0px;
+    border-right: 0.5px solid #8a51b3;
+}
+
+.sub_menu a {
+    color: #cfc6c6;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.sub_menu_ul {
+    display: flex;
+    width: 100%;
+    height: 66px;
+    background: #352f39;
+    margin: 0px;
+    display: none;
+}
+
+.nav_object {
+    line-height:58px;
+    /* width:  212px; */
+    text-align: center;
+    margin:0px;
+
+}
+
+.nav_object a {
+    color: #ACAABC;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0px 20px;
+    /* padding:0px 20px; */
+}
+
+
+
+
+.submit_wrap .bct_submit_input {
+    background: #8040ad;
+    border: 0px;
+    width: 187px;
+    height: 58px;
+    border-radius: 16px;
+    font-size: 20px;
+    line-height: 0;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.regular-text {
+    height: 50px;
+    width: 500px;
+    border: 0px;
+    border-radius: 13px;
+    margin: 0px;
+    /* margin-left: 150px; */
+}
+
+.bctai_form_row .bctai_label {
+    width: 245px
+}
+
+
+/* Embeddings */
+.bctai-select-entry-type{
+    border-radius: 13px;
+
+}
+
+#fs_account{
+    padding: 40px;
+}
+
+.bctai_container .widefat td, .bctai_container .widefat th{
+    color: #50575e;
+    border: 0.1px solid #ACAABC;
+}
+.widefat thead{
+    background: #f1f1f1;
+}
+
+.widefat tbody{
+    background: #FFFFFF;
+}
