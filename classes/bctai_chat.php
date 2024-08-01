@@ -583,7 +583,11 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                     } else {
                         $data2 = $bctai_embeddings_result['data'];
 
+<<<<<<< HEAD
                         //wp_send_json($data2);
+=======
+                        wp_send_json($data2);
+>>>>>>> 10bb54716e8b1a23287b59a4101f618108984979
                         //$img_url = strpos($data2, 'Img URL:');
 
                         $img_url_start = strpos($data2, 'Img URL:');
