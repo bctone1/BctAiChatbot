@@ -77,10 +77,7 @@ $bctai_action = isset($_GET['action']) && !empty($_GET['action']) ? sanitize_tex
             </ul>
             <ul class="sub_menu_ul">
                 <li class="nav_object"><a href="admin.php?page=Modules"><?php echo __('Module','bctai')?></a></li>
-            </ul>
         </div>
-            <div id="fs_account">
-                <?php
                 if (empty($bctai_action)):
                     echo "<style>#tag_bold1 {font-size: 14px;font-weight: normal;color: #fff;}</style>";
                     include __DIR__ . '/dashboard.php';

@@ -1251,7 +1251,6 @@ textarea {
 }
 
 
-
 .bctai_form_row .bctai_label {
     width: 245px
 }
@@ -1361,7 +1360,6 @@ textarea {
 .select_chatbot_icon .select_icon_wrap input{margin: auto 10px;}
 .select_chatbot_icon .select_icon_wrap img{height: 100px;width: 100px;}
 .select_chatbot_icon .select_icon_wrap span{margin: auto 10px;font: normal normal normal 14px/12px Noto Sans KR;letter-spacing: 0px;color: #352F39;opacity: 1;}
-
 
 
 
@@ -1640,7 +1638,6 @@ textarea {
 
 
 
-
 .bctai_widget_open .bctai_chat_widget_content {
     height: 690px;
     width: 400px;
@@ -1681,7 +1678,6 @@ textarea {
     left: 0px;
     top: 730px;
 }
-
 
 
 
@@ -2215,7 +2211,6 @@ textarea{
 #bctai_form_data span.button-link-delete {
     display:none;
 }
-
 .bctai_form_upload_file {
     background: #e3e3e3;
     padding: 10px;
