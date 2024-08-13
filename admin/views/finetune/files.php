@@ -61,7 +61,6 @@ if($bctaiMaxFileSize > 104857600){
             <th><?php echo esc_html__('Action','bctai')?></th>
         </tr>
     </thead>
-
     <tbody>
     <?php
     if($bctai_files && is_array($bctai_files) && count($bctai_files)):

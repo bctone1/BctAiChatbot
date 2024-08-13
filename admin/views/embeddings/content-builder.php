@@ -50,7 +50,6 @@ if (!defined('ABSPATH'))
 
 
 
-
 <form action="" method="post" id="bctai_embeddings_form">
     <?php wp_nonce_field('bctai_embeddings_save');?>
     <input type="hidden" name="action" value="bctai_embeddings">

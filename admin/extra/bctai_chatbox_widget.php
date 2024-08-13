@@ -299,7 +299,6 @@ textarea:focus {
 
     <div class="column-m high">
         <div class="chatbot">
-
             <div class="chatbot-header"style="background-color: <?php echo esc_html($Header_Color) ?>">
                 <h2 style="color: <?php echo esc_html($chatbot_header_text) ?>;font-size: 18px;margin: auto 0px;font-weight: normal;font-family: 'Inter';"><?php echo esc_html($chatbot_name) ?></h2>
                 <div class="right">
