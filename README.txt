@@ -63,6 +63,9 @@ ChatGPT, Embeddings, AI Training, STT/TTS, Custom Post Types
 
 == Changelog ==
 
+
+git test!!!!!!
+
 Version 0.8.6.2– 09.09 2024
 ====================================================
 remember conversation 임시삭제
