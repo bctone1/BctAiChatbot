@@ -408,10 +408,7 @@ function applyCustomStyle() {
         let bctai_google_api_key = '<?php  echo $bctai_google_api_key?>';
         let bctai_roles = <?php echo wp_kses_post(wp_json_encode($bctai_roles))?>;
 
-        //$('#custom_pro').click(function(){});
         
-
-
         $('.bctai-chatbox-preview-box > .bctai_chat_widget').addClass('bctai_widget_open');
         $('.bctai-chatbox-preview-box .bctai_toggle').addClass('bctai_widget_open');
 
@@ -557,7 +554,6 @@ function applyCustomStyle() {
 
 
         function bctaiUpdateRealtime() {
-            //끝
             let Custom_Header_Color = $('.Custom_Header_Color').iris('color');
             let Header_Text_Color = $('.Header_Text_Color').iris('color');
             let Button_Icon_Color = $('.Button_Icon_Color').iris('color');
@@ -572,24 +568,6 @@ function applyCustomStyle() {
             let Typing_Button_Icon_Color=$('.Typing_Button_Icon_Color').iris('color');
             let Message_Typing_Color=$('.Message_Typing_Color').iris('color');
 
-            
-            // let fontsize = $('.bctai_chat_widget_font_size').val();
-            // let Userfontcolor = $('.bctaichat_User_font_color').iris('color');
-            // let bgcolor = $('.bctaichat_bg_color').iris('color');
-            // let inputbg = $('.bctaichat_input_color').iris('color');
-            // let inputborder = $('.bctaichat_input_border').iris('color');
-            // let buttoncolor = $('.bctaichat_send_color').iris('color');
-            // let aibg = $('.bctaichat_ai_color').iris('color');
-            // let useavatar = $('.bctaichat_use_avatar').val();
-            // let width = $('.bctai_chat_widget_width').val();
-            // let height = $('.bctai_chat_widget_height').val();            
-            // let mic_color = $('.bctai_chat_widget_mic_color').iris('color');
-            // let AI_fontcolor = $('.AI_fontcolor').iris('color');
-            // let Input_font_Color=$('.Input_font_Color').iris('color');
-            // $('.bctai-mic-icon').css('color', mic_color);
-
-
-            //끝
             $('.chatbot-header h2').css({
                 'color': Header_Text_Color
             });
@@ -633,76 +611,6 @@ function applyCustomStyle() {
             $('.btn-send_widget').css({
                 'background': Typing_Button_Icon_Color
             });
-            
-
-            
-
-
-
-            // let footernote = $('.bctai-footer-note').val();
-            // let footerheight = 0;
-            // let Header_icon_color = $('.Header_icon_color').iris('color');
-            // if(footernote === '') {
-            //     footerheight = 18;
-            //     $('.bctai-chatbox-footer').hide();
-            //     $('.bctai-chatbox-type').css('padding','5px');
-            // }
-            // else {
-            //     $('.bctai-chatbox-type').css('padding','5px 5px 0 5px');
-            //     $('.bctai-chatbox-footer').show();
-            //     $('.bctai-chatbox-footer').html(footernote);
-            // }
-            // if($('.bctai_chat_widget_audio').prop('checked')){
-            //     $('.bctai-mic-icon').show();
-            // }
-            // else{
-            //     $('.bctai-mic-icon').hide();
-            // }
-            
-            // $('.chatbot-contents .message.right .bubble').css({
-            //     'font-size': fontsize+'px',
-            //     'color': Userfontcolor,
-            // })
-           
-            // $('.chatbot-contents .message.left .bubble').css({
-            //     'background-color': aibg
-            // });
-            // $('.chatbot-contents').css({
-            //     'background-color': bgcolor
-            // });
-            // $('.bctai-chat-widget-typing').css({
-            //     'border-color': inputborder,
-            //     'background-color': inputbg,
-            //     'color' : Input_font_Color
-            // });
-            // $('.chatbot-contents .message.left .bubble').css({
-            //     'font-size': fontsize+'px',
-            //     'color': AI_fontcolor
-            // });
-            
-            
-            // $('.bctai-chatbox-send').css('color',buttoncolor);
-            // if(width === '' || parseInt(width) === 0){
-            //     width = 350;
-            // }
-            // if(height === '' || parseInt(height) === 0){
-            //     height = 400;
-            // }
-            // $('.bctai-chatbox-preview-box').height((parseInt(height)+100)+'px');
-            // $('.bctai_widget_open .bctai_chat_widget_content').css({
-            //     'height': height+'px',
-            //     'width': width+'px',
-            // });
-            // $('.bctai_chat_widget_content .bctai-chatbox-content').css({
-            //     'height': (height - 58 + footerheight)+'px'
-            // });
-            // $('.bctai_chat_widget_content .bctai-chatbox-content ul').css({
-            //     'height': (height - 82 + footerheight)+'px'
-            // });
-            // $('.high').css({
-            //     'height':height+'px'
-            // });
-
         }
 
 
@@ -757,7 +665,6 @@ function applyCustomStyle() {
 
 
         $('.bctai_chatbox_avatar').click(function (e) {
-            //alert("click2");
             e.preventDefault();
             $('.bctai_chatbox_avatar_default').prop('checked',false);
             $('.bctai_chatbox_avatar_custom').prop('checked',true);
@@ -776,7 +683,6 @@ function applyCustomStyle() {
                     button.html('<img src="'+attachment.url+'" style="width:30px;height:30px;">');
                     $('.bctai_ai_avatar_id').val(attachment.id);
                     $('.bctai_chatbox_avatar').css('border','0px');
-
                 }).open();                
         });
     })

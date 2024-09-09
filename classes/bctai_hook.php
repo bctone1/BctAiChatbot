@@ -21,64 +21,21 @@ if(!class_exists('\\BCTAI\\BCTAI_Hook')) {
             add_action( 'wp_footer', [$this, 'bctai_footer'], 1 );
             add_action( 'wp_head',[$this,'bctai_head_seo'], 1 );
             add_action( 'admin_enqueue_scripts', 'wp_enqueue_media' );
+            add_action('wp_enqueue_scripts', 'wp_enqueue_media');
+            
+
             add_action( 'admin_footer', array( $this, 'bctai_admin_footer') );
             add_editor_style(BCTAI_PLUGIN_URL.'admin/css/editor.css');
-            // add_action( 'admin_enqueue_scripts', [$this,'bctai_enqueue_scripts'] );
-            add_action( 'wp_enqueue_scripts', [$this, 'wp_enqueue_scripts_hook'] );
-
-            //카카오페이 핸들러
-            add_action('wp_ajax_kakao_pay_request', [$this,'kakao_pay_ajax_handler']);
-            add_action('wp_ajax_nopriv_kakao_pay_request', [$this,'kakao_pay_ajax_handler']);
+            
+            add_action( 'wp_enqueue_scripts', [$this, 'wp_enqueue_scripts_hook'] );   
         }
 
 
-        function kakao_pay_ajax_handler() {
-
-            $url = 'https://open-api.kakaopay.com/online/v1/payment/ready';
-            $secret_key = 'DEV2602A5BBC14DCA3DD2AF1ED3385EE3F4603A3';
-            $data = array(
-                'cid' => 'TC0ONETIME',
-                'partner_order_id' => '1001',
-                'partner_user_id' => 'yeongbin',
-                'item_name' => '초코파이',
-                'quantity' => '1',
-                'total_amount' => '2200',
-                'vat_amount' => '200',
-                'tax_free_amount' => '0',
-                'approval_url' => 'https://c0013.bctcloud.kr',
-                'fail_url' => 'https://c0013.bctcloud.kr',
-                'cancel_url' => 'https://c0013.bctcloud.kr'
-            );
-        
-            $args = array(
-                'body' => json_encode($data),
-                'headers' => array(
-                    'Authorization' => 'KakaoAK ' . $secret_key,
-                    'Content-Type' => 'application/json'
-                )
-            );
-        
-            $response = wp_remote_post($url, $args);
-        
-            if (is_wp_error($response)) {
-                wp_send_json_error('Failed to connect to KakaoPay API');
-            } else {
-                $body = wp_remote_retrieve_body($response);
-                wp_send_json_success(json_decode($body));
-            }
-        }
-
 
         
 
-        public function bctai_enqueue_scripts()
-        {
-            // wp_enqueue_script('bctai-chat-shortcode', BCTAI_PLUGIN_URL.'src/js/bctai-chat.js',array(),null,true);
-            // wp_enqueue_script('bctai-pdf-script', BCTAI_PLUGIN_URL.'src/js/pdf.js',null,null,true);
-            // wp_enqueue_style('bctai-extra-css', BCTAI_PLUGIN_URL.'src/css/bctai_extra.css',array(),null);
 
-
-        }
+       
 
 
 
@@ -219,6 +176,7 @@ if(!class_exists('\\BCTAI\\BCTAI_Hook')) {
                     height: 690px;
                     border-radius: 15px;
                     overflow: hidden;
+                    min-width: 400px;
                 }
                 .bctai_chat_widget_content{
                     height: 690px;

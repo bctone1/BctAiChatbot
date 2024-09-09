@@ -5,10 +5,8 @@ namespace Modules\STTEvaluation;
 use Modules\ModuleInterface;
 
 class STTEvaluation implements ModuleInterface {
-    //$STTEvaluation_status = get_option('STTEvaluation_status','false');
-
     private $active = false;
-    //private $active = $STTEvaluation_status;
+    
 
     public function activate() {
         $this->active = true;

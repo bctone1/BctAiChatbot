@@ -3,7 +3,7 @@ Contributors: BCTONE
 Tags: chatgpt/embedding, tts/stt, ai chatbot, chatbot template, statistics
 Requires at least: 6.4
 Tested up to: 6.5.2
-Stable tag: 0.8.6
+Stable tag: 0.9
 Requires PHP: 7.0 or higher
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -62,6 +62,21 @@ ChatGPT, Embeddings, AI Training, STT/TTS, Custom Post Types
 
 
 == Changelog ==
+
+Version 0.8.6.2– 09.09 2024
+====================================================
+remember conversation 임시삭제
+첨부파일 이미지 추가
+
+Version 0.8.6.1– 09.09 2024
+====================================================
+Menu 모듈 추가
+
+Version 0.8.6– 09.04 2024
+====================================================
+TTS 오류 해결 (class명 대폭 수정)
+Shorcode 코드 삭제
+Embedding결과 없을 시 멘트 변경
 
 Version 0.8.5.7– 09.01 2024
 ====================================================

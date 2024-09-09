@@ -175,6 +175,7 @@ if($Header_Color =='#8040ad'){
 
 $bct_menu_structure = get_option('menu_structure','');
 $Scenario_status = get_option('Scenario', '');
+$Menu_status = get_option('Menu', 'false');
 
 
 
@@ -195,7 +196,7 @@ $Scenario_status = get_option('Scenario', '');
     font-size: 30px;
 }
 
-.btn-remove,.btn-fullscreen,.btn-mail,.btn-Scenario{
+.btn-remove,.btn-fullscreen,.btn-Scenario{
     background: <?php echo esc_html($Header_Color) ?>;
     border: 0px;
 }
@@ -205,11 +206,11 @@ $Scenario_status = get_option('Scenario', '');
     background-color:<?php echo esc_html($uer_bubble) ?>;
 }
 .chatbot-contents {
-    padding: 0px 0px 200px 10px;
+    padding: 0px 0px 124px 10px;
     <?php
-        if($Scenario_status){
+        if($Menu_status){
     ?>
-    padding: 0px 0px 200px 10px;
+    padding: 0px 0px 177px 10px;
     <?php } ?>    
     height: 100%;
 }
@@ -258,16 +259,16 @@ textarea:focus {
 
 <div id="popup-dialog" title="<?php echo __('Contact us','bctai') ?>" style="display:none;">
 
-    <span style="font: normal normal normal 14px/20px Noto Sans KR;letter-spacing: 0px;color: #352F39;"><?php echo __('Name','bctai') ?></span><span style="color:red;">*</span>
-    <input type="text" id="name" style="height: 52px;background: #F1F1F1 0% 0% no-repeat padding-box;border-radius: 16px;opacity: 1;border:0px;margin-bottom: 15px;">
+    <span style="letter-spacing: 0px;color: #352F39;"><?php echo __('Name','bctai') ?></span><span style="color:red;">*</span> <br>
+    <input type="text" id="name" style="height: 52px;background: #F1F1F1 0% 0% no-repeat padding-box;border-radius: 16px;opacity: 1;border:0px;margin-bottom: 15px;width:100%;"><br>
 
-    <span style="font: normal normal normal 14px/20px Noto Sans KR;letter-spacing: 0px;color: #352F39;"><?php echo __('Email','bctai') ?></span><span style="color:red;">*</span>
-    <input type="text" id="email" style="height: 52px;background: #F1F1F1 0% 0% no-repeat padding-box;border-radius: 16px;opacity: 1;border:0px;margin-bottom: 15px;">
+    <span style="letter-spacing: 0px;color: #352F39;"><?php echo __('Email','bctai') ?></span><span style="color:red;">*</span><br>
+    <input type="text" id="email" style="height: 52px;background: #F1F1F1 0% 0% no-repeat padding-box;border-radius: 16px;opacity: 1;border:0px;margin-bottom: 15px;width:100%;"><br>
 
-    <span style="font: normal normal normal 14px/20px Noto Sans KR;letter-spacing: 0px;color: #352F39;"><?php echo __('Tel','bctai') ?></span>.
-    <input type="text" id="phonenumber" style="height: 52px;background: #F1F1F1 0% 0% no-repeat padding-box;border-radius: 16px;opacity: 1;border:0px;margin-bottom: 15px;">
+    <span style="letter-spacing: 0px;color: #352F39;"><?php echo __('Tel','bctai') ?></span>.<br>
+    <input type="text" id="phonenumber" style="height: 52px;background: #F1F1F1 0% 0% no-repeat padding-box;border-radius: 16px;opacity: 1;border:0px;margin-bottom: 15px;width:100%;"><br>
 
-    <span style="font: normal normal normal 14px/20px Noto Sans KR;letter-spacing: 0px;color: #352F39;"><?php echo __('Message','bctai') ?></span>
+    <span style="letter-spacing: 0px;color: #352F39;"><?php echo __('Message','bctai') ?></span><br>
     <textarea name="" id="contents" cols="30" rows="10" style="height: 140px;background: #F1F1F1 0% 0% no-repeat padding-box;border-radius: 16px;opacity: 1;border:0px;margin-bottom: 15px;"></textarea>
     
     <button id="email-send-button" style="width: 187px; height: 58px; background: #8040AD 0% 0% no-repeat padding-box; border-radius: 16px; border:0px; color:white; display: block; margin:auto;"><?php echo __('SEND','bctai') ?></button>
@@ -296,18 +297,19 @@ textarea:focus {
     data-voice_pitch="<?php echo esc_html($bctai_voice_pitch) ?>"
     data-welcome-message="<?php echo esc_html( get_option( '_bctai_chatbox_welcome_message', 'Hello human, I am a GPT powered AI chat.' ) )?>"
     data-act-as="<?php echo esc_html($bctai_chat_design['proffesion'])?>"
-    data-Scenario_status="<?php echo esc_html($Scenario_status)?>"
+    data-Menu_status="<?php echo esc_html($Menu_status)?>"
 >
 
 
 
     <div class="column-m high">
         <div class="chatbot">
+
             <div class="chatbot-header"style="background-color: <?php echo esc_html($Header_Color) ?>">
                 <h2 style="color: <?php echo esc_html($chatbot_header_text) ?>;font-size: 18px;margin: auto 0px;font-weight: normal;font-family: 'Inter';"><?php echo esc_html($chatbot_name) ?></h2>
                 <div class="right">
                     <button type="button" class="btn-Scenario" onclick="javascript:openPop('modalMenu');"><i class="fa-solid fa-list"></i></button>
-                    <!-- <button type="button" class="btn-mail"><i class="fa-solid fa-envelope"></i></button> -->
+                    
                     <button type="button" class="btn-remove" onclick=removeChatlog()><i class="fas fa-redo-alt"></i></button>
                     <!-- <button type="button" class="btn-fullscreen"><i class="fa-solid fa-expand"></i></button> -->
                      
@@ -315,9 +317,17 @@ textarea:focus {
 
             </div>
 
+            <?php
+            if($Menu_status){
+            ?>
+
             <div class="center">
                 <button type="button" class="selectMenu" onclick="javascript:openPop('modalMenu');" style="margin: 10px;display: inline-flex;align-items: center;width: auto;height: 38px;padding: 0 36px 0 23px;text-align: center;text-transform: uppercase;font-size: 16px;color: #8040AD;border: 1px solid #8040AD;border-radius: 19px;">menu</button>
             </div>
+            
+            
+            <?php } ?>
+            
             
 
             
@@ -399,14 +409,18 @@ textarea:focus {
 
             <div class="chatbotWriteWrap" style="position: absolute;bottom: 0px;left: 0;width: 100%;display: flex;">
                 <div class="inputBtnArea">
-                    <button type="button" class="btn onlyIcon iconFile" onclick="alert('click')" style="width:35px;padding:0px;"><span class="blind">파일첨부</span></button>
+                    <input type="file" id="fileInput" class="btn onlyIcon iconFile" style="width:35px;padding:0px;">
+                    <!-- <button type="button" class="btn onlyIcon iconFile" style="width:35px;padding:0px;"><span class="blind">파일첨부</span></button> -->
                 </div>
                 <textarea name="text" class="textAreaBox" id="textAreaBox" placeholder="<?php echo esc_html( get_option( '_bctai_typing_placeholder', 'Type a message' ) )?>"></textarea>
                 
                 <div class="inputBtnArea">
+                    
                     <button type="button" class="btn onlyIcon iconChatSpeak" style="width:35px;padding:0px;"><span class="blind">음성으로 메시지 입력</span></button>
                     <button type="button" class="btn onlyIcon iconChatTyping" style="width:35px;padding:0px;"><span class="blind">타이핑으로 메시지 입력</span></button>
                 </div>
+
+                <input type="hidden" class="UploadImgUrl" id="UploadImgUrl">
             </div>
             
 
@@ -438,7 +452,7 @@ textarea:focus {
                 <div class="modalContainer">
                     <h1 class="blind">전체 메뉴</h1>
                     <div class="modalHeader">
-                        <button class="btnCloseMenu"><span class="blind">메뉴 닫기</span></button>
+                        <button type="button" class="btnCloseMenu"><span class="blind">메뉴 닫기</span></button>
                     </div>
                     
                     <ul class="menuArea">
@@ -446,7 +460,7 @@ textarea:focus {
                         <li><a href="">Menu Dapth 2</a></li>
                         <li><a href="">Menu Dapth 3</a></li>
                     </ul>
-                    <button type="button" class="btn btnXL btnWhite iconFaq" onclick="javascript:openPop('modalFaq')" style="border:1px solid black;"><span>1:1 문의</span></button>
+                    <button type="button" class="btn btnXL btnWhite iconFaq btn-mail" onclick="javascript:openPop('modalFaq')" style="border:1px solid black;"><span>1:1 문의</span></button>
                     <ul class="snsArea">
                         <li><a href="#" class="btnHome"><span class="blind">home</span></a></li>
                         <li><a href="#" class="btnInstagram"><span class="blind">Instagram</span></a></li>
@@ -620,30 +634,9 @@ textarea:focus {
 
 <script>
 
-    jQuery(document).ready(function($) {
-        $('.order_wrap').click(function() {
-            $.ajax({
-                url: bctai_ajax_url,
-                type: 'POST',
-                data: {
-                    action: 'kakao_pay_request'
-                },
-                success: function(response) {
-                    if (response.success) {
-                        console.log('Response:', response.data);
-                        if (response.data.next_redirect_pc_url) {
-                            window.location.href = response.data.next_redirect_pc_url;
-                        }
-                    } else {
-                        console.error('Error:', response.data);
-                    }
-                },
-                error: function(error) {
-                    console.error('Error:', error);
-                }
-            });
-        });
-    });
+    
+
+  
 
     jQuery('#email-send-button').click(function () {
         var name = jQuery('#name').val();
@@ -681,127 +674,5 @@ textarea:focus {
             });
         }
     });
-
-
-
-    var menu = <?php echo json_encode($bct_menu_structure); ?>;
-    function Scenario(){
-        date_Time = formatAMPM(new Date());
-        var bctai_messages_box = document.getElementsByClassName('messages')[0];
-        let parentChat = document.getElementsByClassName('bctai-chatbox')[0];
-        let bctai_ai_avatar = parentChat.getAttribute('data-ai-avatar');
-        let bctai_ai_name = parentChat.getAttribute('data-ai-name');
-        var bctai_randomnum = '';
-        var cosine_score ='';
-        var bctai_response_text = "";
-        var bctai_message = "";
-
-        bctai_message += "<div style='width: 100%; float: left; margin-top:10px;'><div class='message left'><span class='name'><img src='" + bctai_ai_avatar + "' height='40' width='40'></img><i class='cbiCon'></i>" + bctai_ai_name + "</span><div class='bubble'>";
-        bctai_message += "<div class='txt" + AIMsgIndex + "'></div>";
-
-        bctai_message += "<div>";
-
-        
-        for (var index = 0; index < menu.length; index++) {
-            var childrenString = JSON.stringify(menu[index]['children']);
-            var valueString = JSON.stringify(menu[index]['value']); 
-            bctai_message += "<button type='button' onclick='search(" + childrenString + "," + valueString + ")' style='width: 100%;height: 50px;'>" + menu[index]['value'] + "</button>";
-        }
-        bctai_message += "</div>";
-
-        bctai_message += "</div><div class='date'>" + date_Time + "</div></div>";
-        bctaiWriteMessage(bctai_messages_box, bctai_message, bctai_randomnum, bctai_response_text,cosine_score);
-    }
-
-    function search(a,b){
-        if(!a){
-            alert("정보가 없습니다.");
-        }
-        
-        let bctaiMessage = '';
-        let bctai_question = b;
-        date_Time = formatAMPM(new Date());
-        var bctai_messages_box = document.getElementsByClassName('messages')[0];
-        let parentChat = document.getElementsByClassName('bctai-chatbox')[0];
-        let bctai_ai_avatar = parentChat.getAttribute('data-ai-avatar');
-        let bctai_ai_name = parentChat.getAttribute('data-ai-name');
-        var bctai_randomnum = '';
-        var cosine_score ='';        
-        var bctai_response_text = '';
-        var bctai_message = "";
-
-
-
-
-        bctai_message += "<div style='width: 100%; float: left; margin-top:10px;'><div class='message left'><span class='name'><img src='" + bctai_ai_avatar + "' height='40' width='40'></img><i class='cbiCon'></i>" + bctai_ai_name + "</span><div class='bubble'>";
-        bctai_message += "<div class='txt" + AIMsgIndex + "'></div>";
-
-        bctai_message += "<div>";
-        
-        for (var index = 0; index < a.length; index++) {
-            var childrenString = JSON.stringify(a[index]['children']);
-            var valueString = JSON.stringify(a[index]['value']);
-            var valueImgUrl = JSON.stringify(a[index]['imgurl']);
-
-            bctai_message += "<button type='button' onclick='korea(" + childrenString + "," + valueString + "," + valueImgUrl + ")' style='width: 100%;height: 50px;'>" + a[index]['value'] + "</button>";
-        }
-        
-        bctai_message += "<button type='button' onclick='Scenario()' style='width: 100%;height: 50px;'>이전으로</button>";
-        bctai_message += "</div>";
-        bctai_message += "</div><div class='date'>" + date_Time + "</div></div>";
-        bctaiMessage += "<div style='width: 100%; float: right; margin-top:10px;'><div class='message right archive'><span class='name'><i class='cbiCon'></i></span><div class='bubble'><div class='txt'>";
-        bctaiMessage += bctai_question.replace(/\n/g, '<br>');
-        bctaiMessage += "</div></div><div class='date'>" + date_Time + "</div></div></div>";
-        bctai_messages_box.innerHTML += bctaiMessage;
-        bctai_messages_box.scrollTop = bctai_messages_box.scrollHeight;
-
-        bctaiWriteMessage(bctai_messages_box, bctai_message, bctai_randomnum, bctai_response_text,cosine_score);
-    }
-
-
-
-    function korea(City,gu,dong){
-        console.log(dong);
-        console.log(City);
-        let bctaiMessage = '';
-        let bctai_question =gu;
-        date_Time = formatAMPM(new Date());
-        var bctai_messages_box = document.getElementsByClassName('messages')[0];
-        let parentChat = document.getElementsByClassName('bctai-chatbox')[0];
-        let bctai_ai_avatar = parentChat.getAttribute('data-ai-avatar');
-        let bctai_ai_name = parentChat.getAttribute('data-ai-name');
-        var bctai_randomnum = '';
-        var cosine_score ='';        
-        var bctai_response_text = '';
-        var bctai_message = "";
-
-        bctai_message += "<div style='width: 100%; float: left; margin-top:10px;'><div class='message left'><span class='name'><img src='" + bctai_ai_avatar + "' height='40' width='40'></img><i class='cbiCon'></i>" + bctai_ai_name + "</span><div class='bubble'>";
-        bctai_message += "<div class='txt" + AIMsgIndex + "'></div>";
-
-        if(City[0]['Buyurl']){
-            bctai_message += "<div>";
-            bctai_message += "<img src='"+dong+"'>";
-            
-            bctai_message += `<button type='button' onclick="window.open('${City[0]['Buyurl']}', '_blank')" style='width: 100%; height: 50px;'>${City[0]['value']}</button>`;
-            bctai_message += "<button type='button' onclick='Scenario()' style='width: 100%;height: 50px;'>이전으로</button>";
-            bctai_message += "</div>";
-        }else{
-            bctai_response_text= City[0]['value'];
-        }
-
-        
-
-
-
-        
-        bctai_message += "</div><div class='date'>" + date_Time + "</div></div>";
-        bctaiMessage += "<div style='width: 100%; float: right; margin-top:10px;'><div class='message right archive'><span class='name'><i class='cbiCon'></i></span><div class='bubble'><div class='txt'>";
-        bctaiMessage += bctai_question;
-        bctaiMessage += "</div></div><div class='date'>" + date_Time + "</div></div></div>";
-        bctai_messages_box.innerHTML += bctaiMessage;
-        bctai_messages_box.scrollTop = bctai_messages_box.scrollHeight;
-
-        bctaiWriteMessage(bctai_messages_box, bctai_message, bctai_randomnum, bctai_response_text,cosine_score);
-    }
 
 </script>

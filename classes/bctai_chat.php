@@ -18,17 +18,16 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
 
         public function __construct()
         {
-            add_shortcode('bctai_chatgpt', [$this, 'bctai_chatbox']);
+            
             add_shortcode('bctai_chatgpt_widget', [$this, 'bctai_chatbox_widget']);
             add_action('wp_ajax_bctai_chatbox_message', array($this, 'bctai_chatbox_message'));
             add_action('wp_ajax_nopriv_bctai_chatbox_message', array($this, 'bctai_chatbox_message'));
-            add_action('wp_ajax_bctai_chat_shortcode_message', array($this, 'bctai_chatbox_message'));
-            add_action('wp_ajax_nopriv_bctai_chat_shortcode_message', array($this, 'bctai_chatbox_message'));
-
             add_action('wp_ajax_bctai_Scenario_menu', array($this, 'bctai_Scenario_menu'));
             add_action('wp_ajax_nopriv_bctai_Scenario_menu', array($this, 'bctai_Scenario_menu'));
-
             add_action('wp_ajax_wpaicg_fetch_google_models', [$this, 'wpaicg_fetch_google_models']);
+
+            add_action('wp_ajax_uploadtest', array($this, 'uploadtest'));
+            add_action('wp_ajax_nopriv_uploadtest', array($this, 'uploadtest'));
 
             
 
@@ -36,6 +35,35 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
         }
 
 
+        
+        public function uploadtest() {
+            if (isset($_FILES['file'])) {
+                $file = $_FILES['file'];
+        
+                $upload_dir = wp_upload_dir();
+                $upload_path = $upload_dir['path'] . '/' . basename($file['name']);
+        
+                
+                if (move_uploaded_file($file['tmp_name'], $upload_path)) {
+                    $response = array(
+                        'success' => true,
+                        'file_url' => $upload_dir['url'] . '/' . basename($file['name']),
+                        'message' => '파일 업로드 성공'
+                    );
+                } else {
+                    $response = array(
+                        'success' => false,
+                        'message' => '파일을 업로드할 수 없습니다.'
+                    );
+                }
+            } else {
+                $response = array(
+                    'success' => false,
+                    'message' => '파일이 업로드되지 않았습니다.'
+                );
+            }
+            wp_send_json($response);
+        }
         
 
         
@@ -185,7 +213,7 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
 
         public function bctai_chatbox_message()
         {
-            //wp_send_json("ajax요청 성공");
+            // wp_send_json($_POST);
             global $wpdb;
             $bctai_client_id = $this->bctai_get_cookie_id();
             $bctai_result = array(
@@ -229,7 +257,7 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
             if (!wp_verify_nonce($bctai_nonce, 'bctai-chatbox')) {
                 $bctai_result['msg'] = BCTAI_NONCE_ERROR;
             } else {
-                $bctai_message = (isset($_REQUEST['message']) && !empty($_REQUEST['message']) ? sanitize_text_field($_REQUEST['message']) : '');
+                // $bctai_message = (isset($_REQUEST['message']) && !empty($_REQUEST['message']) ? sanitize_text_field($_REQUEST['message']) : '');
                 $bctai_message = (isset($_REQUEST['message']) && !empty($_REQUEST['message']) ? $_REQUEST['message'] : '');
                 $url = (isset($_REQUEST['url']) && !empty($_REQUEST['url']) ? sanitize_text_field($_REQUEST['url']) : '');
                 $bctai_pinecone_api = get_option('bctai_pinecone_api', '');
@@ -246,224 +274,84 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                 $bctai_chat_best_of = get_option('bctai_chat_best_of', $open_ai->best_of);
                 $bctai_chat_frequency_penalty = get_option('bctai_chat_frequency_penalty', $open_ai->frequency_penalty);
                 $bctai_chat_presence_penalty = get_option('bctai_chat_presence_penalty', $open_ai->presence_penalty);
-
                 $bctai_vector_db_provider = get_option('bctai_vector_db_provider', 'pinecone');
                 
-                if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'bctai_chat_shortcode_message') {
-                    $bctai_chat_source = 'shortcode';
+                $bctai_limited_tokens = false;
+                $bctai_chat_widget = get_option('bctai_chat_widget', []);
+                $bctai_chat_design = get_option('bctai_chat_design',[]);
+                
+                #Language, Tone and Profession
+                $bctai_chat_language = get_option('bctai_chat_language', 'en');
+                $bctai_chat_tone = isset($bctai_chat_widget['tone']) && !empty($bctai_chat_widget['tone']) ? $bctai_chat_widget['tone'] : 'friendly';
+                $bctai_chat_proffesion2 = isset($bctai_chat_design['proffesion']) && !empty($bctai_chat_design['proffesion']) ? $bctai_chat_design['proffesion'] : 'none';
+                $bctai_chat_proffesion = isset($bctai_chat_widget['proffesion']) && !empty($bctai_chat_widget['proffesion']) ? $bctai_chat_widget['proffesion'] : 'none';
+                #Custom Text
+                $bctai_chat_no_answer = empty($bctai_chat_no_answer) ? 'I dont know' : $bctai_chat_no_answer;
+                #Context
+                $bctai_chat_embedding = get_option('bctai_chat_embedding', false);
+                $bctai_chat_embedding_type = get_option('bctai_chat_embedding_type', false);
+                $bctai_chat_no_answer = get_option('bctai_chat_no_answer', '');
+                $bctai_chat_embedding_top = get_option('bctai_chat_embedding_top', 1);
+                $bctai_chat_with_embedding = false;
+                $bctai_chat_remember_conversation = isset($bctai_chat_widget['remember_conversation']) && !empty($bctai_chat_widget['remember_conversation']) ? $bctai_chat_widget['remember_conversation'] : 'yes';
+                $bctai_chat_content_aware = isset($bctai_chat_widget['content_aware']) && !empty($bctai_chat_widget['content_aware']) ? $bctai_chat_widget['content_aware'] : 'yes';
+                    
+                switch ($bctai_chat_provider) {
+                    case 'Huggingface': $bctai_ai_model = 'Meta-Llama-3.1-8B-Instruct';
+                    break;
+
+                    case 'Google':$bctai_ai_model = get_option('wpaicg_google_default_model', 'gemini-pro');
+                    break;
+
+                    case 'OpenRouter':$bctai_ai_model = get_option('wpaicg_openrouter_model', '');
+                    break;
+                    
+                    default:$bctai_ai_model = get_option('bctai_chat_model', '');
+                    break;
                 }
-                if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'bctai_chat_shortcode_message') {
-                    $table = $wpdb->prefix . 'bctai';
-                    $existingValue = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$table} WHERE name = %s", 'bctai_settings'), ARRAY_A);
-                    $bctai_chat_shortcode_options = get_option('bctai_chat_shortcode_options', []);
-                    $default_setting = array(
-                        'language' => 'en',
-                        'tone' => 'friendly',
-                        'profession' => 'none',
-                        'fontsize' => 13,
-                        'fontcolor' => '#fff',
-                        'AI_fontcolor' => '#fff',
-                        'user_bg_color' => '#444654',
-                        'ai_bg_color' => '#343541',
-                        'ai_icon_url' => '',
-                        'ai_icon' => 'default',
-                        'use_avatar' => false,
-                        'model' => 'text-davinci-003',
-                        'temperature' => $existingValue['temperature'],
-                        'max_tokens' => $existingValue['max_tokens'],
-                        'top_p' => $existingValue['top_p'],
-                        'best_of' => $existingValue['best_of'],
-                        'frequency_penalty' => $existingValue['frequency_penalty'],
-                        'presence_penalty' => $existingValue['presence_penalty'],
-                        'ai_name' => 'AI',
-                        'you' => 'You',
-                        'ai_thinking' => 'AI Thinking',
-                        'placeholder' => 'Type a message',
-                        'welcome' => 'Hello human, I am a GPT powered AI chat bot. Ask me anything!',
-                        'no_answer' => '',
-                        'remember_conversation' => 'yes',
-                        'conversation_cut' => 10,
-                        'user_aware' => 'no',
-                        'content_aware' => 'yes',
-                        'embedding' => false,
-                        'embedding_type' => false,
-                        'embedding_top' => false,
-                        'embedding_index' => '',
-                        'user_limited' => false,
-                        'guest_limited' => false,
-                        'user_tokens' => 0,
-                        'limited_message' => 'You have reached your token limit.',
-                        'guest_tokens' => 0,
-                        'role_limited' => false,
-                        'limited_roles' => [],
-                        'save_logs' => false,
-                        'log_request' => false
-                    );
-                    $bctai_settings = shortcode_atts($default_setting, $bctai_chat_shortcode_options);
 
-                    if (isset($_REQUEST['bctai_chat_shortcode_options']) && is_array($_REQUEST['bctai_chat_shortcode_options'])) {
-                        $bctai_chat_shortcode_options = bctai_util_core()->sanitize_text_or_array_field($_REQUEST['bctai_chat_shortcode_options']);
-                        $bctai_settings = shortcode_atts($bctai_settings, $bctai_chat_shortcode_options);
-                    }
-                    #Language, Tone and Profession
-                    $bctai_chat_language = isset($bctai_settings['language']) ? $bctai_settings['language'] : 'en';
-                    $bctai_chat_tone = isset($bctai_settings['tone']) ? $bctai_settings['tone'] : 'friendly';
-                    $bctai_chat_proffesion2 = isset($bctai_settings['profession']) ? $bctai_settings['profession'] : 'none';
-                    #Parameters
-                    $bctai_ai_model = isset($bctai_settings['model']) ? $bctai_settings['model'] : 'gpt-3.5-turbo';
-                    $bctai_chat_temperature = isset($bctai_settings['temperature']) && !empty($bctai_settings['temperature']) ? $bctai_settings['temperature'] : $bctai_chat_temperature;
-                    $bctai_chat_max_tokens = isset($bctai_settings['max_tokens']) && !empty($bctai_settings['max_tokens']) ? $bctai_settings['max_tokens'] : $bctai_chat_max_tokens;
-                    $bctai_chat_top_p = isset($bctai_settings['top_p']) && !empty($bctai_settings['top_p']) ? $bctai_settings['top_p'] : $bctai_chat_top_p;
-                    $bctai_chat_best_of = isset($bctai_settings['best_of']) && !empty($bctai_settings['best_of']) ? $bctai_settings['best_of'] : $bctai_chat_best_of;
-                    $bctai_chat_frequency_penalty = isset($bctai_settings['frequency_penalty']) && !empty($bctai_settings['frequency_penalty']) ? $bctai_settings['frequency_penalty'] : $bctai_chat_frequency_penalty;
-                    $bctai_chat_presence_penalty = isset($bctai_settings['presence_penalty']) && !empty($bctai_settings['presence_penalty']) ? $bctai_settings['presence_penalty'] : $bctai_chat_presence_penalty;
-                    #Custom Text
-                    $bctai_chat_no_answer = isset($bctai_settings['no_answer']) ? $bctai_settings['no_answer'] : '';
-                    $bctai_chat_no_answer = empty($bctai_chat_no_answer) ? 'I dont know2222' : $bctai_chat_no_answer;
-                    #Context
-                    $bctai_chat_remember_conversation = isset($bctai_settings['remember_conversation']) ? $bctai_settings['remember_conversation'] : 'yes';
-                    $bctai_conversation_cut = isset($bctai_settings['conversation_cut']) ? $bctai_settings['conversation_cut'] : 10;
-                    $bctai_conversation_url = 'bctai_conversation_url_shortcode';
-                    $bctai_user_aware = isset($bctai_settings['user_aware']) ? $bctai_settings['user_aware'] : 'no';
-                    $bctai_chat_content_aware = isset($bctai_settings['content_aware']) ? $bctai_settings['content_aware'] : 'yes';
-                    $bctai_chat_embedding = isset($bctai_settings['embedding']) && $bctai_settings['embedding'] ? true : false;
-                    $bctai_chat_embedding_type = isset($bctai_settings['embedding_type']) ? $bctai_settings['embedding_type'] : '';
-                    $bctai_chat_embedding_top = isset($bctai_settings['embedding_top']) ? $bctai_settings['embedding_top'] : 1;
-                    $bctai_chat_with_embedding = false;
-                    if (isset($bctai_settings['embedding_index']) && !empty($bctai_settings['embedding_index'])) {
-                        $bctai_pinecone_environment = $bctai_settings['embedding_index'];
-                    }
-                    #Token Handling
-                    $bctai_token_limit_message = isset($bctai_settings['limited_message']) ? $bctai_settings['limited_message'] : $bctai_token_limit_message;
-                    if (is_user_logged_in() && $bctai_settings['user_limited'] && $bctai_settings['user_tokens'] > 0) {
-                        $bctai_limited_tokens = true;
-                        $bctai_limited_tokens_number = $bctai_settings['user_tokens'];
-                    }
-                    #Check limit base role
-                    if (is_user_logged_in() && isset($bctai_settings['role_limited']) && $bctai_settings['role_limited']) {
-                        $bctai_roles = (array) wp_get_current_user()->roles;
-                        $limited_current_role = 0;
-                        foreach ($bctai_roles as $bctai_role) {
-                            if (
-                                isset($bctai_settings['limited_roles'])
-                                && is_array($bctai_settings['limited_roles'])
-                                && isset($bctai_settings['limited_roles'][$bctai_role])
-                                && $bctai_settings['limited_roles'][$bctai_role] > $limited_current_role
-                            ) {
-                                $limited_current_role = $bctai_settings['limited_roles'][$bctai_role];
-                            }
-                        }
-                        if ($limited_current_role > 0) {
-                            $bctai_limited_tokens = true;
-                            $bctai_limited_tokens_number = $limited_current_role;
-                        } else {
-                            $bctai_limited_tokens = false;
+                $bctai_conversation_cut = get_option('bctai_conversation_cut', 10);
+                $bctai_conversation_url = 'bctai_conversation_url';
+                $bctai_chat_addition = get_option('bctai_chat_addition', false);
+                $bctai_chat_addition_text = get_option('bctai_chat_addition_text', '');
+                $bctai_user_aware = isset($bctai_chat_widget['user_aware']) ? $bctai_chat_widget['user_aware'] : 'no';
+                #Token Handling 
+                $bctai_token_limit_message = isset($bctai_chat_widget['limited_message']) ? $bctai_chat_widget['limited_message'] : $bctai_token_limit_message;
+                if (is_user_logged_in() && isset($bctai_chat_widget['user_limited']) && $bctai_chat_widget['user_limited'] && $bctai_chat_widget['user_tokens'] > 0) {
+                    $bctai_limited_tokens = true;
+                    $bctai_limited_tokens_number = $bctai_chat_widget['user_tokens'];
+                }
+                #Logs
+                $bctai_save_logs = isset($bctai_chat_widget['save_logs']) && $bctai_chat_widget['save_logs'] ? true : false;
+                $bctai_save_request = isset($bctai_chat_widget['log_request']) && $bctai_chat_widget['log_request'] ? true : false;
+                #Check limit base role
+                if (is_user_logged_in() && isset($bctai_chat_widget['role_limited']) && $bctai_chat_widget['role_limited']) {
+                    $bctai_roles = (array) wp_get_current_user()->roles;
+                    $limited_current_role = 0;
+
+                    foreach ($bctai_roles as $bctai_role) {
+                        if (isset($bctai_chat_widget['limited_roles'])&& is_array($bctai_chat_widget['limited_roles'])&& isset($bctai_chat_widget['limited_roles'][$bctai_role])&& $bctai_chat_widget['limited_roles'][$bctai_role] > $limited_current_role){
+                            $limited_current_role = $bctai_chat_widget['limited_roles'][$bctai_role];
                         }
                     }
-                    #End check limit base role
-                    if (!is_user_logged_in() && $bctai_settings['guest_limited'] && $bctai_settings['guest_tokens'] > 0) {
+                    
+                    if ($limited_current_role > 0) {
                         $bctai_limited_tokens = true;
-                        $bctai_limited_tokens_number = $bctai_settings['guest_tokens'];
-                    }
-                    #Logs
-                    $bctai_save_logs = isset($bctai_settings['save_logs']) && $bctai_settings['save_logs'] ? true : false;
-                    $bctai_save_request = isset($bctai_settings['log_request']) && $bctai_settings['log_request'] ? true : false;
-
-                } else {
-
-                    
-                    $bctai_limited_tokens = false;
-                    $bctai_chat_widget = get_option('bctai_chat_widget', []);
-                    $bctai_chat_design = get_option('bctai_chat_design',[]);
-
-                    #Language, Tone and Profession
-                    $bctai_chat_language = get_option('bctai_chat_language', 'en');
-                    $bctai_chat_tone = isset($bctai_chat_widget['tone']) && !empty($bctai_chat_widget['tone']) ? $bctai_chat_widget['tone'] : 'friendly';
-                    $bctai_chat_proffesion2 = isset($bctai_chat_design['proffesion']) && !empty($bctai_chat_design['proffesion']) ? $bctai_chat_design['proffesion'] : 'none';
-                    $bctai_chat_proffesion = isset($bctai_chat_widget['proffesion']) && !empty($bctai_chat_widget['proffesion']) ? $bctai_chat_widget['proffesion'] : 'none';
-                    #Custom Text
-                    $bctai_chat_no_answer = empty($bctai_chat_no_answer) ? 'I dont know' : $bctai_chat_no_answer;
-                    #Context
-                    $bctai_chat_embedding = get_option('bctai_chat_embedding', false);
-                    $bctai_chat_embedding_type = get_option('bctai_chat_embedding_type', false);
-                    $bctai_chat_no_answer = get_option('bctai_chat_no_answer', '');
-                    $bctai_chat_embedding_top = get_option('bctai_chat_embedding_top', 1);
-                    $bctai_chat_with_embedding = false;
-                    $bctai_chat_remember_conversation = isset($bctai_chat_widget['remember_conversation']) && !empty($bctai_chat_widget['remember_conversation']) ? $bctai_chat_widget['remember_conversation'] : 'yes';
-                    $bctai_chat_content_aware = isset($bctai_chat_widget['content_aware']) && !empty($bctai_chat_widget['content_aware']) ? $bctai_chat_widget['content_aware'] : 'yes';
-                    
-                    //$bctai_chat_provider = get_option('bctai_chat_provider','OpenAI');
-
-                    switch ($bctai_chat_provider) {
-                        case 'Huggingface':
-                            $bctai_ai_model = 'Meta-Llama-3.1-8B-Instruct';
-                            break;
-                        case 'Google':
-                            $bctai_ai_model = get_option('wpaicg_google_default_model', 'gemini-pro');
-                            break;
-                        case 'OpenRouter':
-                            $bctai_ai_model = get_option('wpaicg_openrouter_model', '');
-                            break;
-                        default:
-                            $bctai_ai_model = get_option('bctai_chat_model', '');
-                            break;
-                    }
-
-                    
-                    
-                    // wp_send_json($bctai_ai_model);
-                    // $bctai_ai_model = get_option('bctai_chat_model', '');
-
-
-
-                    $bctai_conversation_cut = get_option('bctai_conversation_cut', 10);
-                    $bctai_conversation_url = 'bctai_conversation_url';
-                    $bctai_chat_addition = get_option('bctai_chat_addition', false);
-                    $bctai_chat_addition_text = get_option('bctai_chat_addition_text', '');
-                    $bctai_user_aware = isset($bctai_chat_widget['user_aware']) ? $bctai_chat_widget['user_aware'] : 'no';
-                    #Token Handling 
-                    $bctai_token_limit_message = isset($bctai_chat_widget['limited_message']) ? $bctai_chat_widget['limited_message'] : $bctai_token_limit_message;
-                    if (is_user_logged_in() && isset($bctai_chat_widget['user_limited']) && $bctai_chat_widget['user_limited'] && $bctai_chat_widget['user_tokens'] > 0) {
-                        $bctai_limited_tokens = true;
-                        $bctai_limited_tokens_number = $bctai_chat_widget['user_tokens'];
-                    }
-                    #Logs
-                    $bctai_save_logs = isset($bctai_chat_widget['save_logs']) && $bctai_chat_widget['save_logs'] ? true : false;
-                    $bctai_save_request = isset($bctai_chat_widget['log_request']) && $bctai_chat_widget['log_request'] ? true : false;
-                    #Check limit base role
-                    if (is_user_logged_in() && isset($bctai_chat_widget['role_limited']) && $bctai_chat_widget['role_limited']) {
-                        $bctai_roles = (array) wp_get_current_user()->roles;
-                        $limited_current_role = 0;
-                        foreach ($bctai_roles as $bctai_role) {
-                            if (
-                                isset($bctai_chat_widget['limited_roles'])
-                                && is_array($bctai_chat_widget['limited_roles'])
-                                && isset($bctai_chat_widget['limited_roles'][$bctai_role])
-                                && $bctai_chat_widget['limited_roles'][$bctai_role] > $limited_current_role
-                            ) {
-                                $limited_current_role = $bctai_chat_widget['limited_roles'][$bctai_role];
-                            }
-                        }
-                        if ($limited_current_role > 0) {
-                            $bctai_limited_tokens = true;
-                            $bctai_limited_tokens_number = $limited_current_role;
-                        } else {
-                            $bctai_limited_tokens = false;
-                        }
-                    }
-                    #End check limit base role
-                    if (!is_user_logged_in() && $bctai_chat_widget['guest_limited'] && $bctai_chat_widget['guest_tokens'] > 0) {
-                        $bctai_limited_tokens = true;
-                        $bctai_limited_tokens_number = $bctai_chat_widget['guest_tokens'];
-                    }
-                    if (isset($bctai_chat_widget['embedding_index']) && !empty($bctai_chat_widget['embedding_index'])) {
-                        $bctai_pinecone_environment = $bctai_chat_widget['embedding_index'];
+                        $bctai_limited_tokens_number = $limited_current_role;
+                    } else {
+                        $bctai_limited_tokens = false;
                     }
                 }
+                #End check limit base role
+                if (!is_user_logged_in() && $bctai_chat_widget['guest_limited'] && $bctai_chat_widget['guest_tokens'] > 0) {
+                    $bctai_limited_tokens = true;
+                    $bctai_limited_tokens_number = $bctai_chat_widget['guest_tokens'];
+                }
+                if (isset($bctai_chat_widget['embedding_index']) && !empty($bctai_chat_widget['embedding_index'])) {
+                    $bctai_pinecone_environment = $bctai_chat_widget['embedding_index'];
+                }
+                
                 #Chat Bots
-                // if (isset($_REQUEST['bot_id']) && !empty($_REQUEST['bot_id'])) {
-                    
-                // }
                 if (!is_user_logged_in()) {
                     $bctai_user_aware = 'no';
                 }
@@ -487,11 +375,7 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                         $bctai_token_usage_client = $bctai_chat_token_log ? $bctai_chat_token_log->tokens : 0;
                     }
                     $bctai_chat_token_id = $bctai_chat_token_log ? $bctai_chat_token_log->id : false;
-                    if (
-                        $bctai_token_usage_client > 0
-                        && $bctai_limited_tokens_number > 0
-                        && $bctai_token_usage_client > $bctai_limited_tokens_number
-                    ) {
+                    if ($bctai_token_usage_client > 0 && $bctai_limited_tokens_number > 0 && $bctai_token_usage_client > $bctai_limited_tokens_number){
                         #check current user limited
                         $still_limited = true;
                         if (is_user_logged_in()) {
@@ -513,6 +397,7 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                 $bctai_chat_log_id = false;
                 $bctai_chat_log_data = array();
 
+                
                 #Check Audio Converter
                 if(isset($_FILES['audio']) && empty($_FILES['audio']['error'])){
                     //$bctai_result['msg'] = 'audio';
@@ -550,6 +435,9 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                     }
                     $bctai_message = $completion->text;
                 }
+
+
+                
                 #사용자 ID 데이터에 기록
                 if (!empty($bctai_message) && $bctai_save_logs) {
                     $bctai_current_context_id = isset($_REQUEST['post_id']) && !empty($_REQUEST['post_id']) ? sanitize_text_field($_REQUEST['post_id']) : '';
@@ -586,26 +474,18 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                 $bctai_embedding_content = '';
                 if ($bctai_chat_embedding) {
                     $namespace = false;
-
-                    
                     if (isset($_REQUEST['namespace']) && !empty($_REQUEST['namespace'])) {
                         $namespace = sanitize_text_field($_REQUEST['namespace']);
                     }
-
-
 
                     if($bctai_vector_db_provider === 'qdrant'){
                         $bctai_qdrant_api = get_option('bctai_qdrant_api', '');
                         $bctai_qdrant_endpoint = get_option('bctai_qdrant_endpoint', '');
                         $default_qdrant_collection = get_option('wpaicg_qdrant_default_collection', '');
                         $wpaicg_chat_embedding_top = get_option('wpaicg_chat_embedding_top', 1);
-
-
                         $bctai_embeddings_result = $this->wpaicg_embeddings_result_qdrant($bctai_chat_provider, $open_ai, $bctai_qdrant_api, $bctai_qdrant_endpoint, $default_qdrant_collection, $bctai_message, $wpaicg_chat_embedding_top, $namespace);
-                        //wp_send_json($bctai_embeddings_result);
                     }else{
                         $bctai_embeddings_result = $this->bctai_embeddings_result($open_ai, $bctai_pinecone_api, $bctai_pinecone_environment, $bctai_message, $bctai_chat_embedding_top, $namespace);
-                        // wp_send_json($bctai_embeddings_result);
                     }
                     if($bctai_embeddings_result['bctai_link_url']){
                         $bctai_result['bctai_link_url'] = $bctai_embeddings_result['bctai_link_url'];
@@ -618,10 +498,6 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                         $bctai_chat_with_embedding = false;
                     } else {
                         $data2 = $bctai_embeddings_result['data'];
-
-                        // wp_send_json($data2);
-                        //$img_url = strpos($data2, 'Img URL:');
-
                         $img_url_start = strpos($data2, 'Img URL:');
                         if ($img_url_start !== false) {
                             $post_categories_start = strpos($data2, 'Post Categories:');
@@ -631,14 +507,11 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                                 $bctai_result['ImgURL'] = $url;
                             } 
                         }
-                        
-
                         $post_content_start = strpos($data2, 'Post Content:');
 
                         if ($post_content_start !== false) {
                             $content_data = substr($data2, $post_content_start + strlen('Post Content:'));
                             $content_endposition = strpos($content_data, 'Post URL:');
-                            
                             $post_url_start = strpos($data2, 'Post URL:');
                             if($post_url_start !== false){
                                 $url_data = substr($data2, $post_url_start + strlen('Post URL:'));
@@ -653,14 +526,10 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                                 $bctai_result['status'] = $bctai_embeddings_result['status'];
                                 $bctai_embedding_score = $bctai_embeddings_result['score'][0];
                                 $formatted_embedding_score = number_format($bctai_embedding_score, 2);
-
-                                $bctai_result['url'] = $url_data; 
-                                $bctai_result['cosine_score'] = $formatted_embedding_score;          
-                                //$bctai_result['data'] = $data2 . '(코사인유사도 : '.$formatted_embedding_score.')'; 
-                                //$result = $bctai_embeddings_result['infomation_status'];
-                                //wp_send_json($result);
+                                $bctai_result['url'] = $url_data;
+                                $bctai_result['cosine_score'] = $formatted_embedding_score;
                                 if(is_user_logged_in()){
-                                    $bctai_result['data'] = $data2 ; 
+                                    $bctai_result['data'] = $data2 ;
                                 }else{
                                     if($bctai_embeddings_result['infomation_status']=='no'){
                                         $bctai_result['data'] = '정보를 공개할수 없습니다. 관리자에 문의해주세요';
@@ -668,8 +537,8 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                                         $bctai_result['data'] = $data2 ; 
                                     }
                                 }
-                                $bctai_result['msg'] = empty($bctai_embeddings_result['data']) ? $bctai_chat_no_answer : $bctai_embeddings_result['data'];
 
+                                $bctai_result['msg'] = empty($bctai_embeddings_result['data']) ? $bctai_chat_no_answer : $bctai_embeddings_result['data'];
                                 $this->bctai_save_chat_log($bctai_chat_log_id, $bctai_chat_log_data, 'ai', $bctai_result['data']);
                                 wp_send_json($bctai_result); //바로출력
                             }else{
@@ -691,12 +560,11 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                                         )
                                     );
                                 }else{
-                                    $bctai_result['data'] = "질문에 대한 답이 없습니다. GPT에게 질문 하시려면 아래 버튼을 눌러주세요.";
+                                    $bctai_result['data'] = "응답시간이 조금 더 길어질 수 있습니다. 계속하시려면 계속하기 버튼을 눌러주세요.";
                                     $bctai_result['msg'] = "코사인 유사도 0.4가 넘는 데이터가 없습니다.";
                                     $bctai_result['status'] = "SaveAnswer";
                                     wp_send_json($bctai_result);
                                 }
-                                
                             }
                         } else {
                             #openai
@@ -707,80 +575,87 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                                 wp_send_json($bctai_result);
                                 exit;
                             } else {
-                                $bctai_total_tokens += $bctai_embeddings_result['tokens']; // Add embedding tokens
-
-                                // $bctai_embedding_content = $bctai_embeddings_result['data'];
+                                $bctai_total_tokens += $bctai_embeddings_result['tokens'];
                                 $bctai_embedding_content = $data2;
-
                                 $bctai_embedding_score = $bctai_embeddings_result['score'][0];
                                 $formatted_embedding_score = number_format($bctai_embedding_score, 2);
                                 $bctai_result['score']= $formatted_embedding_score;
-                                
                             }
                             $bctai_chat_with_embedding = true;
                         }
                     }
                 }
 
-                #기록 기억하기
-                if ($bctai_chat_remember_conversation == 'yes') {
-                    $bctai_session_page = md5($bctai_client_id . $url);
+                
 
-                    if (!isset($_COOKIE[$bctai_conversation_url]) || empty($_COOKIE[$bctai_conversation_url])) {
-                        setcookie($bctai_conversation_url, $bctai_session_page, time() + 86400, COOKIEPATH, COOKIE_DOMAIN);
-                        $bctai_conversation_messages = array();
-                    } else {
-                        $bctai_conversation_messages = isset($_COOKIE[$bctai_session_page]) ? $_COOKIE[$bctai_session_page] : '';
-                        $bctai_conversation_messages = str_replace("\\", '', $bctai_conversation_messages);
-                        if (!empty($bctai_conversation_messages && is_serialized($bctai_conversation_messages))) {
-                            $bctai_conversation_messages = unserialize($bctai_conversation_messages);
-                            $bctai_conversation_messages = $bctai_conversation_messages ? $bctai_conversation_messages : array();
-                        } else {
-                            $bctai_conversation_messages = array();
-                        }
-                    }
-                    $bctai_conversation_messages_length = count($bctai_conversation_messages);
-                    if ($bctai_conversation_messages_length > $bctai_conversation_cut) {
-                        $bctai_conversation_messages_start = $bctai_conversation_messages_length - $bctai_conversation_cut;
-                    } else {
-                        $bctai_conversation_messages_start = 0;
-                    }
-                    $bctai_conversation_end_messages = array_splice($bctai_conversation_messages, $bctai_conversation_messages_start, $bctai_conversation_messages_length);
-                }
+                #기록 기억하기
+                // if ($bctai_chat_remember_conversation == 'yes') {
+                //     $bctai_session_page = md5($bctai_client_id . $url);
+                //     if (!isset($_COOKIE[$bctai_conversation_url]) || empty($_COOKIE[$bctai_conversation_url])) {
+                //         setcookie($bctai_conversation_url, $bctai_session_page, time() + 86400, COOKIEPATH, COOKIE_DOMAIN);
+                //         $bctai_conversation_messages = array();
+                //     } else {
+                //         $bctai_conversation_messages = isset($_COOKIE[$bctai_session_page]) ? $_COOKIE[$bctai_session_page] : '';
+                //         $bctai_conversation_messages = str_replace("\\", '', $bctai_conversation_messages);
+                //         if (!empty($bctai_conversation_messages && is_serialized($bctai_conversation_messages))) {
+                //             $bctai_conversation_messages = unserialize($bctai_conversation_messages);
+                //             $bctai_conversation_messages = $bctai_conversation_messages ? $bctai_conversation_messages : array();
+                //         } else {
+                //             $bctai_conversation_messages = array();
+                //         }
+                //     }
+                //     $bctai_conversation_messages_length = count($bctai_conversation_messages);
+                //     if ($bctai_conversation_messages_length > $bctai_conversation_cut) {
+                //         $bctai_conversation_messages_start = $bctai_conversation_messages_length - $bctai_conversation_cut;
+                //     } else {
+                //         $bctai_conversation_messages_start = 0;
+                //     }
+                //     $bctai_conversation_end_messages = array_splice($bctai_conversation_messages, $bctai_conversation_messages_start, $bctai_conversation_messages_length);
+                // }
                 
                 if (!empty($bctai_message)) {
-
                     $bctai_chatgpt_messages = array();
-
                     $bctai_chatgpt_messages[] = array('role' => 'system','content'=>"$bctai_chat_proffesion2");
                     $bctai_chatgpt_messages[] = array('role' => 'user', 'content' => "$bctai_embedding_content");
-                    
-                    //$bctai_chatgpt_messages[] = array('role' => 'user', 'content' => html_entity_decode($bctai_chat_greeting_message, ENT_QUOTES, 'UTF-8'));
+
                     if ($bctai_chat_remember_conversation == 'yes') {
-                        #Clear cookies
-                        $bctai_conversation_end_messages[] = $bctai_human_name . ': ' . $bctai_message . "\nAI1: ";
-                        foreach ($bctai_conversation_end_messages as $bctai_conversation_end_message) {
-                            $bctai_chatgpt_message = $bctai_conversation_end_message;
-                            if (strpos($bctai_conversation_end_message, $bctai_human_name . ': ') !== false) {
-                                $bctai_chatgpt_message = str_replace($bctai_human_name . ': ', '', $bctai_chatgpt_message);
-                                $bctai_chatgpt_message = str_replace("\nAI2: ", '', $bctai_chatgpt_message);
-                                if (!empty($bctai_chatgpt_message)) {
-                                    $bctai_chatgpt_messages[] = array('role' => 'user', 'content' => $bctai_chatgpt_message);
-                                }
-                            } else {
-                                if (!empty($bctai_chatgpt_message)) {
-                                    $bctai_chatgpt_messages[] = array('role' => 'assistant', 'content' => $bctai_chatgpt_message);
-                                }
-                            }
-                            $bctai_chat_greeting_message .= "\n" . $bctai_conversation_end_message;
-                        }
-                        // $prompt = $bctai_chat_greeting_message;
+                        // $bctai_conversation_end_messages[] = $bctai_human_name . ': ' . $bctai_message . "\nAI1: ";
+                        // foreach ($bctai_conversation_end_messages as $bctai_conversation_end_message) {
+                        //     $bctai_chatgpt_message = $bctai_conversation_end_message;
+                        //     if (strpos($bctai_conversation_end_message, $bctai_human_name . ': ') !== false) {
+                        //         $bctai_chatgpt_message = str_replace($bctai_human_name . ': ', '', $bctai_chatgpt_message);
+                        //         $bctai_chatgpt_message = str_replace("\nAI2: ", '', $bctai_chatgpt_message);
+                        //         if (!empty($bctai_chatgpt_message)) {
+                        //             $bctai_chatgpt_messages[] = array('role' => 'user', 'content' => $bctai_chatgpt_message);
+                        //         }
+                        //     } else {
+                        //         if (!empty($bctai_chatgpt_message)) {
+                        //             $bctai_chatgpt_messages[] = array('role' => 'assistant', 'content' => $bctai_chatgpt_message);
+                        //         }
+                        //     }
+                        //     $bctai_chat_greeting_message .= "\n" . $bctai_conversation_end_message;
+                        // }
+                        wp_send_json("기능수정중입니다.");
                     } else {
-                        // $prompt = $bctai_chat_greeting_message . "\n" . $bctai_human_name . ": " . $bctai_message . "\nAI3: ";
-                        $bctai_chatgpt_messages[] = array('role' => 'user', 'content' => $bctai_message);
+                        $plusIMG = array();
+
+                        // 메시지 추가
+                        $plusIMG[] = array('type' => 'text', 'text' => $bctai_message);
+
+                        // 이미지 URL 추가 (객체로 변경)
+                        $plusIMG[] = array(
+                            'type' => 'image_url', 
+                            'image_url' => array('url' => $_POST['UploadImgUrl']) // 객체 형태로 변경
+                        );
+
+                        $bctai_chatgpt_messages[] = array('role' => 'user', 'content' => $plusIMG);
+                        // wp_send_json($bctai_chatgpt_messages);
                     }
                     
+                    
+                    // wp_send_json($bctai_chatgpt_messages);
                     if($bctai_chat_provider =='Google'){
+                        #Google
                         $bctai_data_request = [
                             'model' => $bctai_ai_model,
                             'messages' => $bctai_chatgpt_messages,
@@ -793,37 +668,32 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                         ];
                         $complete = $open_ai->chat($bctai_data_request);
                     }else{
+                        #Open AI
+                        $bctai_data_request = [
+                            'model' => $bctai_ai_model,
+                            // 'messages' => [
+                            //     [
+                            //         'role' => 'user',
+                            //         'content' => [
+                            //             ['type' => 'text', 'text' => '정답을 알려주세요'],
+                            //             ['type' => 'image_url','image_url' => ['url' => 'https://c0018.bizhomepass.kr/wp-content/uploads/2024/09/test.png']]
+                            //         ]
+                            //     ]
+                            // ],
 
-                        if ($bctai_ai_model === 'gpt-3.5-turbo' || $bctai_ai_model === 'gpt-3.5-turbo-16k' || $bctai_ai_model == 'gpt-4') {
-                            $bctai_data_request = [
-                                'model' => $bctai_ai_model,
-                                'messages' => $bctai_chatgpt_messages,
-                                'temperature' => floatval($bctai_chat_temperature),
-                                'max_tokens' => intval($bctai_chat_max_tokens),
-                                'frequency_penalty' => floatval($bctai_chat_frequency_penalty),
-                                'presence_penalty' => floatval($bctai_chat_presence_penalty),
-                                'top_p' => floatval($bctai_chat_top_p)
-                            ];
-                            $complete = $open_ai->chat($bctai_data_request);
-                        } else {
-
-                            //wp_send_json($bctai_ai_model);
-                            $bctai_data_request = [
-                                'model' => $bctai_ai_model,
-                                'messages' => $bctai_chatgpt_messages,
-                                'temperature' => floatval($bctai_chat_temperature),
-                                'max_tokens' => intval($bctai_chat_max_tokens),
-                                'frequency_penalty' => floatval($bctai_chat_frequency_penalty),
-                                'presence_penalty' => floatval($bctai_chat_presence_penalty),
-                                'top_p' => floatval($bctai_chat_top_p),
-                            ];
-                            $complete = $open_ai->chat($bctai_data_request);
-                        }
-
+                            'messages' => $bctai_chatgpt_messages,
+                            'temperature' => floatval($bctai_chat_temperature),
+                            'max_tokens' => intval($bctai_chat_max_tokens),
+                            'frequency_penalty' => floatval($bctai_chat_frequency_penalty),
+                            'presence_penalty' => floatval($bctai_chat_presence_penalty),
+                            'top_p' => floatval($bctai_chat_top_p)
+                        ];
+                        
+                        $complete = $open_ai->chat($bctai_data_request);
                     }
                     $complete = json_decode($complete);
 
-                    wp_send_json($complete);
+                    
 
 
 
@@ -1172,13 +1042,7 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
             return $result;
         }
 
-        public function bctai_chatbox($atts)
-        {
-            ob_start();
-            include BCTAI_PLUGIN_DIR . 'admin/extra/bctai_chatbox.php';
-            $bctai_chatbox = ob_get_clean();
-            return $bctai_chatbox;
-        }
+        
 
         public function bctai_chatbox_widget()
         {

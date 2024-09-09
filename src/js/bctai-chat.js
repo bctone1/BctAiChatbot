@@ -1,91 +1,67 @@
     
-    let bctaiMicIcon = '<i class="fa-solid fa-microphone"></i>';
-    let bctaiStopIcon = '<i class="fa-solid fa-record-vinyl"></i>';
+    
+    
     var bctaiChatStream;
     var bctaiChatRec;
     var bctaiInput;
     var bctaiChatAudioContext = window.AudioContext || window.webkitAudioContext;
     var bctaiaudioContext;
     let AIMsgIndex = 0;
-    var bctaiMicBtns = document.querySelectorAll('.bctai-mic-icon');
-
-
+    
+    var bctaiMicBtns = document.querySelectorAll('.iconChatSpeak');
     var bctaiChatTyping = document.querySelectorAll('.textAreaBox');
     var bctaiChatSend = document.querySelectorAll('.iconChatTyping');
-    // var bctaiShortcodeTyping = document.querySelectorAll('.bctai-chat-shortcode-typing');
-    // var bctaiShortcodeSend = document.querySelectorAll('.btn-send');
     var chatbox = document.getElementById('bctai-chatbox');
-    // let data_stt_value = "chatbox.getAttribute('data-stt-method');";
+    
     let data_stt_value;
     let bctaiSTTinput = document.getElementById('textAreaBox');
     let bctaichat_content = document.getElementById('chatbot-contents');
     let bctaichat_message = document.getElementById('messages');
-    let Scenario_status;
+    let Menu_status;
 
-    //var textAreaBox = document.querySelectorAll('.textAreaBox');
-
-    
-    
-    
 
     if (chatbox) {
-
-        Scenario_status = chatbox.getAttribute('data-Scenario_status');
-        if(Scenario_status){
+        Menu_status = chatbox.getAttribute('data-Menu_status');
+        // alert(Menu_status);
+        if(Menu_status){
             document.addEventListener('DOMContentLoaded', function () {
                 bctaiSTTinput.addEventListener('input', function () {
                     this.style.height = 'auto';
                     this.style.height = (this.scrollHeight > 160 ? 160 : this.scrollHeight) + 'px';
-                    if(this.scrollHeight <60){
-                        bctaichat_content.style.padding = '0px 0px 200px 10px';
+                    if(this.scrollHeight <63){
+                        bctaichat_content.style.padding = '0px 0px 177px 10px';
                         bctaichat_message.scrollTop = bctaichat_message.scrollHeight;
-                    }else if(this.scrollHeight <80){
-                        bctaichat_content.style.padding = '0px 0px 228px 10px';
+                    }else if(this.scrollHeight <82){
+                        bctaichat_content.style.padding = '0px 0px 191px 10px';
                         bctaichat_message.scrollTop = bctaichat_message.scrollHeight;
-                    }else if(this.scrollHeight <110){
-                        bctaichat_content.style.padding = '0px 0px 249px 10px';
-                        bctaichat_message.scrollTop = bctaichat_message.scrollHeight;
-                    }else if(this.scrollHeight <130){
-                        bctaichat_content.style.padding = '0px 0px 270px 10px';
-                        bctaichat_message.scrollTop = bctaichat_message.scrollHeight;
-                    }else if(this.scrollHeight <150){
-                        bctaichat_content.style.padding = '0px 0px 291px 10px';
+                    }else if(this.scrollHeight <102){
+                        bctaichat_content.style.padding = '0px 0px 211px 10px';
                         bctaichat_message.scrollTop = bctaichat_message.scrollHeight;
                     }else{
-                        bctaichat_content.style.padding = '0px 0px 312px 10px';
+                        bctaichat_content.style.padding = '0px 0px 216px 10px';
                         bctaichat_message.scrollTop = bctaichat_message.scrollHeight;
                     }
-                    
                 });
-                
             });
         }else{
             document.addEventListener('DOMContentLoaded', function () {
                 bctaiSTTinput.addEventListener('input', function () {
                     this.style.height = 'auto';
                     this.style.height = (this.scrollHeight > 160 ? 160 : this.scrollHeight) + 'px';
-                    if(this.scrollHeight <60){
-                        bctaichat_content.style.padding = '0px 0px 200px 10px';
+                    if(this.scrollHeight <63){
+                        bctaichat_content.style.padding = '0px 0px 124px 10px';
                         bctaichat_message.scrollTop = bctaichat_message.scrollHeight;
-                    }else if(this.scrollHeight <80){
-                        bctaichat_content.style.padding = '0px 0px 128px 10px';
-                        bctaichat_message.scrollTop = bctaichat_message.scrollHeight;
-                    }else if(this.scrollHeight <110){
+                    }else if(this.scrollHeight <82){
                         bctaichat_content.style.padding = '0px 0px 149px 10px';
                         bctaichat_message.scrollTop = bctaichat_message.scrollHeight;
-                    }else if(this.scrollHeight <130){
-                        bctaichat_content.style.padding = '0px 0px 170px 10px';
-                        bctaichat_message.scrollTop = bctaichat_message.scrollHeight;
-                    }else if(this.scrollHeight <150){
-                        bctaichat_content.style.padding = '0px 0px 191px 10px';
+                    }else if(this.scrollHeight <102){
+                        bctaichat_content.style.padding = '0px 0px 152px 10px';
                         bctaichat_message.scrollTop = bctaichat_message.scrollHeight;
                     }else{
-                        bctaichat_content.style.padding = '0px 0px 212px 10px';
+                        bctaichat_content.style.padding = '0px 0px 157px 10px';
                         bctaichat_message.scrollTop = bctaichat_message.scrollHeight;
                     }
-                    
                 });
-                
             });
         }
 
@@ -100,71 +76,40 @@
     recognition.continuous = true;
     recognition.interimResults = true;
     recognition.maxAlternatives = 10000;
-
-    //레코딩 시작 메서드
     recognition.onstart = function () {
         isRecognizing = true;
     };
-
-    //레코딩 종료 메서드
     recognition.onend = function () {
         isRecognizing = false;
     };
-
-    //레코딩 종료 후 반환하는 메서드
     recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
         bctaiSTTinput.value = transcript;
     };
 
-    // recognition.onresult = function (event) {
-    //     let interimTranscript = '';
-    //     for (let i = event.resultIndex; i < event.results.length; i++) {
-    //         const transcript = event.results[i][0].transcript;
-    //         interimTranscript += transcript;
-    //     }
-    //     bctaiSTTinput.forEach(function (element) {
-    //         console.log(interimTranscript);
-    //         element.innerHTML = interimTranscript;
-    //     });
-    // };
-
-    //레코딩 컨트롤러
     function start(mic) {
         if (isRecognizing) {
             console.log("====종료====");
-            mic.innerHTML = '';
-            mic.innerHTML = bctaiMicIcon;
             mic.classList.remove('bctai-recording');
             recognition.stop();
             return;
         }
         console.log("====시작====");
-        mic.innerHTML = '';
-        mic.innerHTML = bctaiStopIcon;
         mic.classList.add('bctai-recording');
         recognition.lang = language;
         recognition.start();
     }
-
-
-
-
-
-
     function formatAMPM(date) {
         var hours = date.getHours();
         var minutes = date.getMinutes();
         var ampm = hours >= 12 ? 'PM' : 'AM';
         hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
+        hours = hours ? hours : 12; 
         minutes = minutes < 10 ? '0' + minutes : minutes;
         var strTime = hours + ':' + minutes + ' ' + ampm;
         return strTime;
     }
     var date_Time = "";
-
-
 
 
     function bctaiescapeHtml(unsafe) {
@@ -177,7 +122,6 @@
     }
 
     function bctaistartChatRecording() {
-        // alert("bctaistartChatRecording");
         let constraints = { audio: true, video: false }
         navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
             bctaiaudioContext = new bctaiChatAudioContext();
@@ -189,15 +133,9 @@
     }
 
     function bctaistopChatRecording(mic) {
-        
         bctaiChatRec.stop();
-        // alert("bctaistopChatRecording1");
         bctaiChatStream.getAudioTracks()[0].stop();
-        // alert("bctaistopChatRecording2");
         bctaiChatRec.exportWAV(function (blob) {
-            // alert("bctaistopChatRecording3");
-            
-
             let type = mic.getAttribute('data-type');
             let parentChat;
             let chatContent;
@@ -211,9 +149,9 @@
                 chatContent = parentChat.querySelectorAll('.chatbot-contents')[0];
                 chatTyping = parentChat.querySelectorAll('.bctai-chat-shortcode-typing')[0];
             }
+            console.log(blob);
             bctaiSendChatMessage(parentChat, chatTyping, type, blob);
         });
-
     }
 
 
@@ -239,11 +177,10 @@
 
 
     function bctaiSendChatMessage(chat, typing, type, blob) {
-        //alert("bctaiSendChatMessage");
-        
         date_Time = formatAMPM(new Date());
         let bctai_box_typing = typing;
 
+        // console.log(blob);
         let bctai_ai_thinking, bctai_messages_box, class_user_item, class_ai_item;
         let bctaiMessage = '';
         let bctaiData = new FormData();
@@ -265,39 +202,38 @@
         let voice_speed = chat.getAttribute('data-voice_speed');
         let voice_pitch = chat.getAttribute('data-voice_pitch');
         let bctaichat_content = document.getElementById('chatbot-contents');
+        let UploadImgUrl = document.getElementById('UploadImgUrl');
         Scenario_status = chatbox.getAttribute('data-Scenario_status');
 
-        if (type === 'widget') {
-            bctai_ai_thinking = chat.getElementsByClassName('bctai-bot-thinking')[0];
-            bctai_messages_box = chat.getElementsByClassName('messages')[0];
-            // class_user_item = 'bctai-chat-user-message';
-            // class_ai_item = 'bctai-chat-ai-message';
-        }else if(type === 'AskGPT'){
-            bctai_ai_thinking = chat.getElementsByClassName('bctai-bot-thinking')[0];
-            bctai_messages_box = chat.getElementsByClassName('messages')[0];
+        
+        bctaiData.append('UploadImgUrl',UploadImgUrl.value);
+        
+        
 
-        }else {
-            bctai_ai_thinking = chat.getElementsByClassName('bctai-bot-thinking')[0];
+        if (type === 'widget') {
             bctai_messages_box = chat.getElementsByClassName('messages')[0];
-            // class_user_item = 'bctai-user-message';
-            // class_ai_item = 'bctai-ai-message';
+        }else if(type === 'AskGPT'){
+            bctai_messages_box = chat.getElementsByClassName('messages')[0];
+        }else {
+            bctai_messages_box = chat.getElementsByClassName('messages')[0];
         }
-        //사용자 질문 출력
-        bctai_ai_thinking.style.display = 'block';
+
+
         if(Scenario_status){
-            bctaichat_content.style.padding = '0px 0px 200px 10px';
+            bctaichat_content.style.padding = '0px 0px 124px 10px';
         }else{
-            bctaichat_content.style.padding = '0px 0px 200px 10px';        }
-        
-        
-        // bctaichat_content.style.padding = '0px 0px 125px 10px';
+            bctaichat_content.style.padding = '0px 0px 124px 10px';
+        }
+
 
         
         let bctai_question;
         if(type === 'AskGPT'){
             bctai_question = bctai_box_typing;
         } else{
-            bctai_question = bctaiescapeHtml(bctai_box_typing.value);
+            if(!blob){
+                bctai_question = bctaiescapeHtml(bctai_box_typing.value);
+            }
         }
         
         bctaiMessage += "<div style='width: 100%; float: right; margin-top:10px;'><div class='message right archive'><span class='name'><i class='cbiCon'></i></span><div class='bubble'><div class='txt'>";
@@ -306,39 +242,40 @@
         bctaiData.append('post_id', post_id);
         bctaiData.append('user_id', user_id);
         bctaiData.append('url', url);
-        if (type === 'widget') {
-            bctaiData.append('action', 'bctai_chatbox_message');
-        } else if(type === 'AskGPT'){
-            bctaiData.append('action', 'bctai_chatbox_message');
+        bctaiData.append('action', 'bctai_chatbox_message');
+
+        if(type === 'AskGPT'){
             bctaiData.append('AskGPT', true);
-        }else {
-            bctaiData.append('action', 'bctai_chat_shortcode_message');
         }
+
+
         if (blob !== undefined) {
             let url = URL.createObjectURL(blob);
+            console.log(url);
             bctaiMessage += '<audio src="' + url + '" controls="true"></audio>';
             bctaiData.append('audio', blob, 'bctai-chat-recording.wav');
         } else if (bctai_question !== '') {
             bctaiMessage += bctai_question.replace(/\n/g, '<br>');
             var jsonData = JSON.stringify(bctai_question);
-            // console.log(jsonData);
             bctaiData.append('message', bctai_question);
         }
         
-        //bctaiData.append('bot_id', bctai_bot_id);
         bctaiMessage += "</div></div><div class='date'>" + date_Time + "</div></div></div>";
         bctai_messages_box.innerHTML += bctaiMessage;
         bctai_messages_box.scrollTop = bctai_messages_box.scrollHeight;
 
 
-        //위 사용자가 입력한 내용을 bctaiData에 저장하고 밑에 xhttp를 GPT에게send,  this.responseText 리스폰 받음
+        
         const xhttp = new XMLHttpRequest();
-        bctai_box_typing.value = '';
+        if(!blob){
+            bctai_box_typing.value = '';
+        }
+
         bctaiSTTinput.style.height = '100%';
         if(Scenario_status){
-            bctaichat_content.style.padding = '0px 0px 200px 10px';
+            bctaichat_content.style.padding = '0px 0px 124px 10px';
         }else{
-            bctaichat_content.style.padding = '0px 0px 200px 10px';
+            bctaichat_content.style.padding = '0px 0px 124px 10px';
         }
         xhttp.open('POST', bctai_ajax_url, true);
         //alert(bctai_ajax_url);
@@ -367,12 +304,12 @@
                         bctai_response = JSON.parse(bctai_response);
                         console.log(bctai_response.data);
                         if(Scenario_status){
-                            bctaichat_content.style.padding = '0px 0px 200px 10px';
+                            bctaichat_content.style.padding = '0px 0px 124px 10px';
                         }else{
-                            bctaichat_content.style.padding = '0px 0px 200px 10px';
+                            bctaichat_content.style.padding = '0px 0px 124px 10px';
                         }
-                        bctai_ai_thinking.style.display = 'none'
-                        if (bctai_response.status === 'success') {
+                        // bctai_ai_thinking.style.display = 'none'
+                        if (bctai_response.status === 'success'){
 
                             bctai_response_text = bctai_response.data;
                             bctai_img_url = bctai_response.ImgURL;
@@ -403,7 +340,7 @@
                         } else if(bctai_response.status === 'SaveAnswer'){
 
                             bctai_response_text = bctai_response.data;
-                            bctai_message = "<div style='width: 100%; float: left;margin-top:10px;'><div class='message left'><span class='name'><img src='" + bctai_ai_avatar + "' height='40' width='40'></img><i class='cbiCon'></i> " + bctai_ai_name + "</span><div class='bubble'><div class='txt" + AIMsgIndex + "'></div> <button type='button' onclick='SaveAnswer()'>질문하기</button>";
+                            bctai_message = "<div style='width: 100%; float: left;margin-top:10px;'><div class='message left'><span class='name'><img src='" + bctai_ai_avatar + "' height='40' width='40'></img><i class='cbiCon'></i> " + bctai_ai_name + "</span><div class='bubble'><div class='txt" + AIMsgIndex + "'></div> <button type='button' onclick='SaveAnswer()'>계속하기</button>";
 
 
                         }else {
@@ -423,11 +360,11 @@
                     if (parseInt(bctai_speech) == 1) {
                         if (voice_service === 'google') {
                             //alert(voice_service);
-                            bctai_ai_thinking.style.display = 'block';
+                            // bctai_ai_thinking.style.display = 'block';
                             if(Scenario_status){
-                                bctaichat_content.style.padding = '0px 0px 200px 10px';
+                                bctaichat_content.style.padding = '0px 0px 124px 10px';
                             }else{
-                                bctaichat_content.style.padding = '0px 0px 200px 10px';
+                                bctaichat_content.style.padding = '0px 0px 124px 10px';
                             }
                             let speechData = new FormData();
                             speechData.append('type', type);
@@ -461,22 +398,22 @@
                                         bctai_message += '<audio style="margin-top:2px;width: 100% " controls="controls"><source type="audio/mpeg" src="' + blobUrl + '"></audio>';
                                         bctai_message += "</div><div class='date'>" + date_Time + "</div></div>";
                                         if(Scenario_status){
-                                            bctaichat_content.style.padding = '0px 0px 200px 10px';
+                                            bctaichat_content.style.padding = '0px 0px 124px 10px';
                                         }else{
-                                            bctaichat_content.style.padding = '0px 0px 200px 10px';
+                                            bctaichat_content.style.padding = '0px 0px 124px 10px';
                                         }
-                                        bctai_ai_thinking.style.display = 'none';
+                                        // bctai_ai_thinking.style.display = 'none';
                                         
                                         bctaiWriteMessage(bctai_messages_box, bctai_message, bctai_randomnum, bctai_response_text);
                                     }
                                     else {
                                         var errorMessageDetail = 'Google: ' + result.msg;
                                         if(Scenario_status){
-                                            bctaichat_content.style.padding = '0px 0px 200px 10px';
+                                            bctaichat_content.style.padding = '0px 0px 124px 10px';
                                         }else{
-                                            bctaichat_content.style.padding = '0px 0px 200px 10px';
+                                            bctaichat_content.style.padding = '0px 0px 124px 10px';
                                         }
-                                        bctai_ai_thinking.style.display = 'none';
+                                        // bctai_ai_thinking.style.display = 'none';
                                         
                                         if (parseInt(bctai_voice_error) !== 1) {
                                             bctai_message += '<span style="width: 100%;display: block;font-size: 11px;">' + errorMessageDetail + '</span>';
@@ -510,22 +447,22 @@
                             speechData.append('message', bctai_response_text);
                             speechData.append('voice', bctai_voice);
                             speechData.append('action', 'bctai_text_to_speech');
-                            bctai_ai_thinking.style.display = 'block';
+                            // bctai_ai_thinking.style.display = 'block';
                             if(Scenario_status){
-                                bctaichat_content.style.padding = '0px 0px 200px 10px';
+                                bctaichat_content.style.padding = '0px 0px 124px 10px';
                             }else{
-                                bctaichat_content.style.padding = '0px 0px 200px 10px';
+                                bctaichat_content.style.padding = '0px 0px 124px 10px';
                             }
                             var speechRequest = new XMLHttpRequest();
                             speechRequest.open("POST", bctai_ajax_url);
                             speechRequest.responseType = "arraybuffer";
                             speechRequest.onload = function () {
                                 if(Scenario_status){
-                                    bctaichat_content.style.padding = '0px 0px 200px 10px';
+                                    bctaichat_content.style.padding = '0px 0px 124px 10px';
                                 }else{
-                                    bctaichat_content.style.padding = '0px 0px 200px 10px';
+                                    bctaichat_content.style.padding = '0px 0px 124px 10px';
                                 }
-                                bctai_ai_thinking.style.display = 'none';
+                                // bctai_ai_thinking.style.display = 'none';
                                 
                                 var blob = new Blob([speechRequest.response], { type: "audio/mpeg" });
                                 var fr = new FileReader();
@@ -701,10 +638,6 @@
 
     function bctaiMicEvent(mic) {
         if (mic.classList.contains('bctai-recording')) {
-            
-            // alert('stopChat');
-            mic.innerHTML = '';
-            mic.innerHTML = bctaiMicIcon;
             mic.classList.remove('bctai-recording');
             console.log(mic);
             bctaistopChatRecording(mic)
@@ -714,8 +647,6 @@
             if (checkRecording && checkRecording.length) {
                 alert('Please finish previous recording');
             } else {
-                mic.innerHTML = '';
-                mic.innerHTML = bctaiStopIcon;
                 mic.classList.add('bctai-recording');
                 bctaistartChatRecording();
             }
@@ -748,37 +679,13 @@
         }
     }
 
-    // if (bctaiShortcodeTyping && bctaiShortcodeTyping.length) {
-    //     for (let i = 0; i < bctaiShortcodeTyping.length; i++) {
-    //         bctaiShortcodeTyping[i].addEventListener('keyup', function (event) {
-    //             if (event.shiftKey && (event.which === 13 || event.keyCode === 13)) {
-                    
-    //             }
-    //             else if ((event.which === 13 || event.keyCode === 13) && !event.shiftKey) {
-    //                 let parentChat = bctaiShortcodeTyping[i].closest('.bctai-chatbox');
-    //                 let chatTyping = parentChat.querySelectorAll('.bctai-chat-shortcode-typing')[0];
-    //                 bctaiSendChatMessage(parentChat, chatTyping, 'shortcode');
-    //             }
-    //         })
-    //     }
-    // }
-
-    // if (bctaiShortcodeSend && bctaiShortcodeSend.length) {
-    //     for (let i = 0; i < bctaiShortcodeSend.length; i++) {
-    //         bctaiShortcodeSend[i].addEventListener('click', function (event) {
-    //             //alert("숏코드 클릭됨");
-    //             let parentChat = bctaiShortcodeSend[i].closest('.bctai-chatbox');
-    //             let chatTyping = parentChat.querySelectorAll('.bctai-chat-shortcode-typing')[0];
-    //             bctaiSendChatMessage(parentChat, chatTyping, 'shortcode');
-    //         })
-    //     }
-    // }
+    
 
         if (bctaiMicBtns && bctaiMicBtns.length) {
     
             for (let i = 0; i < bctaiMicBtns.length; i++) {
                 bctaiMicBtns[i].addEventListener('click', function () {
-                    //alert('마이크 클릭');
+                    // alert(data_stt_value);
 
                     if(data_stt_value=='Audio'){
                         bctaiMicEvent(bctaiMicBtns[i]);
@@ -798,12 +705,7 @@
 
         }
 
-    //챗봇 상단 초기화버튼
-    // jQuery('.btn-remove').on('click', function (event) {
-    //     alert("dldkdk");
-    //     jQuery('.messages').empty();
-    //     welcom_MSG();
-    // });
+    
     
     var isExpanded = false;
     jQuery('.btn-fullscreen').click(function () {
@@ -833,8 +735,6 @@
             width: 'auto',
             resizable: false,
             position: { my: "center", at: "center", of: window },
-            
-            
         });
         
         jQuery('.ui-front').css('z-index', '2001');
@@ -858,6 +758,60 @@
     });
 
 
+    // $('.iconFile').click(function (e) {
+    //     e.preventDefault();
+    //     // var button = $(e.currentTarget),
+    //     custom_uploader = wp.media({
+    //         title: 'Insert image',
+    //         library : {
+    //             type : 'image'
+    //         },
+    //         button: {
+    //             text: 'Use this image'
+    //         },
+    //         multiple: false
+    //     }).on('select', function() {
+    //         var attachment = custom_uploader.state().get('selection').first().toJSON();
+    //         console.log(attachment);
+    //         var imgTag = '<div class="message right"><div class="bubble"><img style="width:100%;"src="' + attachment.url + '" alt="Image"></div></div>';
+    //         $('#messages').append(imgTag);
+
+    //         var bctai_messages_box = document.getElementById('messages');
+    //         bctai_messages_box.scrollTop = bctai_messages_box.scrollHeight;
+
+    //         $('.UploadImgUrl').val(attachment.url);
+    //     }).open();
+    // });
+    
+
+    
+    $('#fileInput').on('change', function(event) {
+        const file = this.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('action', 'uploadtest');
+            formData.append('name', '테스트');
+    
+            $.ajax({
+                url: bctai_ajax_url,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response);
+                    alert(response.file_url);
+                    $('.UploadImgUrl').val(response.file_url);
+                    var imgTag = '<div class="message right"><div class="bubble"><img style="width:100%;"src="' + response.file_url + '" alt="Image"></div></div>';
+                    $('#messages').append(imgTag);
+                },
+                error: function(xhr, status, error) {
+                    console.error('파일 업로드 실패:', error);
+                }
+            });
+        }
+    });
     
 
 

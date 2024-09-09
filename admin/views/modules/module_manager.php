@@ -5,6 +5,8 @@ $modules = $moduleManager->getModules();
 //echo '<pre>'; print_r($modules); echo '</pre>';
 
 
+
+
 // Pagination settings
 $items_per_page = 25;
 $total_modules = count($modules);
@@ -20,27 +22,11 @@ wp_enqueue_script('module-manager-js', plugin_dir_url(__FILE__) . 'js/module_man
 
 
 
+
+
 ?>
 
 <div class="wrap">
-
-
-
-    <!-- <div class="module-grid">
-        <?php foreach ($modules_to_display as $moduleName => $module): ?>
-        
-        <div class="module-item <?php echo $module->isActive() ? 'active' : ''; ?>" data-module="<?php echo esc_html($module->getName()); ?>">
-            <?php echo $module->isActive() ?>
-        
-            <div class="module-name"><?php echo esc_html($module->getName()); ?></div>
-            <div class="module-description"><?php echo esc_html($module->getDescription()); ?></div>
-        </div>
-        <?php endforeach; ?>
-    </div> -->
-
-
-    
-
     <?php if ($total_pages > 1): ?>
     <div class="pagination">
         <?php for ($i = 1; $i <= $total_pages; $i++): ?>
@@ -55,11 +41,13 @@ wp_enqueue_script('module-manager-js', plugin_dir_url(__FILE__) . 'js/module_man
 
 
 
-    <div class="sectionHeader">
-        <h2 class="sectionTitle">Modules</h2>
-    </div>
-    <div class="sectionContent">
-        <div class="moduleWrap">
+<div class="sectionHeader">
+    <h2 class="sectionTitle">Modules</h2>
+</div>
+
+
+<div class="sectionContent">
+    <div class="moduleWrap">
 
 
         <?php foreach ($modules_to_display as $moduleName => $module): ?>
@@ -76,10 +64,12 @@ wp_enqueue_script('module-manager-js', plugin_dir_url(__FILE__) . 'js/module_man
             </div>
         <?php endforeach; ?>
 
+
+
         
                 
-        </div>
     </div>
+</div>
 
 
 

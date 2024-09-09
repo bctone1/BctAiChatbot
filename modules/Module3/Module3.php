@@ -16,15 +16,21 @@ class Module3 implements ModuleInterface {
     }
 
     public function isActive() {
-        return $this->active;
+        $Menu = get_option('Menu', 'false');
+
+        if($Menu === 'true'){
+            return true;
+        }else if($Menu === 'false'){
+            return false;
+        }
     }
 
     public function getName() {
-        return 'Module 3';
+        return 'Menu';
     }
 
     public function getDescription() {
-        return 'This is Module 3.';
+        return 'Front Menu';
     }
 }
 

@@ -476,7 +476,7 @@ if ( !empty($errors)) {
 
         <h3 class="chapterTitle">Context Settings</h3>
 
-        <div class="columnWrap">
+        <!-- <div class="columnWrap">
             <div class="columnWrap column2">
                 <div class="formTitle"><strong>Remember Conversation</strong></div>
                 <div class="formContent">
@@ -524,7 +524,7 @@ if ( !empty($errors)) {
                     </select>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="columnWrap">
             <div class="columnWrap column2">
