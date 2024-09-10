@@ -177,71 +177,35 @@ foreach ($grouped as $date => $embedding_tokens_ID) {
 
 
 
-//오디오 사용량 시작
-$audio_qurry = $wpdb->prepare("
-SELECT *, DATE_FORMAT(FROM_UNIXTIME(created_at), '%%Y.%%m.%%d') AS formatted_created_at
-FROM (
-    SELECT CURDATE() - INTERVAL (a.a + (10 * b.a) + (100 * c.a)) DAY AS date_range
-    FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) a
-    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) b
-    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) c
-) date_ranges
-LEFT JOIN " . $wpdb->prefix . "bctai_audio_logs ON DATE_FORMAT(FROM_UNIXTIME(created_at), '%%Y-%%m-%%d') = date_ranges.date_range
-WHERE date_ranges.date_range BETWEEN '%s' AND '%s'
-ORDER BY date_ranges.date_range DESC, created_at DESC;
+
+$audio_query = $wpdb->prepare("
+WITH RECURSIVE DateSeries AS (
+    SELECT '%s' AS log_date
+    UNION ALL
+    SELECT DATE_ADD(log_date, INTERVAL 1 DAY)
+    FROM DateSeries
+    WHERE log_date < '%s'
+)
+SELECT ds.log_date, COALESCE(SUM(bal.size), 0) AS total_size
+FROM DateSeries ds
+LEFT JOIN vVsosAxVk_bctai_audio_logs bal ON DATE(bal.created_at) = ds.log_date
+GROUP BY ds.log_date
+ORDER BY ds.log_date DESC;
 ", $start_date,$end_date);
 
-
-
-$audio_logs = $wpdb->get_results($audio_qurry);
+$audio_logs = $wpdb->get_results($audio_query);
 // echo '<pre>';print_r($audio_logs);echo '<pre>';
 
-foreach ($audio_logs as $log) {
-    unset($log->source);
-}
-
-// echo '<pre>';print_r($audio_logs);echo '<pre>';
-foreach ($audio_logs as $index => $audio_log) {
-    $createday_audio[] = $audio_log->date_range;
-    $request_size[] = $audio_log->size;
-}
-foreach ($createday_audio as $index => $date) {
-    $grouped_tokens3[$date][] = $request_size[$index];
-    if ($request_size[$index] != null) {
-        $grouped_tokens4[$date][] = 1;
-    } else {
-        $grouped_tokens4[$date][] = 0;
-    }
-}
-//그룹화 된 배열을 계산하여 넣을 또 다른 배열 준비
 $audio_date_count = array();
 $summed_size = array();
-$request_cnt = array();
-foreach ($grouped_tokens4 as $date => $size) {
-    $request_cnt[] = array_sum($size);
-}
-//같은 날짜의 토큰 및 날짜를 하나로 합산
-foreach ($grouped_tokens3 as $date => $size) {
-    $audio_date_count[] = $date;
-    $summed_size[] = array_sum($size);
+
+foreach ($audio_logs as $log) {
+    $audio_date_count[] = $log->log_date;
+    $summed_size[] = $log->total_size;
 }
 
-//echo '<pre>'; print_r($audio_date_count); echo '</pre>';
+// echo '<pre>';print_r($audio_date_count);echo '<pre>';
 
-
-
-
-
-
-
-
-
-
-?>
-
-
-
-<?php
 
 //총 방문자
 $total_count = $wpdb->get_var("
@@ -253,12 +217,6 @@ $total_count_today = $wpdb->get_var("
 SELECT COUNT(DISTINCT SESSION) AS unique_visitors
 FROM " . $wpdb->prefix . "bctai_visitor_count
 WHERE DATE(FROM_UNIXTIME(TIME)) = CURDATE();");
-
-
-
-
-
-
 
 
 //총 페이지뷰
@@ -447,40 +405,34 @@ foreach($user_view_query_values as $value){
             </div>
         </div>
 
-
+        <div class="graf_box" style="margin-top: 40px;">
+            <h2><?php echo __('User view','bctai')?></h2>
+            <div id ="user_view"></div>
+        </div>
         
-            <div class="graf_box" style="margin-top: 40px;">
-                <h2><?php echo __('User view','bctai')?></h2>
-                <div id ="user_view"></div>
-
-            </div>
-            <div class="graf_box" style="margin-top: 40px;">
-                <h2><?php echo __('Page rank','bctai')?></h2>
-                <div id ="visitor"></div>
-
-            </div>
-        
-
+        <div class="graf_box" style="margin-top: 40px;">
+            <h2><?php echo __('Page rank','bctai')?></h2>
+            <div id ="visitor"></div>
+        </div>
 
         <div class="graf_box" style="margin-top: 40px;">
             <h2><?php echo __('Chatbot Usage', 'bctai') ?></h2> 
             <div id="chart"></div>
-
         </div>
-
-
-        
 
         <div class="graf_box" style="margin-top: 40px;">
             <h2><?php echo __('Embedding Usage','bctai')?></h2>
             <div id="embedding_chart"></div>
-
         </div>
 
         <div class="graf_box" style="margin-top: 40px;">
             <h2><?php echo __('TTS Usage','bctai')?></h2>
             <div id="TTS_chart"></div>
+        </div>
 
+        <div class="graf_box" style="margin-top: 40px;">
+            <h2><?php echo __('STT Usage','bctai')?></h2>
+            <div id="STT_chart"></div>
         </div>
 
        
@@ -509,8 +461,8 @@ foreach($user_view_query_values as $value){
         },
         axis: {
             x: {
-                type: 'category', // x 축의 유형을 카테고리로 설정
-                categories: page_title // 페이지 제목을 포함한 배열을 전달
+                type: 'category', 
+                categories: page_title
             }
         },
         bar: {
@@ -620,7 +572,7 @@ foreach($user_view_query_values as $value){
     // C3.js TTS 사용량 차트 생성
     var TTS_date = ['<?php echo __('Date','bctai'); ?>', ...<?php echo wp_json_encode($audio_date_count); ?>];
     var TTS_size = ['<?php echo __('Size (KB)','bctai'); ?>', ...<?php echo wp_json_encode($summed_size); ?>];
-    var request_count = ['<?php echo __('Requests','bctai'); ?>', ...<?php echo wp_json_encode($request_cnt); ?>];
+    
     var chart = c3.generate({
         bindto: '#TTS_chart',
         //size: { height: 300 },
@@ -628,7 +580,7 @@ foreach($user_view_query_values as $value){
         point: { r: 5 },
         data: {
             x: '<?php echo __('Date','bctai'); ?>',
-            columns: [TTS_date, TTS_size, request_count],
+            columns: [TTS_date, TTS_size],
         },
         axis: {
             x: {

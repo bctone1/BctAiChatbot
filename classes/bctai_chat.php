@@ -293,7 +293,7 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                 $bctai_chat_no_answer = get_option('bctai_chat_no_answer', '');
                 $bctai_chat_embedding_top = get_option('bctai_chat_embedding_top', 1);
                 $bctai_chat_with_embedding = false;
-                $bctai_chat_remember_conversation = isset($bctai_chat_widget['remember_conversation']) && !empty($bctai_chat_widget['remember_conversation']) ? $bctai_chat_widget['remember_conversation'] : 'yes';
+                $bctai_chat_remember_conversation = isset($bctai_chat_widget['remember_conversation']) && !empty($bctai_chat_widget['remember_conversation']) ? $bctai_chat_widget['remember_conversation'] : 'no';
                 $bctai_chat_content_aware = isset($bctai_chat_widget['content_aware']) && !empty($bctai_chat_widget['content_aware']) ? $bctai_chat_widget['content_aware'] : 'yes';
                     
                 switch ($bctai_chat_provider) {
@@ -636,20 +636,19 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                         //     $bctai_chat_greeting_message .= "\n" . $bctai_conversation_end_message;
                         // }
                         wp_send_json("기능수정중입니다.");
-                    } else {
+                    }
+
+
+                    if($_POST['UploadImgUrl']){
                         $plusIMG = array();
-
-                        // 메시지 추가
                         $plusIMG[] = array('type' => 'text', 'text' => $bctai_message);
-
-                        // 이미지 URL 추가 (객체로 변경)
                         $plusIMG[] = array(
                             'type' => 'image_url', 
                             'image_url' => array('url' => $_POST['UploadImgUrl']) // 객체 형태로 변경
                         );
-
                         $bctai_chatgpt_messages[] = array('role' => 'user', 'content' => $plusIMG);
-                        // wp_send_json($bctai_chatgpt_messages);
+                    }else{
+                        $bctai_chatgpt_messages[] = array('role' => 'user', 'content' => $bctai_message);
                     }
                     
                     
@@ -704,18 +703,10 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                             $bctai_result['msg'] = 'Incorrect API key provided. You can find your API key at https://platform.openai.com/account/api-keys.';
                         }
                     } else {
-                        if ($bctai_ai_model === 'gpt-3.5-turbo' || $bctai_ai_model === 'gpt-3.5-turbo-16k' || $bctai_ai_model == 'gpt-4-32k' || $bctai_ai_model == 'gpt-4') {
-                            if($bctai_embedding_score){
-                                $bctai_result['data'] = $complete->choices[0]->message->content . '(코사인유사도 : '.$formatted_embedding_score.')'; 
-                            }else{
-                                $bctai_result['data'] = $complete->choices[0]->message->content; //답변
-                            }
-                        } else {
-                            if($bctai_embedding_score){
-                                $bctai_result['data'] = $complete->choices[0]->message->content . '(코사인유사도 : '.$formatted_embedding_score.')'; 
-                            }else{
-                                $bctai_result['data'] = $complete->choices[0]->message->content; //답변
-                            }
+                        if($bctai_embedding_score){
+                            $bctai_result['data'] = $complete->choices[0]->message->content . '(코사인유사도 : '.$formatted_embedding_score.')'; 
+                        }else{
+                            $bctai_result['data'] = $complete->choices[0]->message->content; //답변
                         }
                         $bctai_total_tokens += $complete->usage->total_tokens;
                         if (!$bctai_save_request) {

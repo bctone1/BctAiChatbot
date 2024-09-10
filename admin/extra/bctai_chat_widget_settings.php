@@ -130,7 +130,7 @@ $bctai_chat_presence_penalty = get_option('bctai_chat_presence_penalty',0);
 //custom text
 $bctai_footer_text = isset($bctai_chat_widget['footer_text']) && !empty($bctai_chat_widget['footer_text']) ? $bctai_chat_widget['footer_text'] : '';
 //context
-$bctai_chat_remember_conversation = isset($bctai_chat_widget['remember_conversation']) && !empty($bctai_chat_widget['remember_conversation']) ? $bctai_chat_widget['remember_conversation'] : 'yes';
+$bctai_chat_remember_conversation = isset($bctai_chat_widget['remember_conversation']) && !empty($bctai_chat_widget['remember_conversation']) ? $bctai_chat_widget['remember_conversation'] : 'no';
 $bctai_conversation_cut = get_option('bctai_conversation_cut', 10);
 $bctai_user_aware = isset($bctai_chat_widget['user_aware']) && !empty($bctai_chat_widget['user_aware']) ? $bctai_chat_widget['user_aware'] : 'no';
 $bctai_chat_content_aware = isset($bctai_chat_widget['content_aware']) && !empty($bctai_chat_widget['content_aware']) ? $bctai_chat_widget['content_aware'] : 'yes';
