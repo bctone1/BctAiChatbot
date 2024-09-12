@@ -37,18 +37,36 @@ if (!class_exists('\\BCTAI\\BCTAI_Google_Speech')) {
             if ($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $bctAudioLogsTable)) != $bctAudioLogsTable) {
                 $charset_collate = $wpdb->get_charset_collate();
                 $sql = "CREATE TABLE " . $bctAudioLogsTable . " (
-            `id` mediumint(11) NOT NULL AUTO_INCREMENT,
-            `log_session` VARCHAR(255) NOT NULL,
-            `created_at` VARCHAR(255) NOT NULL,
-            `type` VARCHAR(255) NOT NULL,
-            `request_text` VARCHAR(255) NOT NULL,
-            
-            `size` VARCHAR(255) NOT NULL,
-            PRIMARY KEY (id)
-        ) $charset_collate";
-                require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-                $wpdb->query($sql);
+                `id` mediumint(11) NOT NULL AUTO_INCREMENT,
+                `log_session` VARCHAR(255) NOT NULL,
+                `created_at` VARCHAR(255) NOT NULL,
+                `type` VARCHAR(255) NOT NULL,
+                `request_text` VARCHAR(255) NOT NULL,
+                `size` VARCHAR(255) NOT NULL,
+                PRIMARY KEY (id)
+                ) $charset_collate";
+                 require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+                 $wpdb->query($sql);
             }
+
+            $bct_STT_logs = $wpdb->prefix . 'bctai_STT_logs';
+            if ($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $bct_STT_logs)) != $bct_STT_logs) {
+                $charset_collate = $wpdb->get_charset_collate();
+                $sql = "CREATE TABLE " . $bct_STT_logs . " (
+                `id` mediumint(11) NOT NULL AUTO_INCREMENT,
+                `log_session` VARCHAR(255) NOT NULL,
+                `created_at` VARCHAR(255) NOT NULL,
+                `type` VARCHAR(255) NOT NULL,
+                `request_text` VARCHAR(255) NOT NULL,
+                `size` VARCHAR(255) NOT NULL,
+                PRIMARY KEY (id)
+                ) $charset_collate";
+                 require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+                 $wpdb->query($sql);
+            }
+
+
+
         }
 
 

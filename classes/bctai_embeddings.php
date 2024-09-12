@@ -650,30 +650,41 @@ if(!class_exists('\\BCTAI\BCTAI_Embeddings')) {
 
         public function bctai_delete_embeddings_ids($ids)
         {
+
+            $bctai_vector_db_provider = get_option('bctai_vector_db_provider', 'pinecone');
+
             global $wpdb;
             $bctai_pinecone_api = get_option('bctai_pinecone_api','');
             $bctai_pinecone_environment = get_option('bctai_pinecone_environment','');
             $index_host_url = 'https://' . $bctai_pinecone_environment . '/vectors/delete';
 
-            if (empty($bctai_pinecone_api) || empty($bctai_pinecone_environment)) {
-                return esc_html__('Missing Pinecone API Settings', 'bctai');
-            } else {
-                $headers = [
-                    'Content-Type' => 'application/json',
-                    'Api-Key' => $bctai_pinecone_api
-                ];
-                $body = json_encode([
-                    'deleteAll' => 'true',
-                    //'ids' => ['id-1','id-2']
-                    'namespace' => 'Default'
-                ]);
-                $response = wp_remote_post($index_host_url, [
-                    'headers' => $headers,
-                    'body' => $body
-                ]);
-            }
-
+            
             foreach ($ids as $id){
+                if($bctai_vector_db_provider=='pinecone'){
+                    try {
+                        $headers = array(
+                            'Content-Type' => 'application/json',
+                            'Api-Key' => $bctai_pinecone_api
+                        );
+                        $body = json_encode([
+                            'deleteAll' => 'false',
+                            'ids' => [$id]
+                        ]);
+                        $response = wp_remote_post($index_host_url, array(
+                            'headers' => $headers,
+                            'body' => $body
+                        ));
+    
+                        if (is_wp_error($response)) {
+    
+                            error_log(print_r($response, true));
+                        }
+                    } catch (\Exception $exception) {
+                        error_log(print_r($exception->getMessage(), true));
+                    }
+                }else{
+                    return'Qdrant';
+                }
                 wp_delete_post($id);
             }
         }
@@ -799,9 +810,9 @@ if(!class_exists('\\BCTAI\BCTAI_Embeddings')) {
             preg_match('/<a href="([^"]*)"[^>]*>(.*?)<\/a>/', $bctai_link_url, $matches);
 
             if (!empty($matches)) {
-                $bctai_link_url = $matches[0]; // 전체 <a> 태그를 포함한 부분을 $bctai_link_url에 저장
+                $bctai_link_url = $matches[0];
             } else {
-                $bctai_link_url = ''; // 매치되는 <a> 태그가 없을 경우 빈 문자열
+                $bctai_link_url = '';
             }
 
             //return $bctai_link_url;
@@ -1066,17 +1077,11 @@ if(!class_exists('\\BCTAI\BCTAI_Embeddings')) {
 
             $content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $content);
             if($openai) {
-
-
-
-
                 $bctai_pinecone_api = get_option('bctai_pinecone_api','');
                 $bctai_pinecone_environment = get_option('bctai_pinecone_environment','');
                 if(empty($bctai_pinecone_api) || empty($bctai_pinecone_environment)) {
                     $bctai_result['msg'] = 'Missing Pinecone API Settings';
-                }
-                else {
-
+                }else{
                     $Embedding_Provider = get_option('Embedding_Provider','OpenAI');
 
                     if($Embedding_Provider=='OpenAI'){
@@ -1096,17 +1101,11 @@ if(!class_exists('\\BCTAI\BCTAI_Embeddings')) {
                         if(empty($bctai_result['msg']) && isset($response['error']['code']) && $response['error']['code'] == 'invalid_api_key'){
                             $bctai_result['msg'] = 'Incorrect API key provided. You can find your API key at https://platform.openai.com/account/api-keys.';
                         }
-                    }
-
-                    else {
+                    }else{
                         $embedding = $response['data'][0]['embedding'];
                         if(empty($embedding)) {
                             $bctai_result['msg'] = 'No data returned';
-                        }
-                        else {
-
-
-
+                        }else {
                             if(!$embeddings_id) {
                                 $embedding_title = empty($title) ? mb_substr($content, 0, 50, 'utf-8') : $title;
                                 if(strpos($embedding_title, 'Question') !== false) {
@@ -1158,8 +1157,6 @@ if(!class_exists('\\BCTAI\BCTAI_Embeddings')) {
 
                                 //Qdrant
                                 if($bctai_vector_db_provider === 'qdrant'){
-                                    
-
                                     $bctai_qdrant_endpoint = rtrim(get_option('bctai_qdrant_endpoint', ''), '/') . '/collections';
                                     $default_qdrant_collection = get_option('wpaicg_qdrant_default_collection', '');
                                     $qdrant_url = $bctai_qdrant_endpoint . '/' . $default_qdrant_collection . '/points?wait=true';

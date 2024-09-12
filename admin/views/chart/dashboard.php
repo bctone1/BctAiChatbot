@@ -169,15 +169,7 @@ foreach ($grouped as $date => $embedding_tokens_ID) {
 }
 
 
-
-
-
-
-
-
-
-
-
+#TTS 사용량
 $audio_query = $wpdb->prepare("
 WITH RECURSIVE DateSeries AS (
     SELECT '%s' AS log_date
@@ -188,10 +180,11 @@ WITH RECURSIVE DateSeries AS (
 )
 SELECT ds.log_date, COALESCE(SUM(bal.size), 0) AS total_size
 FROM DateSeries ds
-LEFT JOIN vVsosAxVk_bctai_audio_logs bal ON DATE(bal.created_at) = ds.log_date
+LEFT JOIN " . $wpdb->prefix . "bctai_audio_logs bal ON DATE(bal.created_at) = ds.log_date
 GROUP BY ds.log_date
 ORDER BY ds.log_date DESC;
 ", $start_date,$end_date);
+// echo $audio_query;
 
 $audio_logs = $wpdb->get_results($audio_query);
 // echo '<pre>';print_r($audio_logs);echo '<pre>';
@@ -203,6 +196,41 @@ foreach ($audio_logs as $log) {
     $audio_date_count[] = $log->log_date;
     $summed_size[] = $log->total_size;
 }
+
+#STT 사용량
+$STT_query = $wpdb->prepare("
+WITH RECURSIVE DateSeries AS (
+    SELECT '%s' AS log_date
+    UNION ALL
+    SELECT DATE_ADD(log_date, INTERVAL 1 DAY)
+    FROM DateSeries
+    WHERE log_date < '%s'
+)
+SELECT ds.log_date, COALESCE(SUM(bal.size), 0) AS total_size
+FROM DateSeries ds
+LEFT JOIN " . $wpdb->prefix . "bctai_STT_logs bal ON DATE(bal.created_at) = ds.log_date
+GROUP BY ds.log_date
+ORDER BY ds.log_date DESC;
+", $start_date,$end_date);
+
+
+$STT_logs = $wpdb->get_results($STT_query);
+
+
+$STT_date_count = array();
+$STT_summed_size = array();
+
+foreach ($STT_logs as $log) {
+    $STT_date_count[] = $log->log_date;
+    $STT_summed_size[] = $log->total_size;
+}
+
+
+
+
+
+
+
 
 // echo '<pre>';print_r($audio_date_count);echo '<pre>';
 
@@ -426,7 +454,7 @@ foreach($user_view_query_values as $value){
         </div>
 
         <div class="graf_box" style="margin-top: 40px;">
-            <h2><?php echo __('TTS Usage','bctai')?></h2>
+            <h2><?php echo __('Google TTS Usage','bctai')?></h2>
             <div id="TTS_chart"></div>
         </div>
 
@@ -440,9 +468,7 @@ foreach($user_view_query_values as $value){
 </div>
 
 
-<!--C3 css 추가-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css"/>
-<!--d3 c3 js추가-->
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
 
@@ -575,6 +601,36 @@ foreach($user_view_query_values as $value){
     
     var chart = c3.generate({
         bindto: '#TTS_chart',
+        //size: { height: 300 },
+        padding: { right: 30 },
+        point: { r: 5 },
+        data: {
+            x: '<?php echo __('Date','bctai'); ?>',
+            columns: [TTS_date, TTS_size],
+        },
+        axis: {
+            x: {
+                type: 'timeseries',
+                tick: {
+                    // count: objCount,
+                    format: '%Y-%m-%d',
+                },
+            },
+            y: {
+                min: 0,
+                padding: { bottom: 10 },
+            },
+        },
+        //legend: { show: false },
+        grid: { y: { show: true } },
+    });
+
+    //STT사용량
+    var TTS_date = ['<?php echo __('Date','bctai'); ?>', ...<?php echo wp_json_encode($STT_date_count); ?>];
+    var TTS_size = ['<?php echo __('Request','bctai'); ?>', ...<?php echo wp_json_encode($STT_summed_size); ?>];
+    
+    var chart = c3.generate({
+        bindto: '#STT_chart',
         //size: { height: 300 },
         padding: { right: 30 },
         point: { r: 5 },

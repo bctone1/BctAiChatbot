@@ -19,10 +19,8 @@ if($bctai_sub_action == 'reindexall'){
     exit;  
 }
 if($bctai_sub_action == 'deleteall'){
-    //echo '<pre>'; print_r($bctai_sub_action); echo '</pre>';
     $wpdb->query("DELETE FROM ".$wpdb->postmeta." WHERE meta_key IN ('bctai_indexed','bctai_source','bctai_parent','bctai_error_msg')");
     $bctai_embeddings = $wpdb->get_results("SELECT ID FROM ".$wpdb->posts." WHERE post_type='bctai_builder'");
-    //echo '<pre>'; print_r($bctai_embeddings); echo '</pre>';
     if($bctai_embeddings && count($bctai_embeddings)) {
         $bctai_embedding_ids = wp_list_pluck($bctai_embeddings,'ID');
         BCTAI\BCTAI_Embeddings::get_instance()->bctai_delete_embeddings_ids($bctai_embedding_ids);
@@ -30,8 +28,6 @@ if($bctai_sub_action == 'deleteall'){
     echo '<script>window.location.href = "'.admin_url('admin.php?page=Embeddings&action=builder').'";</script>';
     exit;
 }
-
-
 
 $bctai_builder_sub = isset($_GET['sub']) && !empty($_GET['sub']) ? sanitize_text_field($_GET['sub']) : false;
 $bctai_builder_types = get_option('bctai_builder_types',[]);
@@ -45,11 +41,8 @@ $bctai_total_skips = array();
 if($bctai_builder_types && is_array($bctai_builder_types) && count($bctai_builder_types)) {
     $ids = implode("','",$bctai_builder_types);
     $commaDelimitedPlaceholders = implode(',', array_fill(0, count($bctai_builder_types), '%s'));    
-
     $bctai_total_errors = $wpdb->get_results("SELECT p.ID,p.post_title FROM " . $wpdb->posts . " p LEFT JOIN " . $wpdb->postmeta . " m ON m.post_id = p.ID WHERE p.post_type IN ('".$ids."') AND m.meta_key='bctai_indexed' AND m.meta_value='error'");
-    //echo '<pre>'; print_r($bctai_total_errors); echo '</pre>';
     $bctai_total_skips = $wpdb->get_results("SELECT p.ID,p.post_title FROM " . $wpdb->posts . " p LEFT JOIN " . $wpdb->postmeta . " m ON m.post_id = p.ID WHERE p.post_type IN ('".$ids."') AND m.meta_key='bctai_indexed' AND m.meta_value='skip'");
-    //echo '<pre>'; print_r($bctai_total_skips); echo '</pre>';
 }
 ?>
 

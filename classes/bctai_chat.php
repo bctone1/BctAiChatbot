@@ -425,7 +425,34 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                         'response_format' => 'json'
                     );
                     $completion = $open_ai->transcriptions($data_audio_request);
+                    
+                    
+                    $bctai_client_id = $this->bctai_get_cookie_id();
+                    $bctai_current_context_id = isset($_REQUEST['post_id']) && !empty($_REQUEST['post_id']) ? sanitize_text_field($_REQUEST['post_id']) : '';
+                    $bctai_unique_chat = md5($bctai_client_id . '-' . $bctai_current_context_id);
+
+                    $wpdb->insert(
+                        $wpdb->prefix . 'bctai_STT_logs',
+                        array(
+                            'log_session' => $bctai_unique_chat,
+                            'created_at' => gmdate('Y-m-d'),
+                            'type' => 'AskGPT',
+
+                            // if($_REQUEST['AskGPT']){
+                            //     'type' => 'AskGPT',
+                            // }else{
+                            //     'type' => 'Normal',
+                            // }
+                            'request_text' => $completion,
+                            'size' => 1
+                        )
+                    );
                     $completion = json_decode($completion);
+
+                    
+                    
+
+                    // wp_send_json($completion);
                     if($completion && isset($completion->error)){
                         $bctai_result['msg'] = $completion->error->message;
                         if(empty($bctai_result['msg']) && isset($completion->error->code) && $completion->error->code == 'invalid_api_key'){
