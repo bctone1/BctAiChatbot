@@ -62,7 +62,10 @@ ChatGPT, Embeddings, AI Training, STT/TTS, Custom Post Types
 
 
 == Changelog ==
-dkdkdkdkdkdk
+
+깃허브 영빈업데이트 입니다.
+
+
 Version 0.9.3– 09.19 2024
 ====================================================
 부부펫(외부부착 스크립트 최신화 및 수정)
