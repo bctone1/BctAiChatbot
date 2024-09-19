@@ -63,7 +63,7 @@ ChatGPT, Embeddings, AI Training, STT/TTS, Custom Post Types
 
 == Changelog ==
 
-깃허브 영빈업데이트 입니다.
+
 
 
 Version 0.9.3– 09.19 2024
