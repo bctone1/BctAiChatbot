@@ -259,6 +259,7 @@ if($bctaiMaxFileSize > 104857600){
                         bctaiLoading(btn);
                     },
                     success: function (res) {
+                        // alert(res);
                         bctaiAjaxRunning = false;
                         bctaiRmLoading(btn);
                         if (res.status === 'success') {

@@ -158,6 +158,7 @@ if(!class_exists('\\BCTAI\BCTAI_FineTune')){
                 wp_send_json($bctai_result);
             }
             $models = $this->bctai_get_models();
+            // wp_send_json($models);
             if(is_array($models)){
                 $bctai_result['status'] = 'success';
                 $bctai_result['data'] = $models;
@@ -175,9 +176,9 @@ if(!class_exists('\\BCTAI\BCTAI_FineTune')){
             $bctai_provider = get_option('bctai_provider', 'OpenAI');
             $open_ai = BCTAI_OpenAI::get_instance()->openai();
             // if provider not openai then assing azure to $open_ai
-            if ($bctai_provider != 'OpenAI') {
-                $open_ai = BCTAI_AzureAI::get_instance()->azureai();
-            }
+            // if ($bctai_provider != 'OpenAI') {
+            //     $open_ai = BCTAI_AzureAI::get_instance()->azureai();
+            // }
             if ($open_ai) {
                 $result = $open_ai->listModels();
                 $json_parse = json_decode($result);

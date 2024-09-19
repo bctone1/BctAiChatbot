@@ -18,7 +18,7 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
 
         public function __construct()
         {
-            
+            add_shortcode('bctai_shortcode_cafe24', [$this, 'bctai_shortcode_cafe24']);
             add_shortcode('bctai_chatgpt_widget', [$this, 'bctai_chatbox_widget']);
             add_action('wp_ajax_bctai_chatbox_message', array($this, 'bctai_chatbox_message'));
             add_action('wp_ajax_nopriv_bctai_chatbox_message', array($this, 'bctai_chatbox_message'));
@@ -26,17 +26,150 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
             add_action('wp_ajax_nopriv_bctai_Scenario_menu', array($this, 'bctai_Scenario_menu'));
             add_action('wp_ajax_wpaicg_fetch_google_models', [$this, 'wpaicg_fetch_google_models']);
 
-            add_action('wp_ajax_uploadtest', array($this, 'uploadtest'));
-            add_action('wp_ajax_nopriv_uploadtest', array($this, 'uploadtest'));
+            add_action('wp_ajax_bctai_chatbox_cafe24', array($this, 'bctai_chatbox_cafe24'));
+            add_action('wp_ajax_nopriv_bctai_chatbox_cafe24', array($this, 'bctai_chatbox_cafe24'));
+
+            
+
+            add_action('wp_ajax_uploadimg', array($this, 'uploadimg'));
+            add_action('wp_ajax_nopriv_uploadimg', array($this, 'uploadimg'));
 
             
 
             $this->create_database_tables();
         }
 
+        public function cafe24_style(){
+            global $wpdb;
+
+            
+
+
+            $bctai_chat_widget = get_option('bctai_chat_widget',[]);
+            $bctai_chat_design = get_option('bctai_chat_design',[]);
+
+
+            //system
+            $bctai_chat_proffesion = isset($bctai_chat_design['proffesion']) && !empty($bctai_chat_design['proffesion']) ? $bctai_chat_design['proffesion'] : 'none';
+            $bctai_chat_position = isset($bctai_chat_design['position']) && !empty($bctai_chat_design['position']) ? $bctai_chat_design['position'] : 'left';
+            //style
+            $bctai_chat_icon = isset($bctai_chat_design['icon']) && !empty($bctai_chat_design['icon']) ? $bctai_chat_design['icon'] : 'default';
+            $bctai_chat_icon_url = isset($bctai_chat_design['icon_url']) && !empty($bctai_chat_design['icon_url']) ? $bctai_chat_design['icon_url'] : '';
+            $bctai_ai_avatar = isset($bctai_chat_design['ai_avatar']) && !empty($bctai_chat_design['ai_avatar']) ? $bctai_chat_design['ai_avatar'] : 'default';
+            $bctai_ai_avatar_id = isset($bctai_chat_design['ai_avatar_id']) && !empty($bctai_chat_design['ai_avatar_id']) ? $bctai_chat_design['ai_avatar_id'] : '';
+
+
+
+
+
+            $Header_Color = isset($bctai_chat_design['Header_Color']) && !empty($bctai_chat_design['Header_Color']) ? $bctai_chat_design['Header_Color'] : '#8040ad';
+
+
+
+            $Button_Icon_Color = isset($bctai_chat_design['Button_Icon_Color']) && !empty($bctai_chat_design['Button_Icon_Color']) ? $bctai_chat_design['Button_Icon_Color'] : '#569bd4';
+            $Message_Background_Color = isset($bctai_chat_design['Message_Background_Color']) && !empty($bctai_chat_design['Message_Background_Color']) ? $bctai_chat_design['Message_Background_Color'] : '#569bd4';
+            $Header_Text_Color =isset($bctai_chat_design['Header_Text_Color']) && !empty($bctai_chat_design['Header_Text_Color']) ? $bctai_chat_design['Header_Text_Color'] : '#569bd4';
+
+            //context
+            $bctai_chat_remember_conversation = isset($bctai_chat_widget['remember_conversation']) && !empty($bctai_chat_widget['remember_conversation']) ? $bctai_chat_widget['remember_conversation'] : 'yes';
+            $bctai_chat_content_aware = isset($bctai_chat_widget['content_aware']) && !empty($bctai_chat_widget['content_aware']) ? $bctai_chat_widget['content_aware'] : 'yes';
+            //token handling
+            $bctai_include_footer = (isset($bctai_chat_widget['footer_text']) && !empty($bctai_chat_widget['footer_text'])) ? 5 : 0;
+
+            $cafe24_css ='<style>  
+                .bctai_widget_open .bctai_chat_widget_content {
+                    height: 690px;
+                    width: 400px;
+                }
+
+                .high {
+                    height: 690px;
+                    border-radius: 15px;
+                    overflow: hidden;
+                    min-width: 400px;
+                }
+                .bctai_chat_widget_content{
+                    height: 690px;
+                    width: 400px;
+                    position: absolute;
+                    bottom: calc(100% + 15px);
+                }
+
+                .bctai_widget_open .bctai_chat_widget_content .bctai-chatbox {
+                    top: -30px;
+                }
+                
+                
+                .bctai_chat_widget {
+                    position: fixed;
+                }
+                .bctai_widget_left {
+                    bottom: 15px;
+                    left: 15px;
+                }
+                .bctai_widget_right {
+                    bottom: 15px;
+                    right: 15px;
+                }
+                .bctai_chat_widget_content .bctai-chatbox {
+                    position: absolute;
+                    top: 103%;
+                    left: 0;
+                    transition: top 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+                }
+                .bctai_chat_widget .bctai_toggle{
+                    margin-left:10px;
+                        cursor: pointer;
+                }
+                .bctai_chat_widget .bctai_toggle img{
+                    width: 75px;
+                    height: 75px;
+                }    
+            </style>';
+
+            return $cafe24_css;
+        }
+
+        public function bctai_shortcode_cafe24()
+        {
+            ob_start();
+            include BCTAI_PLUGIN_DIR . 'admin/extra/bctai_chat_widget.php';
+            $bctai_chatbox = ob_get_clean();
+            return $bctai_chatbox;
+        }
+
+
+        public function bctai_chatbox_cafe24()
+        {
+
+
+            $cafe24_html = $this->bctai_shortcode_cafe24();
+
+            $cafe24_css = $this->cafe24_style();
+
+            $response = array(
+                'content' => $cafe24_html,
+                'styles'  => array(
+                    'style_css' => BCTAI_PLUGIN_URL. 'src/css/style.css',
+                    'common_css' => BCTAI_PLUGIN_URL. 'src/css/common.css',
+                    // 'jquery_ui_css' => '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'
+                ),
+                'scripts' => array(
+                    'bctai_chat_script' => BCTAI_PLUGIN_URL . 'src/js/bctai-chat.js',
+                    'jquery_ui_script' => BCTAI_PLUGIN_URL. 'src/js/jquery.js',
+                    'common_js' => BCTAI_PLUGIN_URL. 'src/js/common.js'
+                ),
+                'cafe24_style'=>$cafe24_css
+            );
+
+            // JSON 응답으로 반환
+            wp_send_json($response);
+        }
+
+
 
         
-        public function uploadtest() {
+        public function uploadimg() {
             if (isset($_FILES['file'])) {
                 $file = $_FILES['file'];
         

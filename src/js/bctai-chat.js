@@ -17,6 +17,9 @@ var date_Time = formatAMPM(new Date());
 var isExpanded = false;
 
 
+// var bctai_ajax_url = "https://c0018.bizhomepass.kr/wp-admin/admin-ajax.php";
+
+
 if (chatbox) {
     Menu_status = chatbox.getAttribute('data-Menu_status');
     if(Menu_status){
@@ -624,7 +627,7 @@ jQuery(document).ready(function($) {
         if (file) {
             const formData = new FormData();
             formData.append('file', file);
-            formData.append('action', 'uploadtest');
+            formData.append('action', 'uploadimg');
             formData.append('name', '테스트');
             $.ajax({
                 url: bctai_ajax_url,

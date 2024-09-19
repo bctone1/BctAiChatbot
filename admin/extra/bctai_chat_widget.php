@@ -34,20 +34,14 @@ if($bctai_chat_status == 'active'):
 
 
 <div class="bctai_chat_widget<?php echo $bctai_chat_position == 'left' ? ' bctai_widget_left' : ' bctai_widget_right'?>">
-
-
-    <div class="bctai_chat_widget_content">
+    <div class="bctai_chat_widget_content" style="visibility: hidden;">
         <?php include BCTAI_PLUGIN_DIR . 'admin/extra/bctai_chatbox_widget.php'; ?>
     </div>
-
-
     <button class="btnChatbot"><span class="blind">챗봇 오픈</span></button>
 
-    
     <!-- <div class="bctai_toggle">
         <img src="<?php echo esc_html($bctai_chat_icon_url)?>" />
     </div> -->
-
 </div>
 
 

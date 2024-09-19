@@ -136,7 +136,7 @@ html, body {height:100%;}
 
 
 /* container */
-.container {flex:1;height:100%;padding:30px 35px 0;background-color:#f0f0f1;}
+/* .container {flex:1;height:100%;padding:30px 35px 0;background-color:#f0f0f1;} */
 .container .content {min-height:calc(100vh - 54px - 80px);}
 .container .content .section {padding-top:40px;}
 .section {padding-top:30px;}

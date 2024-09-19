@@ -44,7 +44,7 @@ font-family:'Noto Sans KR'; font-style:normal; font-weight:900;
 
 /* Segoe UI */
 @font-face {
-font-family:'Segoe UI'; font-style:normal; font-weight:400; 
+font-family:'Segoe UI'; font-style:normal; font-weight:400;
   src:url('fonts/segoeui.woff2') format('woff2'),
   url('fonts/segoeui.woff') format('woff'),
   url('fonts/segoeui.otf') format('opentype');
