@@ -64,7 +64,7 @@ html, body {height:100%;}
 .btnArea.center .btn + .btn {margin:0 5px;}
 .btnArea.btnAreaBottom {justify-content:center;margin-top:30px;}
 .btn {position:relative; border:0px;}
-[class*="btn"]:not(.btnArea) {display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;transition-duration:0.3s;border:0px;}
+/* [class*="btn"]:not(.btnArea) {display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;transition-duration:0.3s;border:0px;} */
 .btn::before,
 .btn::after {content:"";}
 .bgPrimary {color:#fff;background-color:#8040AD;}
@@ -99,7 +99,7 @@ html, body {height:100%;}
   100% {transform:translate(-50%, -50%) rotate(360deg);}
 }
 .btnDel {width:34px;height:34px;border-radius:50%;background:#4F4D5F url(../images/icon_del.png) no-repeat center center;}
-[class*="btn"][class*="icon"]:not(.onlyIcon) {min-width:163px;}
+/* [class*="btn"][class*="icon"]:not(.onlyIcon) {min-width:163px;} */
 [class*="btn"][class*="icon"]::before,
 [class*="btn"][class*="icon"]::after {content:"";display:block;background-repeat:no-repeat;background-position:center center;background-size:100%;}
 .iconSpeak::before {width:19px;height:19px;background-image:url(../images/icon_speak.png);}

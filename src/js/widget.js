@@ -12,7 +12,6 @@ jQuery(document).ready(function ($) {
         success: function(response) {
             // console.log(response);
             jQuery("body").append(response.content);
-            jQuery("body").append(response.cafe24_style);
     
             // CSS 파일을 동적으로 추가
             if (response.styles) {

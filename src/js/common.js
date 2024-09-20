@@ -31,7 +31,7 @@ jQuery(document).ready(function($) {
 
 
   /** slider-range */
-  $(function() {
+  $(function($) {
     $("#slider-range-min").slider({
       range: "min",
       value: 1234,
@@ -110,6 +110,8 @@ jQuery(document).ready(function ($) {
 
   // chatbot open
   $(".btnChatbot").on("click", function(){
+    // $(".btnChatbot").css("background","url(https://c0018.bizhomepass.kr/wp-content/plugins/bct-ai-chatbotv0.9.3/src/images/chatbot/icon_close_circle_s.png) no-repeat center center");
+
     if($(".btnChatbot").hasClass("on")) {
       $(".btnChatbot").removeClass("on");
       $(".modalChatbot").removeClass("on");

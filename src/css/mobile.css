@@ -1,0 +1,121 @@
+.bctai_widget_open .bctai_chat_widget_content {
+    height: 690px;
+    width: 400px;
+}
+
+.high {
+    height: 690px;
+    border-radius: 15px;
+    overflow: hidden;
+    min-width: 400px;
+}
+.bctai_chat_widget_content{
+    height: 690px;
+    width: 400px;
+    position: absolute;
+    bottom: calc(100% + 15px);
+}
+
+.bctai_widget_open .bctai_chat_widget_content .bctai-chatbox {
+    top: -30px;
+}
+
+
+.bctai_chat_widget {
+    position: fixed;
+    z-index:7;
+}
+.bctai_widget_left {
+    bottom: 15px;
+    left: 15px;
+}
+.bctai_widget_right {
+    bottom: 15px;
+    right: 15px;
+}
+.bctai_chat_widget_content .bctai-chatbox {
+    position: absolute;
+    top: 103%;
+    left: 0;
+    transition: top 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+}
+.bctai_chat_widget .bctai_toggle{
+    margin-left:10px;
+        cursor: pointer;
+}
+.bctai_chat_widget .bctai_toggle img{
+    width: 75px;
+    height: 75px;
+}
+
+
+
+
+
+
+@media (max-width: 600px) {
+    /* body {
+        font-size: 14px;
+    } */
+
+    .bctai_widget_open .bctai_chat_widget_content {
+        height: 440px;
+        width: 350px;
+    }
+    
+    .high {
+        height: 440px;
+        border-radius: 15px;
+        overflow: hidden;
+        min-width: 350px;
+    }
+    .bctai_chat_widget_content{
+        height: 440px;
+        width: 350px;
+        position: absolute;
+        bottom: calc(100% + 15px);
+    }
+    
+    .bctai_widget_open .bctai_chat_widget_content .bctai-chatbox {
+        top: -30px;
+    }
+    
+    
+    .bctai_chat_widget {
+        position: fixed;
+        z-index:7;
+    }
+    .bctai_widget_left {
+        bottom: 70px;
+        left: 10px;
+    }
+    .bctai_widget_right {
+        bottom: 15px;
+        right: 15px;
+    }
+    .bctai_chat_widget_content .bctai-chatbox {
+        position: absolute;
+        top: 103%;
+        left: 0;
+        transition: top 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+    }
+    .bctai_chat_widget .bctai_toggle{
+        margin-left:10px;
+            cursor: pointer;
+    }
+    .bctai_chat_widget .bctai_toggle img{
+        width: 75px;
+        height: 75px;
+    }
+
+    .btnChatbot {width:50px;height:50px;background:url(../images/chatbot/icon_bctaichatbot.svg) no-repeat center center;transform:scale(1);background-size: cover;}
+
+
+
+
+
+}
+
+
+
+
