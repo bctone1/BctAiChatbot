@@ -226,7 +226,7 @@ if(!class_exists('\\BCTAI\\BCTAI_Hook')) {
                 .bctai_chat_widget .bctai_toggle img{
                     width: 75px;
                     height: 75px;
-                }    
+                }
             </style>
 
             <script>

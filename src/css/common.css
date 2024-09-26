@@ -23,6 +23,14 @@
     width: unset;
 } */
 
+/* [type=button]:focus, [type=button]:hover, [type=submit]:focus, [type=submit]:hover, button:focus, button:hover {
+    background-color:transparent;
+} */
+
+
+.bctai_chat_widget [type=button], .bctai_chat_widget [type=submit], .bctai_chat_widget button {
+    border:0px;
+}
 
 
 

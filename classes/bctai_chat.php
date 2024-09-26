@@ -143,15 +143,9 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
 
         public function bctai_Scenario_menu(){
             $content = $_REQUEST['content'];
-
             //$menu_structure_json = json_encode($content);
-            
             update_option('menu_structure', $content);
-
             wp_send_json($content);
-
-            
-
         }
 
 
@@ -219,9 +213,6 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                 require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
                 $wpdb->query($sql);
             }
-
-
-
         }
 
         
@@ -252,6 +243,7 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
 
         public function bctai_chatbox_message()
         {
+            // wp_send_json("BCTONE C0018 Connect");
             // wp_send_json($_POST);
             global $wpdb;
             $bctai_client_id = $this->bctai_get_cookie_id();
@@ -293,11 +285,16 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
             }
             $bctai_save_request = false;
             $bctai_nonce = sanitize_text_field($_REQUEST['_wpnonce']);
+
             if (!wp_verify_nonce($bctai_nonce, 'bctai-chatbox')) {
+
+            // if (wp_verify_nonce($bctai_nonce, 'bctai-chatbox')) {
                 $bctai_result['msg'] = BCTAI_NONCE_ERROR;
             } else {
                 // $bctai_message = (isset($_REQUEST['message']) && !empty($_REQUEST['message']) ? sanitize_text_field($_REQUEST['message']) : '');
                 $bctai_message = (isset($_REQUEST['message']) && !empty($_REQUEST['message']) ? $_REQUEST['message'] : '');
+                // wp_send_json($bctai_message);
+
                 $url = (isset($_REQUEST['url']) && !empty($_REQUEST['url']) ? sanitize_text_field($_REQUEST['url']) : '');
                 $bctai_pinecone_api = get_option('bctai_pinecone_api', '');
                 $bctai_pinecone_environment = get_option('bctai_pinecone_environment', '');
@@ -757,6 +754,8 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                         $complete = $open_ai->chat($bctai_data_request);
                     }
                     $complete = json_decode($complete);
+
+                    // wp_send_json($complete);
 
                     
 

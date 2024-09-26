@@ -3,7 +3,7 @@ Contributors: BCTONE
 Tags: chatgpt/embedding, tts/stt, ai chatbot, chatbot template, statistics
 Requires at least: 6.4
 Tested up to: 6.5.2
-Stable tag: 0.9.4
+Stable tag: 0.9.5
 Requires PHP: 7.0 or higher
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -42,19 +42,19 @@ ChatGPT, Embeddings, AI Training, STT/TTS, Custom Post Types
 == Service URL ==
 # https://texttospeech.googleapis.com/v1/ : The Google Text-to-Speech API is accessed using the following URL
 
-# https://[Pinecone Environment]/vectors/delete : 파인콘 벡터 저장소 인덱스 삭제요청 url
+# https://[Pinecone Environment]/vectors/delete: URL for deleting an index from the Pinecone vector storage
 
-# https://' . $bctai_pinecone_environment . '/vectors/delete?ids='.$id : 파인콘 벡터 저장소 인덱스 삭제요청 url
+# https://'. $bctai_pinecone_environment . '/vectors/delete?ids='.$id: URL for deleting an index from the Pinecone vector storage
 
-# https://' . $bctai_pinecone_environment . '/vectors/upsert : 파인콘 벡터 저장소 저장 요청 url
+# https://'. $bctai_pinecone_environment . '/vectors/upsert: URL for saving to the Pinecone vector storage
 
-# https://controller.' + bctai_pinecone_sv + '.pinecone.io/databases : 파인콘 인덱스 요청 url
-
-
+# https://controller.' + bctai_pinecone_sv + '.pinecone.io/databases: URL for requesting Pinecone index
 
 
 
-수정 eea3
+
+
+
 
 
 
@@ -63,92 +63,92 @@ ChatGPT, Embeddings, AI Training, STT/TTS, Custom Post Types
 
 == Changelog ==
 
+Version 0.9.5– 09.26 2024
+====================================================
+Fix: Resolve CSS conflicts in the Hello Elementor theme
+
 Version 0.9.4– 09.20 2024
 ====================================================
-부부펫 모바일 반응형 css추가(src/mobile.css)
+Update: Added responsive CSS for mobile (src/mobile.css)
 
 Version 0.9.3– 09.19 2024
 ====================================================
-부부펫(외부부착 스크립트 최신화 및 수정)
+Update: Updated and modified external attachment scripts
 
 Version 0.9.2– 09.12 2024
 ====================================================
-STT사용량 추가, STT DB Table생성, TTS오류 수정
-Embedding Post삭제 오류 수정
+Update: Added STT usage
+Update: Created STT DB table
+Fix: Fixed TTS error
+Fix: Resolved embedding post deletion error
 
 Version 0.9.1– 09.09 2024
 ====================================================
-Statistics / Dashboard / TTS Usage 오류수정
-
+Fix: Resolved TTS usage error in Statistics / Dashboard
 
 Version 0.8.6.2– 09.09 2024
 ====================================================
-remember conversation 임시삭제
-첨부파일 이미지 추가
+Fix: Temporarily removed "remember conversation"
+Update: Added image attachment feature
 
 Version 0.8.6.1– 09.09 2024
 ====================================================
-Menu 모듈 추가
+Update: Added Menu module
 
 Version 0.8.6– 09.04 2024
 ====================================================
-TTS 오류 해결 (class명 대폭 수정)
-Shorcode 코드 삭제
-Embedding결과 없을 시 멘트 변경
+Fix: Resolved TTS error (major class name changes)
+Fix: Deleted shortcode code
+Update: Changed message when there are no embedding results
 
 Version 0.8.5.7– 09.01 2024
 ====================================================
-LLM공급사 및 모델 추가 (Google Gemini)
-임베딩 모델 추가 (Google text-embedding-004, embedding-004)
+Update: Added LLM provider and models (Google Gemini)
+Update: Added embedding models (Google text-embedding-004, embedding-004)
 
 
 Version 0.8.5.6– August.01 2024
 ====================================================
-OpenAI LLM 추가 'gpt-4-0613','gpt-4-0314','gpt-4o','gpt-4o-mini'
-관리자 및 프론트 디자인 변경, bctai-chat-settings qdrant, Openrouter 속성 추가
-
+Update: Added OpenAI LLMs: 'gpt-4-0613', 'gpt-4-0314', 'gpt-4o', 'gpt-4o-mini'
+Update: Modified admin and front-end UI; added properties for Qdrant and OpenRouter in bctai-chat-settings
 
 Version 0.8.5.4– August.01 2024
 ====================================================
-스타일 대폭수정, a링크 오류 해결
-
-
+Fix: Major style revisions and <a> tag error resolution
 
 Version 0.8.5.3– July.22 2024
 ====================================================
-Qdrant 스코어 너무 낮아서 엔드포트 맞게 사용했는지 확인 필요! = 임베딩모델 선택 오류 해결
-
-이박사님 요청사항 : 임베딩시 a링크 삭제 말고 챗봇창에 그대로 링크 같이 출력하는 코드 작성 필요 작업중★★★
+Fix: Qdrant score adjustment and endpoint check
+Fix: Embedding model selection error
+Fix: Chatbot <a> tag UI adjustment
 
 
 Version 0.8.5.2– July.09 2024
 ====================================================
-STT 오류 수정
-Q&A List pagenation 추가
-
+Fix: STT error correction
+Update: Added pagination to the Q&A List
 
 Version 0.8.5– July.01 2024
 ====================================================
-Update : 일부기능 모듈화(온오프형식)
-Update : STT WER Test페이지 추가
-Fix : 
+Update: Modularized certain features (on/off format)
+Update: Added STT WER Test page
 
 Version 0.8.2– June.04 2024
 ====================================================
-Fix : css,js파일 압축 및 src폴더 추가
-Fix : 원격파일 호출 및 url정보 작성
+Fix: Compressed CSS and JS files and added src folder
+Fix: Remote file calls and URL information update
 
 Version 0.8.1– May.27 2024
 ====================================================
-Fix : Datesets / Create Fine-Tune 리턴값 null 수정
-Fix : Trainings / 이벤트 버튼튼 리턴값 null 수정
-Update : Embedding Post 링크 추가입력 및 코사인 유사도 정보 변경
+Fix: Fixed null return value in "Datasets / Create Fine-Tune"
+Fix: Fixed null return value in "Trainings / Event button"
+Update: Added embedding post link input and updated cosine similarity information
 
 
 Version 0.8.0– May.13 2024
 ====================================================
-Fix : Chatbot / Settings Fine-tuning 버튼 추가
-Fix : Chatbot / 코사인 유사도 소수점 2자리까지만 출력
+Update: Added "Chatbot / Settings Fine-tuning" button
+Fix: Chatbot / Displaying cosine similarity up to 2 decimal places
 
 
 

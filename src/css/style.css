@@ -624,12 +624,13 @@ hr {margin:5px 0;border:none;border-bottom:1px solid #dcdcdc;}
 /* chatbot */
 .chatbot {position:relative;overflow:hidden;height:100%;}
 .chatbot-header {display:flex;justify-content:space-between;overflow:hidden;height:50px;padding:0 14px; /*background-color:#3380cd;*/}
-.chatbot-header button {display:inline-block;line-height:30px;margin: 17px 3px;padding:0 3px;width: 15px;height: 15px;}
-/* .chatbot-header i {font-size:19px;color:#fff;} */
-/* .chatbot-contents {height:calc(100% - 110px);padding:20px 5px 20px 20px;box-sizing:border-box;} */
 
-/* .chatbot-contents {padding: 0px 0px 207px 10px;height: 100%;} */
-/* padding: 0px 0px 107px 10px; */
+
+/* .chatbot-header button {display:inline-block;line-height:30px;margin: 17px 3px;padding:0 3px;width: 15px;height: 15px;} */
+.chatbot-header button {display:inline-block;line-height:30px;width:10%;height:100%}
+
+
+
 
 
     
@@ -767,3 +768,4 @@ hr {margin:5px 0;border:none;border-bottom:1px solid #dcdcdc;}
 .bctai-chatbox{overflow:hidden;margin-top:20px;border-radius:15px;box-shadow:0px 0px 10px 3px gray;}
 
 .c3-tooltip-container{width:200px;}
+
