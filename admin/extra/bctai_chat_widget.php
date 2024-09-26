@@ -34,9 +34,13 @@ if($bctai_chat_status == 'active'):
 
 <style>
     .btnChatbot {width:100px;height:100px;transform:scale(1);border:0px;background:url(<?php echo esc_html($bctai_chat_icon_url)?>);background-size: cover;}
-    [type=button]:focus, [type=button]:hover, [type=submit]:focus, [type=submit]:hover, button:focus, button:hover {
+    /* [type=button]:focus, [type=button]:hover, [type=submit]:focus, [type=submit]:hover, button:focus, button:hover {
         background-color:transparent;
     }
+
+    .bctai_chat_widget [type=button], .bctai_chat_widget [type=submit], .bctai_chat_widget button {
+        border:0px;
+    } */
 </style>
 
 

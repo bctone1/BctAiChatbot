@@ -245,6 +245,11 @@ textarea:focus {
 .iconChatSpeak, .iconChatTyping{
     width:35px;height:29px;
 }
+
+.bctai-chatbox button{border:0px;}
+.bctai-chatbox button:hover{
+    background-color:transparent;
+}
     
 </style>
 
