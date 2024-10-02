@@ -84,6 +84,14 @@ if (isset($_POST['bctai_submit'])) {
     } else {
         delete_option('bctai_google_api_key');
     }
+
+    if (isset($_POST['bctai_google_search_engine_ID']) && !empty($_POST['bctai_google_search_engine_ID'])) {
+        update_option('bctai_google_search_engine_ID', sanitize_text_field($_POST['bctai_google_search_engine_ID']));
+    } else {
+        delete_option('bctai_google_search_engine_ID');
+    }
+
+
     if (isset($_POST['bctai_elevenlabs_api']) && !empty($_POST['bctai_elevenlabs_api'])) {
         update_option('bctai_elevenlabs_api', sanitize_text_field($_POST['bctai_elevenlabs_api']));
     } else {
@@ -403,6 +411,8 @@ $bctai_chat_enable_sale = get_option('bctai_chat_enable_sale', false);
 $bctai_elevenlabs_hide_error = get_option('bctai_elevenlabs_hide_error', false);
 $bctai_elevenlabs_api = get_option('bctai_elevenlabs_api', '');
 $bctai_google_api_key = get_option('bctai_google_api_key', '');
+
+$bctai_google_search_engine_ID = get_option('bctai_google_search_engine_ID', '');
 
 global $wpdb;
 $table = $wpdb->prefix . 'bctai';

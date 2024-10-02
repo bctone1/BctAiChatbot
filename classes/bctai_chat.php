@@ -243,6 +243,15 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
 
         public function bctai_chatbox_message()
         {
+
+
+            
+            
+            
+            // wp_send_json($search_results);
+
+
+            
             // wp_send_json("BCTONE C0018 Connect");
             // wp_send_json($_POST);
             global $wpdb;
@@ -359,6 +368,9 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                 }
                 #Logs
                 $bctai_save_logs = isset($bctai_chat_widget['save_logs']) && $bctai_chat_widget['save_logs'] ? true : false;
+                $bctai_Internet_Browsing = isset($bctai_chat_widget['bctai_Internet_Browsing']) && !empty($bctai_chat_widget['bctai_Internet_Browsing']) ? true : false;
+
+
                 $bctai_save_request = isset($bctai_chat_widget['log_request']) && $bctai_chat_widget['log_request'] ? true : false;
                 #Check limit base role
                 if (is_user_logged_in() && isset($bctai_chat_widget['role_limited']) && $bctai_chat_widget['role_limited']) {
@@ -676,10 +688,24 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                 //     $bctai_conversation_end_messages = array_splice($bctai_conversation_messages, $bctai_conversation_messages_start, $bctai_conversation_messages_length);
                 // }
                 
+
+                
                 if (!empty($bctai_message)) {
                     $bctai_chatgpt_messages = array();
                     $bctai_chatgpt_messages[] = array('role' => 'system','content'=>"$bctai_chat_proffesion2");
                     $bctai_chatgpt_messages[] = array('role' => 'user', 'content' => "$bctai_embedding_content");
+                    
+
+                    if($bctai_Internet_Browsing){
+                        $bctai_google_search_engine_ID = get_option('bctai_google_search_engine_ID', '');
+                        $bctai_google_api_key = get_option('bctai_google_api_key', '');
+                        $search_results = $this->wpaicg_search_internet($bctai_google_api_key, $bctai_google_search_engine_ID, $bctai_message);
+                        $search_results_data = $search_results['data'];
+                        $bctai_chatgpt_messages[] = array('role' => 'user', 'content' => "$search_results_data");
+                    }
+                    
+
+                    
 
                     if ($bctai_chat_remember_conversation == 'yes') {
                         // $bctai_conversation_end_messages[] = $bctai_human_name . ': ' . $bctai_message . "\nAI1: ";
@@ -814,6 +840,50 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
             }
             wp_send_json($bctai_result);
         }
+
+
+        public function wpaicg_search_internet($api_key, $search_engine_id, $query) {
+            $country = get_option('wpaicg_google_search_country', '');
+            $num_results = get_option('wpaicg_google_search_num', 10);
+            $language = get_option('wpaicg_google_search_language', '');
+        
+            $search_url = 'https://www.googleapis.com/customsearch/v1?q=' . urlencode($query) . '&key=' . $api_key . '&cx=' . $search_engine_id;
+        
+            if (!empty($country)) {
+                $search_url .= '&cr=' . $country;
+            }
+        
+            if (!empty($language)) {
+                $search_url .= '&lr=' . $language;
+            }
+        
+            $search_url .= '&num=' . intval($num_results);
+            // $search_url .= '&sort=';
+        
+            $response = wp_remote_get($search_url);
+        
+            if (is_wp_error($response)) {
+                return ['status' => 'error', 'data' => ''];
+            }
+        
+            $body = wp_remote_retrieve_body($response);
+            $data = json_decode($body, true);
+        
+            if (isset($data['items']) && !empty($data['items'])) {
+                $search_content = '';
+        
+                foreach ($data['items'] as $item) {
+                    $search_content .= $item['title'] . "\n" . $item['snippet'] . "\n" . $item['link'] . "\n\n";
+                }
+        
+                return ['status' => 'success', 'data' => $search_content];
+            }
+        
+            return ['status' => 'empty', 'data' => ''];
+        }
+
+
+
 
         public function getIpAddress()
         {

@@ -171,6 +171,8 @@ $bctai_reset_limit = isset($bctai_chat_widget['reset_limit']) ? $bctai_chat_widg
 $bctai_include_footer = (isset($bctai_chat_widget['footer_text']) && !empty($bctai_chat_widget['footer_text'])) ? 5 : 0;
 //log
 $bctai_save_logs = isset($bctai_chat_widget['save_logs']) && !empty($bctai_chat_widget['save_logs']) ? $bctai_chat_widget['save_logs'] : false;
+$bctai_Internet_Browsing = isset($bctai_chat_widget['bctai_Internet_Browsing']) && !empty($bctai_chat_widget['bctai_Internet_Browsing']) ? $bctai_chat_widget['bctai_Internet_Browsing'] : false;
+
 $bctai_log_notice = isset($bctai_chat_widget['log_notice']) && !empty($bctai_chat_widget['log_notice']) ? $bctai_chat_widget['log_notice'] : false;
 $bctai_log_notice_message = isset($bctai_chat_widget['log_notice_message']) && !empty($bctai_chat_widget['log_notice_message']) ? $bctai_chat_widget['log_notice_message'] : 'Please note that your conversations will be recorded.';
 
@@ -197,7 +199,9 @@ if ( !empty($errors)) {
 }
 ?>
 
-
+<style>
+    .setting_wrap .formContent{margin:auto;}
+</style>
 
 <h2 class="sectionTitle">Settings</h2>
 <form action="" method="post" id="form-chatbox-setting">
@@ -790,13 +794,22 @@ if ( !empty($errors)) {
 
         
 
-        <h3 class="chapterTitle">Logs Setting</h3>
+        <h3 class="chapterTitle">Options</h3>
         
         <div class="columnWrap">
             <div class="columnWrap column2">
                 <div class="formTitle"><strong>Save Chat Logs</strong></div>
                 <div class="formContent">
                     <input <?php echo $bctai_save_logs ? ' checked':''?> class="bctai_chatbot_save_logs" value="1" type="checkbox" name="bctai_chat_widget[save_logs]">
+                </div>
+            </div>
+        </div>
+        
+        <div class="columnWrap">
+            <div class="columnWrap column2">
+                <div class="formTitle"><strong>Internet Browsing</strong></div>
+                <div class="formContent">
+                    <input <?php echo $bctai_Internet_Browsing ? ' checked':''?> class="bctai_chatbot_bctai_Internet_Browsing" value="1" type="checkbox" name="bctai_chat_widget[bctai_Internet_Browsing]">
                 </div>
             </div>
         </div>

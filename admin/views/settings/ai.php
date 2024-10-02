@@ -420,11 +420,11 @@ $Google_Embedding_model = get_option('Google_Embedding_model','text-embedding-00
     <?php endif;?>
 </div>
 
-<h1 style="font: normal normal 900 24px/35px Noto Sans KR; margin:0px;"><?php echo __('Google TTS Setting', 'bctai') ?></h1>
+<h1 style="font: normal normal 900 24px/35px Noto Sans KR; margin:0px;"><?php echo __('Google Cloud Console', 'bctai') ?></h1>
 
 <div class="columnWrap">
     <div class="columnWrap column2">
-        <div class="formTitle"><strong>Google API Key</strong></div>
+        <div class="formTitle"><strong>Google Cloud Console API Key</strong></div>
         <div class="formContent">
             <div class="inputButtonArea">
                 <input type="text" class="bctai_google_api_key" value="<?php echo esc_html($bctai_google_api_key)?>" name="bctai_google_api_key">
@@ -434,6 +434,18 @@ $Google_Embedding_model = get_option('Google_Embedding_model','text-embedding-00
             <p id ="bctai_message"></p>
         </div>
     </div>
+
+
+
+    <div class="columnWrap column2">
+        <div class="formTitle"><strong>Api Key</strong></div>
+        <div class="formContent">
+            <input type="text" class="bctai_google_search_engine_ID" value="<?php echo esc_html($bctai_google_search_engine_ID)?>" name="bctai_google_search_engine_ID">
+            <div class="link underline"><a href="https://programmablesearchengine.google.com/controlpanel/all" target="_blank" style="color: #F53706;">Get Your ID</a></div>
+        </div>
+        
+    </div>
+
     
 </div>
 
