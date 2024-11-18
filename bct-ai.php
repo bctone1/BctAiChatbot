@@ -2,7 +2,7 @@
 /*
 *Plugin Name:       BCT AI Chatbot
 *Description:       ChatGPT, Embeddings, AI Training, STT/TTS, Custom Post Types
-*Version:           0.9.6
+*Version:           0.9.7
 *Author:            Bctone
 *Author URI:        https://bctaichatbot.com/
 *License:           GPL-2.0+
@@ -13,7 +13,7 @@
 if ( !defined( 'WPINC' ) ) {
     die;
 }
-define( 'WP_BCT_AI_VERSION', '0.9.6' );
+define( 'WP_BCT_AI_VERSION', '0.9.7' );
 if( !class_exists( '\\BCTAI\\BCTAI_OpenAI' ) ) {
     require_once __DIR__ . '/includes/class-wp-bct-ai-openai.php';
 }

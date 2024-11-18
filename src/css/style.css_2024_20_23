@@ -383,7 +383,7 @@ iframe[name="hiddeniFrame"] {position:absolute;top:0;overflow:hidden;width:1px;h
 
 /* device check */
 .modalChatbot.devicePC {width:400px;}
-.modalChatbot.deviceMobile {width:80%;height:80vh;}
+.modalChatbot.deviceMobile {width:80%;height:80%;}
 
 
 /* chatbot write */
@@ -394,8 +394,8 @@ iframe[name="hiddeniFrame"] {position:absolute;top:0;overflow:hidden;width:1px;h
 .chatbotWriteWrap .inputBtnArea .iconChatTyping {display:none;}
 .iconFile {width:35px;height:29px;}
 .iconFile::before {width:75%;height:100%;background-image:url(../images/chatbot/icon_flie.png);}
-.iconChatSpeak {width:35px;height:29px;}
-.iconChatSpeak::before {width:100%;height:140%;background-image:url(../images/chatbot/icon_speak_gray.png);background-size:auto 40px !important;}
+.iconChatSpeak {width:35px;height:35px;}
+.iconChatSpeak::before {height:35px;width:100%;height:140%;background-image:url(../images/chatbot/icon_speak_gray.png);background-size:auto 40px !important;}
 .iconChatSpeak.on::before {width:100%;height:100%;background-image:url(../images/chatbot/icon_speak_primay.png);}
 .iconChatTyping {width:35px;height:29px;}
 .iconChatTyping::before {width:90%;height:100%;background-image:url(../images/chatbot/icon_upload.primay.png);}

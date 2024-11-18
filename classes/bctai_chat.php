@@ -597,7 +597,7 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                         }
                         if (!$bctai_chat_embedding_type || empty($bctai_chat_embedding_type)) {
                             #only Embeddings
-                            if($bctai_embeddings_result['score'][0] > 0.6){
+                            if($bctai_embeddings_result['score'][0] > 0.8){
                                 $bctai_result['status'] = $bctai_embeddings_result['status'];
                                 $bctai_embedding_score = $bctai_embeddings_result['score'][0];
                                 $formatted_embedding_score = number_format($bctai_embedding_score, 2);
@@ -634,12 +634,13 @@ if (!class_exists('\\BCTAI\BCTAI_Chat')) {
                                             'created_at' => time()
                                         )
                                     );
-                                }else{
-                                    $bctai_result['data'] = "응답시간이 조금 더 길어질 수 있습니다. 계속하시려면 계속하기 버튼을 눌러주세요.";
-                                    $bctai_result['msg'] = "코사인 유사도 0.4가 넘는 데이터가 없습니다.";
-                                    $bctai_result['status'] = "SaveAnswer";
-                                    wp_send_json($bctai_result);
                                 }
+                                // else{
+                                //     $bctai_result['data'] = "응답시간이 조금 더 길어질 수 있습니다. 계속하시려면 계속하기 버튼을 눌러주세요.";
+                                //     $bctai_result['msg'] = "코사인 유사도 0.4가 넘는 데이터가 없습니다.";
+                                //     $bctai_result['status'] = "SaveAnswer";
+                                //     wp_send_json($bctai_result);
+                                // }
                             }
                         } else {
                             #openai
